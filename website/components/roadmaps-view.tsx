@@ -1,9 +1,12 @@
 "use client"
 
-import { roadmaps, references } from "@/lib/control-data"
-import { ExternalLink } from "lucide-react"
+import Link from "next/link"
+import { resourceGroups, roadmaps } from "@/lib/control-data"
+import { ArrowRight, BookOpen } from "lucide-react"
 
 export function RoadmapsView() {
+  const resourceCount = resourceGroups.reduce((count, group) => count + group.resources.length, 0)
+
   return (
     <div className="space-y-12">
       <section>
@@ -37,23 +40,28 @@ export function RoadmapsView() {
       <section>
         <header className="mb-6">
           <p className="font-mono text-xs uppercase tracking-widest text-primary">References</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">Open texts, courses & software</h2>
+          <h2 className="mt-1 text-2xl font-semibold tracking-tight">Books, papers, courses & software</h2>
+          <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
+            The full resource index now has {resourceGroups.length} groups and {resourceCount} entries, including
+            the 17 textbook references from the README.
+          </p>
         </header>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {references.map((ref) => (
-            <a
-              key={ref.href}
-              href={ref.href}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-start justify-between gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/60"
-            >
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-snug">{ref.label}</p>
-                <p className="text-xs leading-relaxed text-muted-foreground">{ref.note}</p>
-              </div>
-              <ExternalLink className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
-            </a>
+
+        <Link
+          href="/references"
+          className="group inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-primary/60"
+        >
+          <BookOpen className="size-4 text-primary" />
+          Open resource index
+          <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+        </Link>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {resourceGroups.map((group) => (
+            <div key={group.title} className="rounded-lg border border-border bg-card p-4">
+              <p className="text-sm font-medium leading-snug">{group.title}</p>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{group.resources.length} entries</p>
+            </div>
           ))}
         </div>
       </section>

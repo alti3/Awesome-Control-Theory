@@ -1,8 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { useMemo, useState } from "react"
 import {
   ArrowLeft,
+  BookOpen,
   Search,
   Repeat,
   SlidersHorizontal,
@@ -91,7 +93,7 @@ export function ControlMap() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search 150+ topics…"
+                placeholder="Search 200+ topics…"
                 className="h-9 w-full rounded-md border border-border bg-card pl-9 pr-8 text-sm outline-none placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40"
               />
               {query && (
@@ -112,6 +114,13 @@ export function ControlMap() {
               <TabButton active={view === "roadmaps"} onClick={() => setView("roadmaps")} icon={<Route className="size-4" />}>
                 Paths
               </TabButton>
+              <Link
+                href="/references"
+                className="flex items-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <BookOpen className="size-4" />
+                Resources
+              </Link>
             </div>
 
             <ThemeToggle />
@@ -197,7 +206,7 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
             search across every method, estimator, and analysis tool.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Feedback", "LQR", "Kalman filter", "MPC", "Lyapunov", "A*", "Sliding mode"].map((t) => (
+            {["Feedback", "LQR", "Kalman filter", "MPC", "MIMO", "Z-transform", "Lyapunov", "Sliding mode"].map((t) => (
               <span
                 key={t}
                 className="rounded-full border border-border bg-secondary px-3 py-1 font-mono text-xs text-secondary-foreground"

@@ -37,6 +37,14 @@ export const branches: Branch[] = [
             term: "Output feedback",
             description: "Uses measured outputs directly or through an observer.",
           },
+          {
+            term: "Separation principle",
+            description: "Designs state feedback and an observer separately for many linear output-feedback problems.",
+          },
+          {
+            term: "Compensator design",
+            description: "Combines controller and observer dynamics when the full state is not directly measured.",
+          },
         ],
       },
       {
@@ -95,6 +103,14 @@ export const branches: Branch[] = [
             term: "Quadratic programming",
             description: "Standard online optimization form for linear MPC and control-barrier-function controllers.",
           },
+          {
+            term: "Probability & stochastic processes",
+            description: "Support Kalman filtering, stochastic control, random disturbances, covariance propagation, and spectral-density models.",
+          },
+          {
+            term: "Numerical optimization",
+            description: "Supports direct optimal control, trajectory optimization, constrained MPC, parameter estimation, and design tuning.",
+          },
         ],
       },
     ],
@@ -104,7 +120,7 @@ export const branches: Branch[] = [
     number: "02",
     title: "Control Methods",
     tagline: "Choose a controller",
-    blurb: "Eight families of controllers, from PID to robust H-infinity synthesis.",
+    blurb: "Controller families from PID and digital control to MIMO, MPC, adaptive, and robust synthesis.",
     sections: [
       {
         title: "Linear",
@@ -129,6 +145,11 @@ export const branches: Branch[] = [
           { term: "Dynamic inversion", description: "Uses a model inverse to command nonlinear systems." },
           { term: "Sliding mode control", description: "Drives trajectories onto a switching surface; robust to matched uncertainty." },
           { term: "Bang-bang control", description: "Switches between extreme control values, often in minimum-time problems." },
+          { term: "Perturbation methods", description: "Analyze systems with weak nonlinearities or small parameters." },
+          { term: "Averaging", description: "Approximates behavior when fast oscillations or adaptation dynamics can be averaged." },
+          { term: "Singular perturbations", description: "Separate fast and slow dynamics for analysis and controller design." },
+          { term: "Input-output stability", description: "Studies boundedness and gain from inputs to outputs in nonlinear feedback systems." },
+          { term: "Passivity", description: "Uses energy exchange to reason about nonlinear feedback stability and interconnections." },
         ],
       },
       {
@@ -150,6 +171,10 @@ export const branches: Branch[] = [
           { term: "DDP & iLQR", description: "Approximate nonlinear optimal control through local quadratic models." },
           { term: "Collocation & shooting", description: "Transcribe continuous trajectory optimization into finite-dimensional nonlinear programs." },
           { term: "Bang-bang solutions", description: "Arise when the optimal input saturates at its limits." },
+          { term: "Calculus of variations", description: "Gives Euler-Lagrange-style necessary conditions for optimal trajectories." },
+          { term: "Dynamic-programming algorithms", description: "Solve shortest-path, finite-horizon, infinite-horizon, and imperfect-information problems." },
+          { term: "Stochastic optimal control", description: "Handles dynamics, measurements, or disturbances modeled probabilistically." },
+          { term: "Dual control", description: "Accounts for inputs that both control the plant and excite it to learn uncertain parameters." },
         ],
       },
       {
@@ -163,6 +188,34 @@ export const branches: Branch[] = [
           { term: "Stochastic MPC", description: "Treats uncertainty probabilistically via chance constraints or expected costs." },
           { term: "Explicit MPC", description: "Precomputes piecewise-affine control laws for fast online evaluation." },
           { term: "Constraint handling", description: "Input, state, and safety limits can be represented directly in the optimization." },
+          { term: "Generalized Predictive Control", description: "Uses input-output models and receding-horizon design for predictive control." },
+          { term: "Fast MPC methods", description: "Exploit structure, warm starts, explicit laws, or tailored solvers for real-time deadlines." },
+          { term: "Hybrid MPC", description: "Handles systems with continuous dynamics and discrete modes or logic." },
+          { term: "Industrial MPC", description: "Emphasizes model maintenance, estimator integration, constraint management, and reliable optimization." },
+        ],
+      },
+      {
+        title: "Digital & Sampled-Data",
+        topics: [
+          { term: "Digital control", description: "Designs controllers that run on sampled measurements and update actuators at discrete instants." },
+          { term: "Z-transform methods", description: "Analyze discrete-time transfer functions and sampled systems." },
+          { term: "Sampled-data models", description: "Describe continuous plants, samplers, zero-order holds, and digital controllers together." },
+          { term: "Zero-order hold", description: "Models digital-to-analog actuation held constant between samples." },
+          { term: "Aliasing", description: "Occurs when sampling makes high-frequency content appear as lower-frequency behavior." },
+          { term: "Quantization", description: "Captures finite-resolution effects in sensing, computation, and actuation." },
+          { term: "Computation delay", description: "Represents latency from sensing, estimation, optimization, and actuator updates." },
+          { term: "Hybrid control", description: "Combines continuous dynamics with switching, events, logic, or mode-dependent controllers." },
+        ],
+      },
+      {
+        title: "MIMO & Multivariable",
+        topics: [
+          { term: "MIMO control", description: "Handles plants with multiple inputs and outputs where loops can interact strongly." },
+          { term: "Singular-value analysis", description: "Studies multivariable gain, directionality, and robustness across frequency." },
+          { term: "Relative gain array", description: "Evaluates input-output pairings and control-structure choices." },
+          { term: "Decoupling control", description: "Reduces cross-channel interactions when the model supports it." },
+          { term: "Control structure design", description: "Chooses manipulated variables, controlled variables, measurements, and loop pairings." },
+          { term: "Linear Matrix Inequalities", description: "Express robust, optimal, and constrained control conditions as convex feasibility problems." },
         ],
       },
       {
@@ -184,6 +237,10 @@ export const branches: Branch[] = [
           { term: "Self-tuning regulators", description: "Repeatedly identify a model and redesign controller gains online." },
           { term: "Extremum seeking", description: "Optimizes an unknown objective online by perturbing inputs and following gradients." },
           { term: "Iterative Learning Control", description: "Improves repeated-task tracking from trial to trial." },
+          { term: "Auto-tuning", description: "Identifies useful process information online to tune controllers such as PID loops." },
+          { term: "Relay feedback", description: "Excites controlled oscillations to infer process dynamics for tuning." },
+          { term: "Real-time parameter estimation", description: "Updates model parameters from streaming data during operation." },
+          { term: "Robust adaptive control", description: "Adds safeguards so adaptation remains stable under unmodeled dynamics, noise, and disturbances." },
         ],
       },
       {
@@ -195,6 +252,8 @@ export const branches: Branch[] = [
           { term: "Small-gain reasoning", description: "Bounds feedback interconnections by limiting loop gain under uncertainty." },
           { term: "LFTs", description: "Linear fractional transformations organize uncertain plants for robust analysis and synthesis." },
           { term: "Robust stability margins", description: "Connect classical frequency design to robust-control goals." },
+          { term: "Robust performance", description: "Verifies both stability and performance under uncertainty." },
+          { term: "Structured singular value", description: "Quantifies robustness for structured uncertainty models." },
         ],
       },
     ],
@@ -267,7 +326,15 @@ export const branches: Branch[] = [
           { term: "Extended Kalman filter", description: "Linearizes nonlinear dynamics and measurement models locally." },
           { term: "Sigma-point filters", description: "The unscented Kalman filter propagates selected sample points through nonlinear models." },
           { term: "Particle filters", description: "Approximate arbitrary state distributions with weighted samples." },
+          { term: "Information filters", description: "Represent uncertainty with information matrices, useful in sparse or distributed estimation." },
+          { term: "Square-root filters", description: "Propagate covariance factors to improve numerical conditioning." },
+          { term: "U-D filters", description: "Use unit upper-triangular and diagonal covariance factors for stable filtering." },
+          { term: "H-infinity filters", description: "Estimate states under worst-case disturbance models instead of stochastic assumptions alone." },
+          { term: "Kalman-Bucy filter", description: "Continuous-time Kalman filtering for linear systems driven by stochastic models." },
+          { term: "Constrained filters", description: "Enforce known bounds or equality constraints on state estimates." },
           { term: "Smoothers", description: "Fixed-lag or RTS smoothers estimate past states using later measurements." },
+          { term: "Wiener filtering", description: "Estimates signals from noisy measurements using second-order statistics." },
+          { term: "Recursive least squares", description: "Estimates fixed or slowly varying parameters from streaming data." },
           { term: "Covariance tuning", description: "Consistency checks keep filter uncertainty aligned with observed residuals." },
         ],
       },
@@ -280,6 +347,7 @@ export const branches: Branch[] = [
           { term: "Kalman observers", description: "Combine prediction and correction with explicit noise statistics." },
           { term: "Unknown-input observers", description: "Estimate states when some disturbances or inputs are not measured." },
           { term: "High-gain & sliding-mode observers", description: "Common nonlinear observer families." },
+          { term: "Reduced-order observers", description: "Estimate only the unmeasured portion of the state when some states are directly measured." },
         ],
       },
       {
@@ -309,6 +377,7 @@ export const branches: Branch[] = [
           { term: "Target tracking", description: "Estimates moving object states from noisy measurements." },
           { term: "Trajectory tracking", description: "Estimates deviation from a desired path or reference." },
           { term: "Multi-sensor tracking", description: "Fuses detections from multiple measurement sources." },
+          { term: "Multiple-model estimation", description: "Runs candidate models or filters in parallel to handle mode changes or uncertain dynamics." },
           { term: "Data association", description: "Matches measurements to tracks in multi-target tracking." },
         ],
       },
@@ -338,6 +407,8 @@ export const branches: Branch[] = [
           { term: "Hybrid systems", description: "Combine continuous dynamics with discrete modes, events, or logic." },
           { term: "Time-delay systems", description: "Model transport, communication, and computation delays that can destabilize loops." },
           { term: "Saturation & rate limits", description: "Capture actuator limits that strongly affect closed-loop performance." },
+          { term: "Stochastic state models", description: "Include process noise, measurement noise, and random disturbances in continuous or discrete time." },
+          { term: "Stochastic differential equations", description: "Model continuous-time dynamics driven by random processes or Wiener-process idealizations." },
         ],
       },
       {
@@ -346,6 +417,7 @@ export const branches: Branch[] = [
           { term: "Transfer functions", description: "Represent input-output dynamics in the Laplace domain." },
           { term: "Block diagrams", description: "Show interconnections among plants, controllers, summing junctions, sensors, feedback." },
           { term: "Signal-flow views", description: "Clarify feedback, feedforward, disturbances, and noise." },
+          { term: "Signal-flow graphs", description: "Use node-edge relationships and Mason's gain formula to derive input-output transfer functions." },
           { term: "Uncertainty models", description: "Describe parametric uncertainty, unmodeled dynamics, disturbances, and sensor noise." },
           { term: "LFTs", description: "Separate nominal dynamics from uncertainty blocks for robust-control analysis." },
         ],
@@ -356,6 +428,8 @@ export const branches: Branch[] = [
           { term: "First-principles modeling", description: "Derives dynamics from physics: Newton's laws, energy balances, circuits, fluids." },
           { term: "System identification", description: "Estimates models from input-output data." },
           { term: "Linearization", description: "Approximates nonlinear dynamics near an equilibrium or trajectory." },
+          { term: "Canonical forms", description: "Organize state-space models into standard coordinate representations." },
+          { term: "Similarity transformations", description: "Reorganize state variables without changing input-output behavior." },
           { term: "Minimum realization", description: "Removes uncontrollable or unobservable states while preserving behavior." },
           { term: "Model reduction", description: "Lowers model order for analysis, synthesis, and real-time simulation." },
           { term: "Balanced truncation", description: "Reduces stable linear models while approximately preserving behavior." },
@@ -408,6 +482,7 @@ export const branches: Branch[] = [
           { term: "Nyquist plots", description: "Determine closed-loop stability from open-loop encirclements." },
           { term: "Nichols charts", description: "Combine gain and phase for frequency-domain design." },
           { term: "Sensitivity functions", description: "Describe disturbance rejection, noise amplification, and tracking limitations." },
+          { term: "Spectral-density analysis", description: "Describes how stochastic disturbances and noise are distributed across frequency." },
         ],
       },
       {
@@ -416,6 +491,13 @@ export const branches: Branch[] = [
           { term: "Root locus", description: "Tracks closed-loop pole movement as gain changes." },
           { term: "Pole-zero plots", description: "Reveal modes, damping, zeros, cancellations, and nonminimum-phase behavior." },
           { term: "Nonminimum-phase zeros", description: "Limit tracking speed and transient performance." },
+        ],
+      },
+      {
+        title: "Algebraic Stability Tests",
+        topics: [
+          { term: "Routh-Hurwitz tests", description: "Determine continuous-time polynomial stability without explicitly computing roots." },
+          { term: "Jury tests", description: "Provide algebraic stability checks for discrete-time characteristic polynomials." },
         ],
       },
       {
@@ -475,7 +557,7 @@ export const roadmaps: Roadmap[] = [
       "Step, impulse, and sine responses",
       "PID control",
       "Root locus, Bode, Nyquist & stability margins",
-      "Lead-lag compensation & loop shaping",
+      "Routh-Hurwitz, Z-transform methods, lead-lag compensation & loop shaping",
     ],
   },
   {
@@ -486,7 +568,7 @@ export const roadmaps: Roadmap[] = [
       "Full-state feedback & pole placement",
       "LQR, Riccati equations & LQG",
       "Observers, Kalman filtering & separation principle",
-      "MPC, constrained control & safety filters",
+      "MIMO design, MPC, constrained control & safety filters",
     ],
   },
   {
@@ -504,56 +586,235 @@ export const roadmaps: Roadmap[] = [
     title: "Advanced Control Path",
     steps: [
       "Lyapunov stability",
-      "Nonlinear control: feedback linearization, backstepping, sliding mode",
-      "Optimal control: PMP, HJB, DDP & iLQR",
-      "Robust control: H-infinity, mu-synthesis, ADRC, LFTs",
-      "Adaptive control: MRAC, extremum seeking, ILC",
+      "Nonlinear control: feedback linearization, backstepping, sliding mode, passivity",
+      "Optimal control: PMP, HJB, dynamic programming, DDP & iLQR",
+      "Robust control: H-infinity, mu-synthesis, structured singular values, LFTs",
+      "Adaptive control: MRAC, self-tuning, auto-tuning, robust adaptive control",
       "Multi-agent, safety-critical & learning-based control",
+    ],
+  },
+  {
+    title: "Stochastic Estimation Path",
+    steps: [
+      "Probability, stochastic processes & spectral density",
+      "Least squares, recursive least squares & Wiener filtering",
+      "Discrete-time Kalman filtering",
+      "Continuous-time Kalman-Bucy filtering",
+      "Square-root, information, constrained & H-infinity filters",
+      "EKF, UKF, particle filters, smoothing & multiple-model estimation",
+    ],
+  },
+  {
+    title: "MIMO & Robust Design Path",
+    steps: [
+      "SISO loop shaping, sensitivity & performance limitations",
+      "MIMO state-space models, singular values & RGA",
+      "Uncertainty models, LFTs & structured singular value analysis",
+      "Robust stability and robust performance",
+      "H-infinity synthesis, mu-synthesis & LMIs",
+      "Control structure design, model reduction & case studies",
     ],
   },
 ]
 
 export type Reference = { label: string; href: string; note: string }
+export type ResourceGroup = { title: string; description: string; resources: Reference[] }
 
-export const references: Reference[] = [
+export const resourceGroups: ResourceGroup[] = [
   {
-    label: "Feedback Systems (Åström & Murray)",
-    href: "https://fbsbook.org/",
-    note: "Open textbook on modeling, feedback, stability, frequency response, state space, robustness.",
+    title: "Textbooks & Learning Resources",
+    description: "Canonical books spanning classical control, state space, nonlinear systems, MPC, optimal control, stochastic estimation, adaptive control, and robust MIMO design.",
+    resources: [
+      {
+        label: "Feedback Systems: An Introduction for Scientists and Engineers",
+        href: "https://fbsbook.org/",
+        note: "Karl J. Astrom and Richard M. Murray. Open introduction to feedback, modeling, linear systems, state/output feedback, PID, robustness, and architecture.",
+      },
+      {
+        label: "Feedback Control of Dynamic Systems",
+        href: "https://scsolutions.com/publication/feedback-control-of-dynamic-systems-eighth-edition/",
+        note: "Gene F. Franklin, J. David Powell, and Abbas Emami-Naeini. Classical and state-space design, root locus, frequency response, digital control, nonlinear systems, and case studies.",
+      },
+      {
+        label: "Control Systems Engineering",
+        href: "https://www.zybooks.com/catalog/control-systems-engineering-8th-edition/",
+        note: "Norman S. Nise. Modeling, time response, subsystem reduction, stability, steady-state error, root locus, frequency response, state-space design, and digital control.",
+      },
+      {
+        label: "Modern Control Engineering",
+        href: "https://www.pearson.com/en-gb/subject-catalog/p/Ogata-Modern-Control-Engineering-5th-Edition/P200000003521",
+        note: "Katsuhiko Ogata. Modeling of mechanical, electrical, fluid, and thermal systems; transient response; root locus; frequency response; PID; and state-space design.",
+      },
+      {
+        label: "Modern Control Systems",
+        href: "https://www.pearson.com/en-us/subject-catalog/p/modern-control-systems/P200000003484/9780137307098",
+        note: "Richard C. Dorf and Robert H. Bishop. Mathematical models, state variables, feedback performance, stability, root locus, frequency design, robust control, and digital control.",
+      },
+      {
+        label: "Control System Design",
+        href: "https://openlibrary.org/books/OL7345499M/Control_System_Design",
+        note: "Graham C. Goodwin, Stefan F. Graebe, and Mario E. Salgado. SISO/MIMO design, PID, sampled-data and hybrid control, optimization, state space, nonlinear control, MPC, and decoupling.",
+      },
+      {
+        label: "Multivariable Feedback Control: Analysis and Design",
+        href: "https://skoge.folk.ntnu.no/book/",
+        note: "Sigurd Skogestad and Ian Postlethwaite. MIMO limitations, uncertainty, robust stability and performance, controller design, control-structure design, model reduction, and LMIs.",
+      },
+      {
+        label: "Nonlinear Systems",
+        href: "https://www.pearson.com/en-us/subject-catalog/p/nonlinear-systems/P200000003306/9780130673893",
+        note: "Hassan K. Khalil. Phase-plane behavior, Lyapunov stability, input-output stability, passivity, perturbation methods, singular perturbations, and feedback linearization.",
+      },
+      {
+        label: "Model Predictive Control",
+        href: "https://link.springer.com/book/10.1007/978-0-85729-398-5",
+        note: "Eduardo F. Camacho and Carlos Bordons. Generalized, commercial, multivariable, constrained, robust, nonlinear, hybrid, and fast MPC.",
+      },
+      {
+        label: "Dynamic Programming and Optimal Control",
+        href: "https://web.mit.edu/dimitrib/www/dpbook.html",
+        note: "Dimitri P. Bertsekas. Dynamic programming, deterministic and stochastic decision problems, shortest paths, imperfect information, infinite-horizon problems, and approximate DP.",
+      },
+      {
+        label: "Optimal Control Theory: An Introduction",
+        href: "https://books.google.com/books/about/Optimal_Control_Theory.html?id=fCh2SAtWIdwC",
+        note: "Donald E. Kirk. Performance measures, dynamic programming, calculus of variations, Pontryagin's minimum principle, and numerical trajectory optimization.",
+      },
+      {
+        label: "Control System Design: An Introduction to State-Space Methods",
+        href: "https://store.doverpublications.com/products/9780486442785",
+        note: "Bernard Friedland. State-space representation, frequency analysis, controllability, observability, pole placement, observers, separation principle, LQR, random processes, and Kalman filters.",
+      },
+      {
+        label: "Optimal Control and Estimation",
+        href: "https://store.doverpublications.com/products/9780486462783",
+        note: "Robert F. Stengel. Optimal trajectories, LQ control, optimal estimation, Kalman filtering, stochastic optimal control, dual control, and multivariable design.",
+      },
+      {
+        label: "Optimal State Estimation: Kalman, H-infinity, and Nonlinear Approaches",
+        href: "https://www.wiley.com/en-us/Optimal+State+Estimation%3A+Kalman%2C+H+Infinity%2C+and+Nonlinear+Approaches-p-9780471708582",
+        note: "Dan Simon. Least squares, Kalman filters, information and square-root forms, smoothing, H-infinity filtering, EKF, UKF, and particle filters.",
+      },
+      {
+        label: "Adaptive Control",
+        href: "https://openlibrary.org/books/OL7407856M/Adaptive_Control_%282nd_Edition%29",
+        note: "Karl J. Astrom and Bjorn Wittenmark. Real-time parameter estimation, self-tuning regulators, MRAS, stochastic adaptive control, auto-tuning, gain scheduling, and implementation.",
+      },
+      {
+        label: "Introduction to Stochastic Control Theory",
+        href: "https://store.doverpublications.com/products/9780486445311",
+        note: "Karl J. Astrom. Stochastic processes, stochastic state models, spectral descriptions, stochastic differential equations, parametric optimization, and optimal stochastic control.",
+      },
+      {
+        label: "Schaum's Outline of Feedback and Control Systems",
+        href: "https://www.mheducation.com/highered/mhp/product/schaums-outline-feedback-control-systems-3rd-edition.html",
+        note: "Joseph J. DiStefano III, Allen R. Stubberud, and Ivan J. Williams. Problem-oriented review of Laplace and Z-transforms, stability, transfer functions, block diagrams, signal-flow graphs, Nyquist, root locus, Bode, and Nichols methods.",
+      },
+    ],
   },
   {
-    label: "MIT OCW 6.241J Dynamic Systems & Control",
-    href: "https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/",
-    note: "Graduate notes on feedback interconnections, stability, performance, robust control.",
+    title: "Open Texts & Course Notes",
+    description: "Freely accessible notes and textbooks for structured study and implementation practice.",
+    resources: [
+      {
+        label: "MIT OCW 6.241J Dynamic Systems and Control",
+        href: "https://ocw.mit.edu/courses/6-241j-dynamic-systems-and-control-spring-2011/",
+        note: "Graduate notes on dynamic systems, feedback interconnections, stability, performance, and robust control.",
+      },
+      {
+        label: "Caltech CDS 101/110",
+        href: "https://www.cds.caltech.edu/~murray/courses/cds101/fa03/caltech/am03.html",
+        note: "Course material aligned with Astrom and Murray's Feedback Systems text.",
+      },
+      {
+        label: "Stanford EE363 Linear Dynamical Systems",
+        href: "https://ee363.stanford.edu/archive/index.html",
+        note: "State-space models, controllability, observability, least squares, and estimation.",
+      },
+      {
+        label: "Stanford EE364B Convex Optimization II",
+        href: "https://web.stanford.edu/class/ee364b/lectures.html",
+        note: "Robust optimization, stochastic MPC, model predictive control, and numerical methods.",
+      },
+      {
+        label: "MIT Underactuated Robotics",
+        href: "https://underactuated.mit.edu/",
+        note: "Nonlinear dynamics, LQR, trajectory optimization, planning, Lyapunov analysis, learning, and robotics applications.",
+      },
+      {
+        label: "Model Predictive Control: Theory, Computation, and Design",
+        href: "https://sites.engineering.ucsb.edu/~jbraw/mpc/",
+        note: "Open MPC textbook by Rawlings, Mayne, and Diehl with theory, algorithms, computation, and examples.",
+      },
+    ],
   },
   {
-    label: "MIT Underactuated Robotics",
-    href: "https://underactuated.mit.edu/",
-    note: "Nonlinear dynamics, LQR, trajectory optimization, planning, Lyapunov analysis.",
+    title: "Classic Papers & Surveys",
+    description: "Primary papers and surveys behind filtering, MPC, path planning, and safety-critical control.",
+    resources: [
+      {
+        label: "A New Approach to Linear Filtering and Prediction Problems",
+        href: "https://doi.org/10.1115/1.3662552",
+        note: "R. E. Kalman's original Kalman filtering paper.",
+      },
+      {
+        label: "Constrained Model Predictive Control: Stability and Optimality",
+        href: "https://doi.org/10.1016/S0005-1098(99)00214-9",
+        note: "Mayne, Rawlings, Rao, and Scokaert. Core reference on MPC stability and optimality.",
+      },
+      {
+        label: "Rapidly-Exploring Random Trees: A New Tool for Path Planning",
+        href: "https://lavalle.pl/papers/Lav98c.pdf",
+        note: "Steven M. LaValle's original RRT technical report.",
+      },
+      {
+        label: "A Formal Basis for the Heuristic Determination of Minimum Cost Paths",
+        href: "https://doi.org/10.1109/TSSC.1968.300136",
+        note: "Hart, Nilsson, and Raphael's original A* paper.",
+      },
+      {
+        label: "Control Barrier Functions: Theory and Applications",
+        href: "https://coogan.ece.gatech.edu/papers/pdf/amesecc19.pdf",
+        note: "Survey-style reference on safety-critical control with CBFs.",
+      },
+      {
+        label: "Robustness of Control Barrier Functions for Safety Critical Control",
+        href: "https://arxiv.org/abs/1612.01554",
+        note: "Robustness and CLF-CBF quadratic-program formulations.",
+      },
+    ],
   },
   {
-    label: "Stanford EE363 Linear Dynamical Systems",
-    href: "https://ee363.stanford.edu/archive/index.html",
-    note: "State-space models, controllability, observability, least squares, estimation.",
-  },
-  {
-    label: "MPC: Theory, Computation & Design",
-    href: "https://sites.engineering.ucsb.edu/~jbraw/mpc/",
-    note: "Open MPC textbook by Rawlings, Mayne & Diehl.",
-  },
-  {
-    label: "python-control",
-    href: "https://python-control.readthedocs.io/",
-    note: "Python library for classical and state-space control analysis and design.",
-  },
-  {
-    label: "Drake",
-    href: "https://drake.mit.edu/",
-    note: "Model-based robotics toolbox: simulation, optimization, planning, control.",
-  },
-  {
-    label: "CasADi",
-    href: "https://web.casadi.org/",
-    note: "Symbolic framework for nonlinear optimization and optimal control.",
+    title: "Open Software & Benchmarks",
+    description: "Tools for modeling, analysis, simulation, optimization, control design, and estimation.",
+    resources: [
+      {
+        label: "python-control",
+        href: "https://python-control.readthedocs.io/",
+        note: "Python library for classical and state-space control analysis and design.",
+      },
+      {
+        label: "Drake",
+        href: "https://drake.mit.edu/",
+        note: "Model-based robotics toolbox with simulation, optimization, planning, and control tools.",
+      },
+      {
+        label: "CasADi",
+        href: "https://web.casadi.org/",
+        note: "Symbolic framework for nonlinear optimization and optimal control.",
+      },
+      {
+        label: "do-mpc",
+        href: "https://www.do-mpc.com/",
+        note: "Python toolbox for nonlinear MPC and moving horizon estimation.",
+      },
+      {
+        label: "JuliaControl",
+        href: "https://juliacontrol.github.io/",
+        note: "Julia ecosystem for control systems modeling, analysis, and synthesis.",
+      },
+    ],
   },
 ]
+
+export const references: Reference[] = resourceGroups.flatMap((group) => group.resources)

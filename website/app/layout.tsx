@@ -10,7 +10,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'Map of Control Theory — Interactive Guide',
   description:
-    'An interactive map of control theory: feedback, control methods, planning, state estimation, modeling, and system analysis.',
+    'An interactive map of control theory: feedback, digital and MIMO control, planning, estimation, modeling, analysis, and learning resources.',
   generator: 'v0.app',
   icons: {
     icon: [

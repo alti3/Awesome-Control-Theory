@@ -23,6 +23,8 @@ into a structured reference for learning, review, and project planning.
   - [Multi-Agent](#multi-agent)
   - [Optimal](#optimal)
   - [Predictive](#predictive)
+  - [Digital and Sampled-Data](#digital-and-sampled-data)
+  - [MIMO and Multivariable](#mimo-and-multivariable)
   - [Intelligent](#intelligent)
   - [Adaptive](#adaptive)
   - [Robust](#robust)
@@ -50,6 +52,7 @@ into a structured reference for learning, review, and project planning.
   - [Margins and Robustness](#margins-and-robustness)
   - [Frequency-Domain Analysis](#frequency-domain-analysis)
   - [Root Locus and Pole-Zero Analysis](#root-locus-and-pole-zero-analysis)
+  - [Algebraic Stability Tests](#algebraic-stability-tests)
   - [System Properties](#system-properties)
   - [Safety-Critical Analysis](#safety-critical-analysis)
 - [First Principles and Classical Tools](#first-principles-and-classical-tools)
@@ -60,6 +63,7 @@ into a structured reference for learning, review, and project planning.
   - [Advanced Control Path](#advanced-control-path)
 - [Academic and Open References](#academic-and-open-references)
   - [Foundational Texts and Course Notes](#foundational-texts-and-course-notes)
+  - [Textbooks and Learning Resources](#textbooks-and-learning-resources)
   - [Classic Papers and Surveys](#classic-papers-and-surveys)
   - [Open Software and Benchmarks](#open-software-and-benchmarks)
 - [Coverage Checklist](#coverage-checklist)
@@ -85,6 +89,10 @@ into a structured reference for learning, review, and project planning.
 - **Full-state feedback** uses the entire state vector, often in the form
   `u = -Kx`, when states are measured or estimated.
 - **Output feedback** uses measured outputs directly or through an observer.
+- **Separation principle** designs state feedback and an observer separately for
+  many linear output-feedback problems.
+- **Compensator design** combines controller and observer dynamics when the full
+  state is not directly measured.
 
 ### Domains and Representations
 
@@ -113,6 +121,11 @@ into a structured reference for learning, review, and project planning.
   optimal control.
 - **Quadratic programming** is the standard online optimization form for many
   linear MPC and control-barrier-function controllers.
+- **Probability and stochastic processes** support Kalman filtering, stochastic
+  control, random disturbances, covariance propagation, and spectral-density
+  descriptions of noise.
+- **Numerical optimization** supports direct optimal control, trajectory
+  optimization, constrained MPC, parameter estimation, and design tuning.
 
 ## Control Methods
 
@@ -148,6 +161,10 @@ into a structured reference for learning, review, and project planning.
   and provides robustness to matched uncertainty.
 - **Bang-bang control** switches between extreme control values, often appearing
   in minimum-time problems.
+- **Perturbation, averaging, and singular-perturbation methods** analyze systems
+  with weak nonlinearities, periodic effects, or separated time scales.
+- **Input-output stability and passivity** provide nonlinear feedback-analysis
+  tools that complement Lyapunov methods.
 
 ### Multi-Agent
 
@@ -173,6 +190,15 @@ into a structured reference for learning, review, and project planning.
 - **Direct collocation and shooting methods** transcribe continuous trajectory
   optimization into finite-dimensional nonlinear programs.
 - **Bang-bang solutions** can arise when the optimal input saturates at limits.
+- **Calculus of variations** gives Euler-Lagrange-style necessary conditions for
+  optimal trajectories.
+- **Dynamic-programming algorithms** solve shortest-path, finite-horizon,
+  infinite-horizon, perfect-information, and imperfect-information decision
+  problems.
+- **Stochastic optimal control** handles dynamics, measurements, or disturbances
+  modeled probabilistically.
+- **Dual control** accounts for the fact that inputs can both control the plant
+  and excite it to learn uncertain parameters.
 
 ### Predictive
 
@@ -190,6 +216,45 @@ into a structured reference for learning, review, and project planning.
   evaluation.
 - **Constraint handling** is central to MPC because input, state, and safety
   limits can be represented directly in the optimization.
+- **Generalized Predictive Control, or GPC**, is an influential predictive
+  control strategy based on input-output models and receding-horizon design.
+- **Fast MPC methods** exploit structure, warm starts, explicit solutions, or
+  tailored solvers to meet real-time deadlines.
+- **Hybrid MPC** handles systems with both continuous dynamics and discrete
+  modes or logic.
+- **Industrial and commercial MPC schemes** emphasize model maintenance,
+  constraint management, estimator integration, and reliable online
+  optimization.
+
+### Digital and Sampled-Data
+
+- **Digital control** designs controllers that run on sampled measurements and
+  update actuators at discrete instants.
+- **Z-transform methods** analyze discrete-time transfer functions and sampled
+  systems.
+- **Sampled-data models** describe the combined behavior of continuous plants,
+  samplers, zero-order holds, and digital controllers.
+- **Zero-order hold discretization** is the common model for digital-to-analog
+  actuation between samples.
+- **Aliasing, quantization, and computation delay** are practical effects that
+  can change closed-loop behavior.
+- **Hybrid control** combines continuous dynamics with discrete control logic,
+  switching, events, or mode-dependent controllers.
+
+### MIMO and Multivariable
+
+- **MIMO control** handles plants with multiple inputs and multiple outputs,
+  where loops can interact strongly.
+- **Singular-value analysis** studies multivariable gain, directionality, and
+  robustness across frequency.
+- **Relative gain array, or RGA**, helps evaluate input-output pairings and
+  control-structure choices.
+- **Decoupling control** reduces cross-channel interactions when the model
+  supports it.
+- **Control structure design** chooses manipulated variables, controlled
+  variables, measurements, and loop pairings.
+- **Linear Matrix Inequalities, or LMIs**, express many robust, optimal, and
+  constrained control conditions as convex feasibility problems.
 
 ### Intelligent
 
@@ -218,6 +283,12 @@ into a structured reference for learning, review, and project planning.
   and following performance gradients.
 - **Iterative Learning Control, or ILC**, improves repeated-task tracking from
   trial to trial.
+- **Auto-tuning and relay feedback** identify useful process information online
+  to tune controllers such as PID loops.
+- **Real-time parameter estimation** updates model parameters from streaming data
+  during operation.
+- **Robust adaptive control** adds safeguards so adaptation remains stable under
+  unmodeled dynamics, noise, and disturbances.
 
 ### Robust
 
@@ -231,6 +302,10 @@ into a structured reference for learning, review, and project planning.
   robust-analysis and synthesis workflows.
 - **Loop shaping** and **robust stability margins** connect classical frequency
   design to robust-control goals.
+- **Robust performance analysis** verifies both stability and performance under
+  uncertainty.
+- **Structured singular value analysis** quantifies robustness for structured
+  uncertainty models.
 
 ## Planning
 
@@ -294,8 +369,22 @@ into a structured reference for learning, review, and project planning.
   selected sample points through nonlinear models.
 - **Particle filters** approximate arbitrary state distributions with weighted
   samples.
+- **Information filters** represent uncertainty with information matrices and
+  are useful in some distributed or sparse estimation problems.
+- **Square-root and U-D filters** propagate covariance factors to improve
+  numerical conditioning.
+- **H-infinity filters** estimate states under worst-case disturbance models
+  instead of relying only on stochastic noise assumptions.
+- **Kalman-Bucy filters** are continuous-time Kalman filters for linear systems
+  driven by continuous-time stochastic models.
+- **Constrained filters** enforce known bounds or equality constraints on state
+  estimates.
 - **Smoothers**, such as fixed-lag or Rauch-Tung-Striebel smoothers, estimate
   past states using measurements that arrived later.
+- **Wiener filtering** estimates signals from noisy measurements using
+  second-order statistical descriptions.
+- **Recursive least squares** estimates fixed or slowly varying parameters from
+  streaming data.
 - **Covariance tuning and consistency checks** keep filter uncertainty aligned
   with observed residuals.
 
@@ -311,6 +400,8 @@ into a structured reference for learning, review, and project planning.
   are not measured.
 - **High-gain and sliding-mode observers** are common nonlinear observer
   families.
+- **Reduced-order observers** estimate only the unmeasured portion of the state
+  when some states are directly measured.
 
 ### Moving Horizon Estimation
 
@@ -338,6 +429,8 @@ into a structured reference for learning, review, and project planning.
 - **Multi-sensor tracking** fuses detections from multiple measurement sources.
 - **Data association** matches measurements to tracks in multi-target tracking
   problems.
+- **Multiple-model estimation** runs several candidate models or filters in
+  parallel to handle mode changes or uncertain dynamics.
 
 ### Sensor Fusion
 
@@ -373,6 +466,10 @@ into a structured reference for learning, review, and project planning.
   computation delays that can destabilize feedback loops.
 - **Saturation and rate-limit models** capture actuator limits that strongly
   affect closed-loop performance.
+- **Stochastic state models** include process noise, measurement noise, and
+  random disturbances in continuous or discrete time.
+- **Stochastic differential equations** model continuous-time dynamics driven by
+  random processes, often using white-noise or Wiener-process idealizations.
 
 ### System Representations
 
@@ -380,6 +477,8 @@ into a structured reference for learning, review, and project planning.
 - **Block diagrams** show interconnections among plants, controllers, summing
   junctions, sensors, and feedback paths.
 - **Signal-flow views** clarify feedback, feedforward, disturbances, and noise.
+- **Signal-flow graphs** use node-edge relationships and Mason's gain formula to
+  derive input-output transfer functions.
 - **Uncertainty models** describe parametric uncertainty, unmodeled dynamics,
   disturbances, and sensor noise.
 - **Linear fractional transformations** separate nominal dynamics from
@@ -392,6 +491,8 @@ into a structured reference for learning, review, and project planning.
 - **System identification** estimates models from input-output data.
 - **Linearization** approximates nonlinear dynamics near an equilibrium or
   trajectory.
+- **Canonical forms and similarity transformations** reorganize state-space
+  models without changing input-output behavior.
 - **Minimum realization** removes uncontrollable or unobservable states while
   preserving input-output behavior.
 - **Model reduction** lowers model order for analysis, control synthesis, and
@@ -442,6 +543,8 @@ into a structured reference for learning, review, and project planning.
 - **Nichols charts** combine gain and phase for frequency-domain design.
 - **Sensitivity functions** describe disturbance rejection, noise amplification,
   and tracking limitations.
+- **Spectral-density analysis** describes how stochastic disturbances and noise
+  are distributed across frequency.
 
 ### Root Locus and Pole-Zero Analysis
 
@@ -449,6 +552,13 @@ into a structured reference for learning, review, and project planning.
 - **Pole-zero plots** reveal modes, damping, zeros, cancellations, and
   nonminimum-phase behavior.
 - **Nonminimum-phase zeros** limit tracking speed and transient performance.
+
+### Algebraic Stability Tests
+
+- **Routh-Hurwitz tests** determine continuous-time polynomial stability without
+  explicitly computing roots.
+- **Jury tests** provide analogous algebraic stability checks for discrete-time
+  characteristic polynomials.
 
 ### System Properties
 
@@ -534,8 +644,8 @@ into a structured reference for learning, review, and project planning.
 
 ## Academic and Open References
 
-These links favor university notes, open textbooks, classic papers, and
-well-maintained open software.
+These links combine university notes, open textbooks, classic papers,
+well-maintained open software, and canonical textbooks.
 
 ### Foundational Texts and Course Notes
 
@@ -559,6 +669,86 @@ well-maintained open software.
 - [Model Predictive Control: Theory, Computation, and Design](https://sites.engineering.ucsb.edu/~jbraw/mpc/)
   by Rawlings, Mayne, and Diehl: open MPC textbook with theory, algorithms,
   computation, and examples.
+
+### Textbooks and Learning Resources
+
+- [Feedback Systems: An Introduction for Scientists and Engineers](https://fbsbook.org/)
+  by Karl J. Astrom and Richard M. Murray: broad, open introduction to feedback
+  principles, modeling, linear systems, state and output feedback, frequency
+  design, PID, robust performance, and system architecture.
+- [Feedback Control of Dynamic Systems](https://scsolutions.com/publication/feedback-control-of-dynamic-systems-eighth-edition/)
+  by Gene F. Franklin, J. David Powell, and Abbas Emami-Naeini: classical and
+  state-space design text covering dynamic models, response, root locus,
+  frequency response, state-space design, digital control, nonlinear systems,
+  and case studies.
+- [Control Systems Engineering](https://www.zybooks.com/catalog/control-systems-engineering-8th-edition/)
+  by Norman S. Nise: undergraduate controls reference covering modeling,
+  time response, subsystem reduction, stability, steady-state error, root locus,
+  frequency response, state-space design, and digital control.
+- [Modern Control Engineering](https://www.pearson.com/en-gb/subject-catalog/p/Ogata-Modern-Control-Engineering-5th-Edition/P200000003521)
+  by Katsuhiko Ogata: standard text on control-system modeling, mechanical,
+  electrical, fluid, and thermal systems, transient and steady-state response,
+  root locus, frequency response, PID, and state-space analysis/design.
+- [Modern Control Systems](https://www.pearson.com/en-us/subject-catalog/p/modern-control-systems/P200000003484/9780137307098)
+  by Richard C. Dorf and Robert H. Bishop: broad modern-control textbook on
+  mathematical models, state variables, feedback characteristics, performance,
+  stability, root locus, frequency-domain methods, robust control, and digital
+  control.
+- [Control System Design](https://openlibrary.org/books/OL7345499M/Control_System_Design)
+  by Graham C. Goodwin, Stefan F. Graebe, and Mario E. Salgado: design-oriented
+  text covering feedback principles, SISO and MIMO control, PID, sampled-data
+  control, hybrid control, optimization-based control, state-space methods,
+  nonlinear control, MPC, and decoupling.
+- [Multivariable Feedback Control: Analysis and Design](https://skoge.folk.ntnu.no/book/)
+  by Sigurd Skogestad and Ian Postlethwaite: advanced reference for SISO and
+  MIMO limitations, uncertainty, robust stability and performance, controller
+  design, control-structure design, model reduction, LMIs, and case studies.
+- [Nonlinear Systems](https://www.pearson.com/en-us/subject-catalog/p/nonlinear-systems/P200000003306/9780130673893)
+  by Hassan K. Khalil: nonlinear-systems reference covering phase-plane
+  behavior, fundamental properties, Lyapunov stability, input-output stability,
+  passivity, perturbation methods, singular perturbations, and feedback
+  linearization.
+- [Model Predictive Control](https://link.springer.com/book/10.1007/978-0-85729-398-5)
+  by Eduardo F. Camacho and Carlos Bordons: MPC reference covering generalized,
+  commercial, multivariable, constrained, robust, nonlinear, hybrid, and fast
+  model predictive control methods.
+- [Dynamic Programming and Optimal Control](https://web.mit.edu/dimitrib/www/dpbook.html)
+  by Dimitri P. Bertsekas: two-volume reference on dynamic programming,
+  deterministic and stochastic decision problems, shortest paths, imperfect
+  state information, infinite-horizon problems, approximate dynamic
+  programming, and continuous-time optimal control.
+- [Optimal Control Theory: An Introduction](https://books.google.com/books/about/Optimal_Control_Theory.html?id=fCh2SAtWIdwC)
+  by Donald E. Kirk: compact introduction to performance measures, dynamic
+  programming, calculus of variations, Pontryagin's minimum principle, and
+  numerical optimal-trajectory methods.
+- [Control System Design: An Introduction to State-Space Methods](https://store.doverpublications.com/products/9780486442785)
+  by Bernard Friedland: state-space design reference covering feedback,
+  dynamic models, frequency-domain analysis, controllability, observability,
+  pole placement, observers, separation principle, LQR, random processes, and
+  Kalman filtering.
+- [Optimal Control and Estimation](https://store.doverpublications.com/products/9780486462783)
+  by Robert F. Stengel: integrated treatment of optimal trajectories,
+  linear-quadratic control, optimal state estimation, Kalman filtering,
+  stochastic optimal control, dual control, and multivariable design.
+- [Optimal State Estimation: Kalman, H-infinity, and Nonlinear Approaches](https://www.wiley.com/en-us/Optimal+State+Estimation%3A+Kalman%2C+H+Infinity%2C+and+Nonlinear+Approaches-p-9780471708582)
+  by Dan Simon: estimation-focused reference covering least squares, Kalman
+  filters, information and square-root forms, smoothing, H-infinity filtering,
+  extended and unscented Kalman filters, and particle filters.
+- [Adaptive Control](https://openlibrary.org/books/OL7407856M/Adaptive_Control_%282nd_Edition%29)
+  by Karl J. Astrom and Bjorn Wittenmark: adaptive-control reference covering
+  real-time parameter estimation, self-tuning regulators, MRAS, adaptive-system
+  properties, stochastic adaptive control, auto-tuning, gain scheduling, and
+  implementation.
+- [Introduction to Stochastic Control Theory](https://store.doverpublications.com/products/9780486445311)
+  by Karl J. Astrom: stochastic-control text covering stochastic processes,
+  stochastic state models, spectral descriptions, stochastic differential
+  equations, parametric optimization, and optimal stochastic control.
+- [Schaum's Outline of Feedback and Control Systems](https://www.mheducation.com/highered/mhp/product/schaums-outline-feedback-control-systems-3rd-edition.html)
+  by Joseph J. DiStefano III, Allen R. Stubberud, and Ivan J. Williams:
+  problem-oriented review of terminology, differential and difference
+  equations, Laplace and Z-transforms, stability, transfer functions,
+  block diagrams, signal-flow graphs, Nyquist, root locus, Bode, Nichols,
+  nonlinear control, and advanced topics.
 
 ### Classic Papers and Surveys
 
@@ -593,44 +783,63 @@ well-maintained open software.
 This checklist mirrors the labels in the map so gaps are easy to spot.
 
 - **Control methods:** linear, nonlinear, multi-agent, optimal, predictive,
-  intelligent, adaptive, robust.
+  digital, sampled-data, MIMO, intelligent, adaptive, robust.
 - **Mathematical foundations:** linear algebra, differential equations, convex
-  optimization, dynamic programming, Riccati equations, quadratic programming.
+  optimization, numerical optimization, probability, stochastic processes,
+  dynamic programming, Riccati equations, quadratic programming.
 - **Linear methods:** PID, integral action, anti-windup, lead-lag, pole
-  placement, full-state feedback, LQR, LQG, H-infinity control, loop shaping.
+  placement, full-state feedback, output feedback, separation principle,
+  compensator design, LQR, LQG, H-infinity control, loop shaping.
 - **Nonlinear methods:** gain scheduling, backstepping, feedback linearization,
-  dynamic inversion, sliding mode, bang-bang.
+  dynamic inversion, sliding mode, bang-bang, perturbation methods, averaging,
+  singular perturbations, input-output stability, passivity.
 - **Multi-agent methods:** graph-theoretic control, consensus, formation
   control, leader-follower control, swarm control.
 - **Optimal methods:** Pontryagin's Maximum Principle, HJB equation, LQR, DDP,
-  iLQR, direct collocation, shooting methods, optimal planning.
+  iLQR, calculus of variations, direct collocation, shooting methods,
+  dynamic-programming algorithms, stochastic optimal control, dual control,
+  optimal planning.
 - **Predictive methods:** MPC, linear MPC, nonlinear MPC, robust MPC, tube MPC,
-  stochastic MPC, explicit MPC.
+  stochastic MPC, explicit MPC, generalized predictive control, fast MPC,
+  hybrid MPC, industrial MPC.
+- **Digital and sampled-data methods:** digital control, Z-transform,
+  sampled-data models, zero-order hold discretization, aliasing, quantization,
+  computation delay, hybrid control.
+- **MIMO and multivariable methods:** MIMO control, singular-value analysis,
+  relative gain array, decoupling control, control structure design, LMIs.
 - **Intelligent methods:** fuzzy control, reinforcement learning, genetic
   algorithms, adaptive dynamic programming, neural network control.
 - **Adaptive methods:** MRAC, direct adaptive control, indirect adaptive
-  control, self-tuning regulators, extremum seeking, iterative learning control.
+  control, self-tuning regulators, extremum seeking, iterative learning control,
+  auto-tuning, relay feedback, real-time parameter estimation, robust adaptive
+  control.
 - **Robust methods:** ADRC, H-infinity control, mu-synthesis, small-gain
-  reasoning, LFT uncertainty models, robust margins.
+  reasoning, LFT uncertainty models, structured singular value analysis, robust
+  margins, robust performance.
 - **Planning:** step, impulse, sine, constraints, velocity limits, acceleration
   limits, force limits, holonomic, nonholonomic, redundant systems, trajectory
   generation, RRT, RRT-star, PRM, Dijkstra, A-star (A*).
 - **State estimation:** filtering, observer design, Kalman filter,
-  sigma-point filters, particle filters, smoothers, covariance tuning,
-  unknown-input observers, moving horizon estimation, calibration, mapping,
-  tracking, data association, sensor fusion, fault detection.
+  information filters, square-root filters, U-D filters, H-infinity filters,
+  Kalman-Bucy filters, constrained filters, sigma-point filters, particle
+  filters, smoothers, Wiener filtering, recursive least squares, covariance
+  tuning, reduced-order observers, unknown-input observers, moving horizon
+  estimation, calibration, mapping, tracking, multiple-model estimation, data
+  association, sensor fusion, fault detection.
 - **Modeling and simulation:** linear state space, nonlinear state space,
-  hybrid systems, time delays, saturation, transfer functions, uncertainty
-  models, block diagrams, simulation, event handling, co-simulation, system
-  identification, first principles, linearization, minimum realizations, model
-  reduction.
+  stochastic state models, stochastic differential equations, hybrid systems,
+  time delays, saturation, transfer functions, uncertainty models, block
+  diagrams, signal-flow graphs, simulation, event handling, co-simulation,
+  system identification, first principles, linearization, canonical forms,
+  similarity transformations, minimum realizations, model reduction.
 - **System analysis:** performance, stability, margins, Nyquist, Bode,
-  Nichols, root locus, phase plane, pole-zero plots, passivity, sensitivity,
-  controllability, observability, nonminimum phase, Lyapunov stability,
-  control Lyapunov functions, control barrier functions, reachability,
-  invariant sets, formal verification.
+  Nichols, root locus, phase plane, pole-zero plots, Routh-Hurwitz, Jury tests,
+  spectral-density analysis, passivity, sensitivity, controllability,
+  observability, nonminimum phase, Lyapunov stability, control Lyapunov
+  functions, control barrier functions, reachability, invariant sets, formal
+  verification.
 - **Core concepts:** feedback, feedforward, continuous time, discrete time,
-  frequency domain, Laplace domain, C2D, D2C.
+  frequency domain, Laplace domain, Z-domain, C2D, D2C.
 
 ## Contributing
 
