@@ -1,10 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import { useMemo, useState } from "react"
 import {
   ArrowLeft,
   BookOpen,
+  ExternalLink,
   Search,
   Repeat,
   SlidersHorizontal,
@@ -15,9 +15,10 @@ import {
   Atom,
   Map as MapIcon,
   GitBranch,
+  LibraryBig,
   X,
 } from "lucide-react"
-import { branches, type Branch, type Topic } from "@/lib/control-data"
+import { branches, resourceGroups, type Branch, type Topic } from "@/lib/control-data"
 import { BranchCard } from "@/components/branch-card"
 import { RoadmapsView } from "@/components/roadmaps-view"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -33,7 +34,7 @@ const ICONS = {
   "first-principles": Atom,
 } as const
 
-type View = "map" | "roadmaps"
+type View = "map" | "roadmaps" | "resources"
 
 export function ControlMap() {
   const [view, setView] = useState<View>("map")
@@ -87,8 +88,8 @@ export function ControlMap() {
             </span>
           </button>
 
-          <div className="flex items-center gap-2">
-            <div className="relative flex-1 md:w-72">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="relative min-w-0 flex-[1_1_14rem] md:w-72">
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 value={query}
@@ -114,13 +115,9 @@ export function ControlMap() {
               <TabButton active={view === "roadmaps"} onClick={() => setView("roadmaps")} icon={<Route className="size-4" />}>
                 Paths
               </TabButton>
-              <Link
-                href="/references"
-                className="flex items-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <BookOpen className="size-4" />
+              <TabButton active={view === "resources"} onClick={() => setView("resources")} icon={<BookOpen className="size-4" />}>
                 Resources
-              </Link>
+              </TabButton>
             </div>
 
             <ThemeToggle />
@@ -141,6 +138,8 @@ export function ControlMap() {
           />
         ) : view === "roadmaps" ? (
           <RoadmapsView />
+        ) : view === "resources" ? (
+          <ResourcesView />
         ) : selected ? (
           <BranchDetail branch={selected} onBack={() => setSelectedId(null)} />
         ) : (
@@ -180,6 +179,7 @@ function TabButton({
   return (
     <button
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
         "flex items-center gap-1.5 rounded px-3 py-1.5 text-sm font-medium transition-colors",
         active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
@@ -188,6 +188,65 @@ function TabButton({
       {icon}
       {children}
     </button>
+  )
+}
+
+function ResourcesView() {
+  const total = resourceGroups.reduce((count, group) => count + group.resources.length, 0)
+
+  return (
+    <div>
+      <section className="relative mb-10 overflow-hidden rounded-xl border border-border bg-card">
+        <div className="blueprint-grid absolute inset-0 opacity-60" aria-hidden />
+        <div className="relative px-6 py-10 md:px-10 md:py-14">
+          <div className="flex size-11 items-center justify-center rounded-lg border border-border bg-secondary text-primary">
+            <LibraryBig className="size-5" strokeWidth={1.6} />
+          </div>
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-primary">References</p>
+          <h1 className="mt-3 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+            Books, papers, courses, and software for control systems theory.
+          </h1>
+          <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
+            A curated index of {total} resources across {resourceGroups.length} categories, including the textbook
+            references used to expand the map coverage.
+          </p>
+        </div>
+      </section>
+
+      <div className="space-y-10">
+        {resourceGroups.map((group) => (
+          <section key={group.title}>
+            <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-widest text-primary">
+                  {group.resources.length} entries
+                </p>
+                <h2 className="mt-1 text-2xl font-semibold tracking-tight">{group.title}</h2>
+              </div>
+              <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{group.description}</p>
+            </div>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              {group.resources.map((resource) => (
+                <a
+                  key={resource.href}
+                  href={resource.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-start justify-between gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/60"
+                >
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-semibold leading-snug">{resource.label}</h3>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{resource.note}</p>
+                  </div>
+                  <ExternalLink className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
   )
 }
 
