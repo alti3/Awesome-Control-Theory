@@ -847,7 +847,7 @@ export const resourceGroups: ResourceGroup[] = [
       },
       {
         label: "Stanford EE363 Linear Dynamical Systems",
-        href: "https://ee363.stanford.edu/archive/index.html",
+        href: "https://ee363.stanford.edu/lectures.html",
         note: "State-space models, controllability, observability, least squares, and estimation.",
       },
       {
@@ -864,6 +864,16 @@ export const resourceGroups: ResourceGroup[] = [
         label: "Model Predictive Control: Theory, Computation, and Design",
         href: "https://sites.engineering.ucsb.edu/~jbraw/mpc/",
         note: "Open MPC textbook by Rawlings, Mayne, and Diehl with theory, algorithms, computation, and examples.",
+      },
+      {
+        label: "Planning Algorithms",
+        href: "https://msl.cs.uiuc.edu/planning/book.html",
+        note: "Steven M. LaValle. Open book on combinatorial planning, sampling-based motion planning, collision checking, feedback motion planning, and planning under uncertainty.",
+      },
+      {
+        label: "Linear Matrix Inequalities in System and Control Theory",
+        href: "https://stanford.edu/~boyd/papers/LMI_sys_ctrl.html",
+        note: "Boyd, El Ghaoui, Feron, and Balakrishnan. Foundational reference on LMI formulations for systems, robust control, stability, and convex optimization.",
       },
     ],
   },
