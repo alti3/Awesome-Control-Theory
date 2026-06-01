@@ -4,8 +4,9 @@ import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { TableOfContents } from "@/components/table-of-contents"
 import { getTopicBySlug } from "@/lib/control-data"
-import { getTopicMetadata, getTopicModule, getTopicSlugs } from "@/lib/topics"
+import { getTopicMetadata, getTopicModule, getTopicSections, getTopicSlugs } from "@/lib/topics"
 
 type TopicPageProps = {
   params: Promise<{ slug: string }>
@@ -45,12 +46,13 @@ export default async function TopicPage({ params }: TopicPageProps) {
   }
 
   const { default: TopicContent, frontmatter } = mdx
+  const sections = await getTopicSections(slug)
 
   return (
     <div className="min-h-screen">
       <SiteHeader activePage="map" />
 
-      <main className="mx-auto max-w-4xl px-5 py-8 md:py-12">
+      <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
         <Link
           href="/map"
           className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
@@ -73,9 +75,25 @@ export default async function TopicPage({ params }: TopicPageProps) {
           </p>
         </div>
 
-        <article className="topic-prose">
-          <TopicContent />
-        </article>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+          <div className="min-w-0">
+            {sections.length > 0 && (
+              <div className="mb-8 rounded-lg border border-border bg-card p-4 lg:hidden">
+                <TableOfContents sections={sections} />
+              </div>
+            )}
+
+            <article className="topic-prose">
+              <TopicContent />
+            </article>
+          </div>
+
+          {sections.length > 0 && (
+            <aside className="hidden lg:sticky lg:top-28 lg:block">
+              <TableOfContents sections={sections} />
+            </aside>
+          )}
+        </div>
       </main>
 
       <SiteFooter />
