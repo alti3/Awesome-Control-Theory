@@ -597,6 +597,50 @@ export const branches: Branch[] = [
 
 export type Roadmap = { title: string; steps: string[] }
 
+export function topicToSlug(term: string) {
+  return term
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+}
+
+export function getAllTopics() {
+  const topics = new Map<
+    string,
+    Topic & {
+      slug: string
+      branchId: string
+      branchTitle: string
+      sectionTitle: string
+    }
+  >()
+
+  for (const branch of branches) {
+    for (const section of branch.sections) {
+      for (const topic of section.topics) {
+        const slug = topicToSlug(topic.term)
+
+        if (!topics.has(slug)) {
+          topics.set(slug, {
+            ...topic,
+            slug,
+            branchId: branch.id,
+            branchTitle: branch.title,
+            sectionTitle: section.title,
+          })
+        }
+      }
+    }
+  }
+
+  return Array.from(topics.values())
+}
+
+export function getTopicBySlug(slug: string) {
+  return getAllTopics().find((topic) => topic.slug === slug)
+}
+
 export const roadmaps: Roadmap[] = [
   {
     title: "Beginner Classical Path",

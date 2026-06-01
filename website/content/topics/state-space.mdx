@@ -1,0 +1,32 @@
+---
+title: "State-Space Representation"
+description: "Modern way to represent dynamic systems"
+category: "State-Space Models"
+branch: "Modeling & Simulation"
+---
+
+# State-Space Representation
+
+The most powerful and general way to represent linear systems.
+
+$$
+\dot{x}(t) = Ax(t) + Bu(t)
+$$
+
+$$
+y(t) = Cx(t) + Du(t)
+$$
+
+Where:
+
+- $x \in \mathbb{R}^n$ is the **state vector**
+- $u \in \mathbb{R}^m$ is the **input**
+- $y \in \mathbb{R}^p$ is the **output**
+
+## Controllability
+
+A system is controllable if the controllability matrix has full rank:
+
+$$
+\mathcal{C} = [B \quad AB \quad A^2B \quad \dots \quad A^{n-1}B]
+$$

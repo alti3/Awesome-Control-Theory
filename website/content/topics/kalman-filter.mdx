@@ -1,0 +1,42 @@
+---
+title: "Kalman filter"
+description: "Estimates linear Gaussian systems optimally in the least-squares sense."
+category: "Filtering Methods"
+branch: "State Estimation"
+---
+
+# Kalman filter
+
+Estimates linear Gaussian systems optimally in the least-squares sense.
+
+The Kalman filter combines a model prediction with a noisy measurement to estimate the hidden state.
+
+For a discrete linear stochastic model,
+
+$$
+x_{k+1} = A x_k + B u_k + w_k
+$$
+
+$$
+y_k = C x_k + v_k
+$$
+
+with process noise covariance $Q$ and measurement noise covariance $R$.
+
+## Correction Step
+
+The Kalman gain weights prediction uncertainty against measurement uncertainty:
+
+$$
+K_k = P_k^- C^T (C P_k^- C^T + R)^{-1}
+$$
+
+The state estimate is updated by the innovation:
+
+$$
+\hat{x}_k = \hat{x}_k^- + K_k(y_k - C\hat{x}_k^-)
+$$
+
+## Control Connection
+
+In LQG control, a Kalman filter estimates the state and LQR uses that estimate for feedback.

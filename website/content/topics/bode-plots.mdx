@@ -1,0 +1,32 @@
+---
+title: "Bode plots"
+description: "Show magnitude and phase versus frequency."
+category: "Frequency-Domain Analysis"
+branch: "System Analysis"
+---
+
+# Bode plots
+
+Show magnitude and phase versus frequency.
+
+## Core Idea
+
+In control-theory terms, **Bode plots** is part of the frequency-domain analysis toolkit in system analysis. It helps connect a model, signal, controller, estimator, or analysis method to a closed-loop objective.
+
+A compact way to frame the objective is to minimize a performance signal while respecting the plant dynamics:
+
+$$
+J = \int_0^T \left(\|e(t)\|_Q^2 + \|u(t)\|_R^2\right) dt
+$$
+
+where $e(t)$ is the relevant tracking, estimation, or regulation error and $u(t)$ is the control input.
+
+## Control Context
+
+- **Model:** specify the state, input, output, uncertainty, and sampling assumptions.
+- **Objective:** define the behavior that should be tracked, rejected, stabilized, estimated, or optimized.
+- **Verification:** check stability, performance, constraints, and robustness before relying on the design.
+
+## Typical Question
+
+For this topic, the practical question is: what information is available, what behavior is required, and what tradeoff should the controller or analysis method make?

@@ -1,0 +1,34 @@
+---
+title: "Model Predictive Control"
+description: "Repeatedly solves a finite-horizon optimization using a model of the plant."
+category: "Predictive"
+branch: "Control Methods"
+---
+
+# Model Predictive Control
+
+Repeatedly solves a finite-horizon optimization using a model of the plant.
+
+MPC solves a finite-horizon optimization at each sample, applies the first input, then repeats with updated measurements.
+
+A common quadratic objective is
+
+$$
+\min_{x_{0:N},u_{0:N-1}} \sum_{k=0}^{N-1} \left(\|x_k-r_k\|_Q^2 + \|u_k\|_R^2\right) + \|x_N-r_N\|_P^2
+$$
+
+subject to model dynamics
+
+$$
+x_{k+1} = f(x_k,u_k)
+$$
+
+and constraints such as
+
+$$
+x_k \in \mathcal{X}, \qquad u_k \in \mathcal{U}
+$$
+
+## Why It Matters
+
+MPC is useful when actuator limits, state limits, previewed references, and multivariable coupling must be handled explicitly.

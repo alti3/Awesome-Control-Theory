@@ -1,0 +1,42 @@
+---
+title: "LQR"
+description: "Linear Quadratic Regulator minimizes a quadratic state and input cost for optimal state feedback."
+category: "Linear"
+branch: "Control Methods"
+---
+
+# LQR
+
+Linear Quadratic Regulator minimizes a quadratic state and input cost for optimal state feedback.
+
+LQR chooses a full-state feedback law that balances regulation performance against control effort.
+
+$$
+u(t) = -Kx(t)
+$$
+
+For the continuous-time system $\dot{x}=Ax+Bu$, the infinite-horizon objective is
+
+$$
+J = \int_0^\infty \left(x(t)^T Q x(t) + u(t)^T R u(t)\right) dt
+$$
+
+where $Q \succeq 0$ penalizes state error and $R \succ 0$ penalizes input effort.
+
+## Riccati Equation
+
+The optimal gain is
+
+$$
+K = R^{-1}B^TP
+$$
+
+where $P$ solves the algebraic Riccati equation:
+
+$$
+A^TP + PA - PBR^{-1}B^TP + Q = 0
+$$
+
+## Design Reading
+
+Increasing $Q$ usually tightens regulation. Increasing $R$ usually reduces actuator usage and slows response.

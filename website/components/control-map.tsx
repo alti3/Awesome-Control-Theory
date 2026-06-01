@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import Link from "next/link"
 import {
   ArrowLeft,
   Search,
@@ -13,7 +14,7 @@ import {
   Atom,
   X,
 } from "lucide-react"
-import { branches, type Branch, type Topic } from "@/lib/control-data"
+import { branches, topicToSlug, type Branch, type Topic } from "@/lib/control-data"
 import { BranchCard } from "@/components/branch-card"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -89,10 +90,6 @@ export function ControlMap() {
           <SearchResults
             results={searchResults}
             query={query}
-            onOpen={(id) => {
-              setQuery("")
-              setSelectedId(id)
-            }}
           />
         ) : selected ? (
           <BranchDetail branch={selected} onBack={() => setSelectedId(null)} />
@@ -215,13 +212,14 @@ function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {section.topics.map((topic) => (
-              <article
+              <Link
                 key={topic.term}
+                href={`/topics/${topicToSlug(topic.term)}`}
                 className="rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40"
               >
                 <h3 className="text-sm font-semibold leading-snug text-foreground">{topic.term}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -233,11 +231,9 @@ function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }
 function SearchResults({
   results,
   query,
-  onOpen,
 }: {
   results: { branch: Branch; section: string; topic: Topic }[]
   query: string
-  onOpen: (id: string) => void
 }) {
   return (
     <div>
@@ -254,9 +250,9 @@ function SearchResults({
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
           {results.map(({ branch, section, topic }, i) => (
-            <button
+            <Link
               key={`${topic.term}-${i}`}
-              onClick={() => onOpen(branch.id)}
+              href={`/topics/${topicToSlug(topic.term)}`}
               className="group rounded-lg border border-border bg-card p-4 text-left transition-colors hover:border-primary/60"
             >
               <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
@@ -266,7 +262,7 @@ function SearchResults({
               </div>
               <h3 className="text-sm font-semibold leading-snug">{topic.term}</h3>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
-            </button>
+            </Link>
           ))}
         </div>
       )}

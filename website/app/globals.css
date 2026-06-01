@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'katex/dist/katex.min.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -137,5 +138,53 @@
       transparent 1px
     );
     background-size: 22px 22px;
+  }
+
+  .topic-prose {
+    @apply text-base leading-7 text-foreground;
+  }
+  .topic-prose > * + * {
+    @apply mt-5;
+  }
+  .topic-prose h1 {
+    @apply mt-0 text-3xl font-semibold tracking-tight md:text-4xl;
+  }
+  .topic-prose h2 {
+    @apply mt-10 text-2xl font-semibold tracking-tight;
+  }
+  .topic-prose h3 {
+    @apply mt-8 text-xl font-semibold tracking-tight;
+  }
+  .topic-prose p,
+  .topic-prose li {
+    @apply text-pretty text-muted-foreground;
+  }
+  .topic-prose strong {
+    @apply font-semibold text-foreground;
+  }
+  .topic-prose ul,
+  .topic-prose ol {
+    @apply pl-6;
+  }
+  .topic-prose ul {
+    @apply list-disc;
+  }
+  .topic-prose ol {
+    @apply list-decimal;
+  }
+  .topic-prose a {
+    @apply font-medium text-primary underline underline-offset-4;
+  }
+  .topic-prose code {
+    @apply rounded bg-secondary px-1.5 py-0.5 font-mono text-sm text-secondary-foreground;
+  }
+  .topic-prose pre {
+    @apply overflow-x-auto rounded-lg border border-border bg-card p-4;
+  }
+  .topic-prose pre code {
+    @apply bg-transparent p-0;
+  }
+  .topic-prose .katex-display {
+    @apply overflow-x-auto overflow-y-hidden rounded-lg border border-border bg-card px-4 py-5;
   }
 }

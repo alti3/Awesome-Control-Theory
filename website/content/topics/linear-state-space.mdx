@@ -1,0 +1,44 @@
+---
+title: "Linear state space"
+description: "x_dot = A x + B u, y = C x + D u."
+category: "State-Space Models"
+branch: "Modeling & Simulation"
+---
+
+# Linear state space
+
+x_dot = A x + B u, y = C x + D u.
+
+A continuous-time linear state-space model represents the plant through a state vector, input, and output.
+
+$$
+\dot{x}(t) = A x(t) + B u(t)
+$$
+
+$$
+y(t) = C x(t) + D u(t)
+$$
+
+Here $x \in \mathbb{R}^n$ is the state, $u \in \mathbb{R}^m$ is the input, and $y \in \mathbb{R}^p$ is the measured or regulated output.
+
+## Why It Matters
+
+State-space form keeps internal dynamics explicit, which makes controllability, observability, observers, optimal control, and MIMO design natural.
+
+## Controllability
+
+A linear pair $(A,B)$ is controllable when the controllability matrix has full rank:
+
+$$
+\mathcal{C} = [B \quad AB \quad A^2B \quad \cdots \quad A^{n-1}B]
+$$
+
+## Observability
+
+The pair $(A,C)$ is observable when
+
+$$
+\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatrix}
+$$
+
+has full column rank.

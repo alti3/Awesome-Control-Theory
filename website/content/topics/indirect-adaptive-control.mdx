@@ -1,0 +1,32 @@
+---
+title: "Indirect adaptive control"
+description: "Estimates plant parameters first, then updates the controller from the model."
+category: "Adaptive"
+branch: "Control Methods"
+---
+
+# Indirect adaptive control
+
+Estimates plant parameters first, then updates the controller from the model.
+
+## Core Idea
+
+In control-theory terms, **Indirect adaptive control** is part of the adaptive toolkit in control methods. It helps connect a model, signal, controller, estimator, or analysis method to a closed-loop objective.
+
+A compact way to frame the objective is to minimize a performance signal while respecting the plant dynamics:
+
+$$
+J = \int_0^T \left(\|e(t)\|_Q^2 + \|u(t)\|_R^2\right) dt
+$$
+
+where $e(t)$ is the relevant tracking, estimation, or regulation error and $u(t)$ is the control input.
+
+## Control Context
+
+- **Model:** specify the state, input, output, uncertainty, and sampling assumptions.
+- **Objective:** define the behavior that should be tracked, rejected, stabilized, estimated, or optimized.
+- **Verification:** check stability, performance, constraints, and robustness before relying on the design.
+
+## Typical Question
+
+For this topic, the practical question is: what information is available, what behavior is required, and what tradeoff should the controller or analysis method make?
