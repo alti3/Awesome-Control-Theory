@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowLeft, ExternalLink, GitBranch, LibraryBig } from "lucide-react"
+import { ExternalLink, LibraryBig } from "lucide-react"
 import { resourceGroups } from "@/lib/control-data"
-import { ThemeToggle } from "@/components/theme-toggle"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 
 export const metadata: Metadata = {
   title: "References & Learning Resources - Map of Control Theory",
@@ -15,32 +15,7 @@ export default function ReferencesPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3 md:py-4">
-          <Link href="/" className="flex items-center gap-2.5 text-left">
-            <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <GitBranch className="size-4" />
-            </span>
-            <span className="leading-tight">
-              <span className="block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                Interactive
-              </span>
-              <span className="block text-sm font-semibold tracking-tight">Map of Control Theory</span>
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="size-4" />
-              Map
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <SiteHeader activePage="references" />
 
       <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
         <section className="relative mb-10 overflow-hidden rounded-xl border border-border bg-card">
@@ -94,6 +69,8 @@ export default function ReferencesPage() {
           ))}
         </div>
       </main>
+
+      <SiteFooter />
     </div>
   )
 }

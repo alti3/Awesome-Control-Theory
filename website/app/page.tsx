@@ -1,5 +1,5 @@
-import { ControlMap } from "@/components/control-map"
+import { redirect } from "next/navigation"
 
 export default function Page() {
-  return <ControlMap />
+  redirect("/map")
 }
