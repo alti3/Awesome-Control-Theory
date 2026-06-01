@@ -9,24 +9,47 @@ branch: "Control Methods"
 
 Treats uncertainty probabilistically via chance constraints or expected costs.
 
-## Core Idea
+## What It Means
 
-In control-theory terms, **Stochastic MPC** is part of the predictive toolkit in control methods. It helps connect a model, signal, controller, estimator, or analysis method to a closed-loop objective.
+**Stochastic MPC** is a predictive topic in the **Control Methods** branch of the control-theory map. In this context, it focuses on receding-horizon optimization with explicit state, input, and terminal constraints. It belongs to controller design methods that turn models, measurements, and objectives into feedback or feedforward actions, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-A compact way to frame the objective is to minimize a performance signal while respecting the plant dynamics:
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-$$
-J = \int_0^T \left(\|e(t)\|_Q^2 + \|u(t)\|_R^2\right) dt
-$$
+## Mathematical Form
 
-where $e(t)$ is the relevant tracking, estimation, or regulation error and $u(t)$ is the control input.
+A standard receding-horizon problem is
 
-## Control Context
+$$\min_{x_{0:N},u_{0:N-1}}\sum_{k=0}^{N-1}\ell(x_k,u_k)+V_f(x_N)\quad\text{s.t.}\quad x_{k+1}=f(x_k,u_k).$$
 
-- **Model:** specify the state, input, output, uncertainty, and sampling assumptions.
-- **Objective:** define the behavior that should be tracked, rejected, stabilized, estimated, or optimized.
-- **Verification:** check stability, performance, constraints, and robustness before relying on the design.
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-## Typical Question
+## Intuition
 
-For this topic, the practical question is: what information is available, what behavior is required, and what tradeoff should the controller or analysis method make?
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Stochastic MPC**, the central issue is the behavior summarized above: treats uncertainty probabilistically via chance constraints or expected costs. The method still has to remain consistent with the plant assumptions and the performance objective.
+
+A practical example is autonomous motion: a planner proposes a feasible route or trajectory, then a tracking controller or MPC layer respects actuator and safety limits while correcting model error.
+
+## How It Is Used
+
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Test solver convergence, infeasibility handling, scaling, and warm starts at the intended real-time rate.
+- Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+
+## Connections
+
+- connects controller synthesis to stability, performance, robustness, and implementation limits.
+- is especially relevant when constraints and safety requirements are part of the design.
+
+## References
+
+- [Rawlings, Mayne, and Diehl, Model Predictive Control](https://sites.engineering.ucsb.edu/~jbraw/mpc/)
+- [Mayne et al., Constrained MPC: Stability and Optimality](https://doi.org/10.1016/S0005-1098(99)00214-9)
+- [Handbook of Model Predictive Control](https://link.springer.com/book/10.1007/978-3-319-77489-3)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

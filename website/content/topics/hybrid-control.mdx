@@ -9,24 +9,47 @@ branch: "Control Methods"
 
 Combines continuous dynamics with switching, events, logic, or mode-dependent controllers.
 
-## Core Idea
+## What It Means
 
-In control-theory terms, **Hybrid control** is part of the digital & sampled-data toolkit in control methods. It helps connect a model, signal, controller, estimator, or analysis method to a closed-loop objective.
+**Hybrid control** is a Digital & Sampled-Data topic in the **Control Methods** branch of the control-theory map. In this context, it focuses on the part of the control workflow described by this map category. It belongs to controller design methods that turn models, measurements, and objectives into feedback or feedforward actions, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-A compact way to frame the objective is to minimize a performance signal while respecting the plant dynamics:
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-$$
-J = \int_0^T \left(\|e(t)\|_Q^2 + \|u(t)\|_R^2\right) dt
-$$
+## Mathematical Form
 
-where $e(t)$ is the relevant tracking, estimation, or regulation error and $u(t)$ is the control input.
+A sampled model advances the state once per control update:
 
-## Control Context
+$$x_{k+1}=A_d x_k+B_d u_k,\qquad y_k=C_d x_k+D_d u_k.$$
 
-- **Model:** specify the state, input, output, uncertainty, and sampling assumptions.
-- **Objective:** define the behavior that should be tracked, rejected, stabilized, estimated, or optimized.
-- **Verification:** check stability, performance, constraints, and robustness before relying on the design.
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-## Typical Question
+## Intuition
 
-For this topic, the practical question is: what information is available, what behavior is required, and what tradeoff should the controller or analysis method make?
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Hybrid control**, the central issue is the behavior summarized above: combines continuous dynamics with switching, events, logic, or mode-dependent controllers. The method still has to remain consistent with the plant assumptions and the performance objective.
+
+A practical example is an embedded controller: sampling, A/D conversion, computation time, D/A holding, and finite word length all become part of the closed-loop dynamics.
+
+## How It Is Used
+
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Include sampling, delay, quantization, saturation, and numerical precision in simulation before deployment.
+- Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+
+## Connections
+
+- connects controller synthesis to stability, performance, robustness, and implementation limits.
+- bridges continuous plant physics and software implementation through sampled-data models.
+
+## References
+
+- [Franklin, Powell, and Workman, Digital Control of Dynamic Systems](https://www.pearson.com/en-us/subject-catalog/p/digital-control-of-dynamic-systems/P200000003436)
+- [UCSB ECE147B digital control lecture notes](https://courses.ece.ucsb.edu/ECE147/147B_W13Byl/lecture/Lecture2_slides.pdf)
+- [IIT Delhi EEL823 Discrete-time Systems](https://web.iitd.ac.in/~janas/courses/eel823.htm)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

@@ -9,26 +9,47 @@ branch: "Control Methods"
 
 Repeatedly solves a finite-horizon optimization using a model of the plant.
 
-MPC solves a finite-horizon optimization at each sample, applies the first input, then repeats with updated measurements.
+## What It Means
 
-A common quadratic objective is
+**Model Predictive Control** is a predictive topic in the **Control Methods** branch of the control-theory map. In this context, it focuses on receding-horizon optimization with explicit state, input, and terminal constraints. It belongs to controller design methods that turn models, measurements, and objectives into feedback or feedforward actions, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-$$
-\min_{x_{0:N},u_{0:N-1}} \sum_{k=0}^{N-1} \left(\|x_k-r_k\|_Q^2 + \|u_k\|_R^2\right) + \|x_N-r_N\|_P^2
-$$
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-subject to model dynamics
+## Mathematical Form
 
-$$
-x_{k+1} = f(x_k,u_k)
-$$
+A standard receding-horizon problem is
 
-and constraints such as
+$$\min_{x_{0:N},u_{0:N-1}}\sum_{k=0}^{N-1}\ell(x_k,u_k)+V_f(x_N)\quad\text{s.t.}\quad x_{k+1}=f(x_k,u_k).$$
 
-$$
-x_k \in \mathcal{X}, \qquad u_k \in \mathcal{U}
-$$
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-## Why It Matters
+## Intuition
 
-MPC is useful when actuator limits, state limits, previewed references, and multivariable coupling must be handled explicitly.
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Model Predictive Control**, the central issue is the behavior summarized above: repeatedly solves a finite-horizon optimization using a model of the plant. The method still has to remain consistent with the plant assumptions and the performance objective.
+
+A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
+
+## How It Is Used
+
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+- Verify conclusions with simulation or analysis that matches the intended closed-loop interconnection.
+
+## Connections
+
+- connects controller synthesis to stability, performance, robustness, and implementation limits.
+- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+
+## References
+
+- [Rawlings, Mayne, and Diehl, Model Predictive Control](https://sites.engineering.ucsb.edu/~jbraw/mpc/)
+- [Mayne et al., Constrained MPC: Stability and Optimality](https://doi.org/10.1016/S0005-1098(99)00214-9)
+- [Handbook of Model Predictive Control](https://link.springer.com/book/10.1007/978-3-319-77489-3)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

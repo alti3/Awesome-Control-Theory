@@ -9,34 +9,47 @@ branch: "State Estimation"
 
 Estimates linear Gaussian systems optimally in the least-squares sense.
 
-The Kalman filter combines a model prediction with a noisy measurement to estimate the hidden state.
+## What It Means
 
-For a discrete linear stochastic model,
+**Kalman filter** is a filtering methods topic in the **State Estimation** branch of the control-theory map. In this context, it focuses on recursive probabilistic estimation from noisy process and measurement models. It belongs to estimation methods that infer unmeasured states, parameters, disturbances, maps, or tracks from models and data, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-$$
-x_{k+1} = A x_k + B u_k + w_k
-$$
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-$$
-y_k = C x_k + v_k
-$$
+## Mathematical Form
 
-with process noise covariance $Q$ and measurement noise covariance $R$.
+The estimator balances model prediction and measurement correction:
 
-## Correction Step
+$$\hat x_k^+=\hat x_k^-+K_k\bigl(y_k-C\hat x_k^-\bigr).$$
 
-The Kalman gain weights prediction uncertainty against measurement uncertainty:
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-$$
-K_k = P_k^- C^T (C P_k^- C^T + R)^{-1}
-$$
+## Intuition
 
-The state estimate is updated by the innovation:
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Kalman filter**, the central issue is the behavior summarized above: estimates linear Gaussian systems optimally in the least-squares sense. The method still has to remain consistent with the plant assumptions and the performance objective.
 
-$$
-\hat{x}_k = \hat{x}_k^- + K_k(y_k - C\hat{x}_k^-)
-$$
+A practical example is vehicle navigation: an inertial model predicts motion between updates, while GPS, camera, wheel, or range measurements correct drift and expose outliers through residuals.
 
-## Control Connection
+## How It Is Used
 
-In LQG control, a Kalman filter estimates the state and LQR uses that estimate for feedback.
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Check that the linear model is valid over the amplitudes and operating points used in the design.
+- Validate noise covariances and residuals; a filter can look smooth while becoming statistically inconsistent.
+
+## Connections
+
+- supplies state, disturbance, parameter, or environment estimates to feedback and planning layers.
+- pairs naturally with state feedback through observer-based output feedback.
+
+## References
+
+- [Kalman, A New Approach to Linear Filtering and Prediction Problems](https://doi.org/10.1115/1.3662552)
+- [MIT OCW 2.160 Identification, Estimation, and Learning](https://ocw.mit.edu/courses/2-160-identification-estimation-and-learning-spring-2006/)
+- [Simon, Optimal State Estimation](https://www.wiley.com/en-us/Optimal+State+Estimation%3A+Kalman%2C+H+Infinity%2C+and+Nonlinear+Approaches-p-9780471708582)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

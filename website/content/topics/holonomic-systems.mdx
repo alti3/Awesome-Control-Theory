@@ -9,24 +9,47 @@ branch: "Planning"
 
 Can move freely in all configuration directions.
 
-## Core Idea
+## What It Means
 
-In control-theory terms, **Holonomic systems** is part of the motion planning toolkit in planning. It helps connect a model, signal, controller, estimator, or analysis method to a closed-loop objective.
+**Holonomic systems** is a motion planning topic in the **Planning** branch of the control-theory map. In this context, it focuses on configuration-space feasibility and mobility structure before feedback tracking is applied. It belongs to planning methods that create references, paths, trajectories, or constraint descriptions for downstream feedback control, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-A compact way to frame the objective is to minimize a performance signal while respecting the plant dynamics:
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-$$
-J = \int_0^T \left(\|e(t)\|_Q^2 + \|u(t)\|_R^2\right) dt
-$$
+## Mathematical Form
 
-where $e(t)$ is the relevant tracking, estimation, or regulation error and $u(t)$ is the control input.
+Planning usually searches for a feasible curve or graph path:
 
-## Control Context
+$$q_{0:N}^*=\arg\min_{q_{0:N}}\sum_{k=0}^{N-1} c(q_k,q_{k+1})\quad\text{s.t.}\quad q_k\in\mathcal C_{\mathrm{free}}.$$
 
-- **Model:** specify the state, input, output, uncertainty, and sampling assumptions.
-- **Objective:** define the behavior that should be tracked, rejected, stabilized, estimated, or optimized.
-- **Verification:** check stability, performance, constraints, and robustness before relying on the design.
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-## Typical Question
+## Intuition
 
-For this topic, the practical question is: what information is available, what behavior is required, and what tradeoff should the controller or analysis method make?
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Holonomic systems**, the central issue is the behavior summarized above: can move freely in all configuration directions. The method still has to remain consistent with the plant assumptions and the performance objective.
+
+A practical example is autonomous motion: a planner proposes a feasible route or trajectory, then a tracking controller or MPC layer respects actuator and safety limits while correcting model error.
+
+## How It Is Used
+
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Distinguish geometric feasibility from dynamic feasibility and from closed-loop trackability.
+- Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+
+## Connections
+
+- feeds reference commands, paths, or constraints to tracking controllers and estimators.
+- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+
+## References
+
+- [LaValle, Planning Algorithms](https://msl.cs.uiuc.edu/planning/book.html)
+- [LaValle, Rapidly-exploring Random Trees](https://lavalle.pl/papers/Lav98c.pdf)
+- [Probabilistic Robotics](http://www.probabilistic-robotics.org/)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

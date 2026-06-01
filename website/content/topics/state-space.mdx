@@ -7,26 +7,49 @@ branch: "Modeling & Simulation"
 
 # State-Space Representation
 
-The most powerful and general way to represent linear systems.
+Modern way to represent dynamic systems
 
-$$
-\dot{x}(t) = Ax(t) + Bu(t)
-$$
+## What It Means
 
-$$
-y(t) = Cx(t) + Du(t)
-$$
+**State-Space Representation** is a state-space models topic in the **Modeling & Simulation** branch of the control-theory map. In this context, it focuses on state variables, inputs, outputs, dynamics, and coordinate choices. It belongs to modeling and simulation methods that describe plant behavior before analysis, synthesis, and validation, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-Where:
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-- $x \in \mathbb{R}^n$ is the **state vector**
-- $u \in \mathbb{R}^m$ is the **input**
-- $y \in \mathbb{R}^p$ is the **output**
+## Mathematical Form
 
-## Controllability
+A compact state-space model separates dynamics from measurements:
 
-A system is controllable if the controllability matrix has full rank:
+$$\dot x=f(x,u,t), \qquad y=g(x,u,t).$$
 
-$$
-\mathcal{C} = [B \quad AB \quad A^2B \quad \dots \quad A^{n-1}B]
-$$
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
+
+## Intuition
+
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **State-Space Representation**, the central issue is the behavior summarized above: modern way to represent dynamic systems. The method still has to remain consistent with the plant assumptions and the performance objective.
+
+A practical example is a coupled process unit or flight-control axis set where one actuator affects several outputs; multivariable analysis shows which directions are easy to control and which are fragile.
+
+## How It Is Used
+
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Check that the linear model is valid over the amplitudes and operating points used in the design.
+- Separate nominal performance from robust performance; a design can be fast on the nominal model but fragile to structured uncertainty.
+
+## Connections
+
+- provides the plant representation used by analysis, estimation, and controller synthesis.
+- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+
+## References
+
+- [Skogestad and Postlethwaite, Multivariable Feedback Control](https://skoge.folk.ntnu.no/book/)
+- [Boyd et al., Linear Matrix Inequalities in System and Control Theory](https://stanford.edu/~boyd/papers/LMI_sys_ctrl.html)
+- [Stanford EE363 Linear Dynamical Systems](https://ee363.stanford.edu/lectures.html)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

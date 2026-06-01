@@ -9,34 +9,47 @@ branch: "Control Methods"
 
 Linear Quadratic Regulator minimizes a quadratic state and input cost for optimal state feedback.
 
-LQR chooses a full-state feedback law that balances regulation performance against control effort.
+## What It Means
 
-$$
-u(t) = -Kx(t)
-$$
+**LQR** is a linear topic in the **Control Methods** branch of the control-theory map. In this context, it focuses on linear feedback design, superposition, pole locations, loop shaping, and implementable compensators. It belongs to controller design methods that turn models, measurements, and objectives into feedback or feedforward actions, so the important question is not only what the method computes, but what assumptions make the computation meaningful for a closed loop.
 
-For the continuous-time system $\dot{x}=Ax+Bu$, the infinite-horizon objective is
+A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
-$$
-J = \int_0^\infty \left(x(t)^T Q x(t) + u(t)^T R u(t)\right) dt
-$$
+## Mathematical Form
 
-where $Q \succeq 0$ penalizes state error and $R \succ 0$ penalizes input effort.
+For linear-quadratic regulation, the feedback gain follows from a Riccati solution:
 
-## Riccati Equation
+$$u=-Kx,\qquad K=R^{-1}B^T P.$$
 
-The optimal gain is
+The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
-$$
-K = R^{-1}B^TP
-$$
+## Intuition
 
-where $P$ solves the algebraic Riccati equation:
+The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **LQR**, the central issue is the behavior summarized above: linear Quadratic Regulator minimizes a quadratic state and input cost for optimal state feedback. The method still has to remain consistent with the plant assumptions and the performance objective.
 
-$$
-A^TP + PA - PBR^{-1}B^TP + Q = 0
-$$
+A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
 
-## Design Reading
+## How It Is Used
 
-Increasing $Q$ usually tightens regulation. Increasing $R$ usually reduces actuator usage and slows response.
+1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
+2. Choose the representation that matches the topic: transfer function, state-space model, graph, stochastic model, optimization problem, or certificate.
+3. Apply the method to obtain a controller, estimate, trajectory, reduced model, stability statement, or diagnostic quantity.
+4. Check the result against the original engineering requirement, including actuator limits, disturbances, noise, and implementation constraints.
+5. Validate with an independent calculation, simulation, experiment, or residual check before relying on the conclusion.
+
+## Common Pitfalls
+
+- Check that the linear model is valid over the amplitudes and operating points used in the design.
+- Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+
+## Connections
+
+- connects controller synthesis to stability, performance, robustness, and implementation limits.
+- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+
+## References
+
+- [Bertsekas, Dynamic Programming and Optimal Control](https://www.mit.edu/~dimitrib/dpbook.html)
+- [MIT Underactuated Robotics, LQR and trajectory optimization notes](https://underactuated.mit.edu/)
+- [Kirk, Optimal Control Theory](https://books.google.com/books/about/Optimal_Control_Theory.html?id=fCh2SAtWIdwC)
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)
