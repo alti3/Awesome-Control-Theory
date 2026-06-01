@@ -43,7 +43,7 @@ export function RoadmapsView() {
           <h2 className="mt-1 text-2xl font-semibold tracking-tight">Books, papers, courses & software</h2>
           <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
             The full resource index now has {resourceGroups.length} groups and {resourceCount} entries, including
-            the 17 textbook references from the README.
+            the textbook references from the README.
           </p>
         </header>
 

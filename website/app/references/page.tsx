@@ -54,8 +54,8 @@ export default function ReferencesPage() {
               Books, papers, courses, and software for control systems theory.
             </h1>
             <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
-              A curated index of {total} resources across {resourceGroups.length} categories, including the 17
-              textbook references used to expand the map coverage.
+              A curated index of {total} resources across {resourceGroups.length} categories, including the textbook
+              references used to expand the map coverage.
             </p>
           </div>
         </section>

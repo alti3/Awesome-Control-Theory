@@ -60,6 +60,7 @@ into a structured reference for learning, review, and project planning.
   - [Beginner Classical Path](#beginner-classical-path)
   - [State-Space Path](#state-space-path)
   - [Robotics and Autonomy Path](#robotics-and-autonomy-path)
+  - [Digital Control Path](#digital-control-path)
   - [Advanced Control Path](#advanced-control-path)
 - [Academic and Open References](#academic-and-open-references)
   - [Foundational Texts and Course Notes](#foundational-texts-and-course-notes)
@@ -161,6 +162,10 @@ into a structured reference for learning, review, and project planning.
   and provides robustness to matched uncertainty.
 - **Bang-bang control** switches between extreme control values, often appearing
   in minimum-time problems.
+- **Describing functions, equivalent gains, and the circle criterion** provide
+  approximate and absolute-stability tools for nonlinear feedback systems.
+- **Inverse nonlinearities and time-optimal servo structures** compensate known
+  nonlinearities or exploit actuator limits for fast motion.
 - **Perturbation, averaging, and singular-perturbation methods** analyze systems
   with weak nonlinearities, periodic effects, or separated time scales.
 - **Input-output stability and passivity** provide nonlinear feedback-analysis
@@ -232,12 +237,49 @@ into a structured reference for learning, review, and project planning.
   update actuators at discrete instants.
 - **Z-transform methods** analyze discrete-time transfer functions and sampled
   systems.
+- **Difference equations** describe recursive discrete-time dynamics directly
+  and connect digital filters to transfer-function realizations.
+- **Pulse transfer functions** represent sampled-data input-output behavior at
+  the sampling instants.
+- **Modified z-transforms** help analyze delayed and intersample behavior in
+  sampled-data systems.
+- **Bilinear and w-transform methods** map discrete-time design questions into
+  continuous-like algebraic forms.
 - **Sampled-data models** describe the combined behavior of continuous plants,
   samplers, zero-order holds, and digital controllers.
+- **Ideal sampling and reconstruction** explain spectra, aliasing, and how
+  sampled signals are turned back into continuous actuator commands.
 - **Zero-order hold discretization** is the common model for digital-to-analog
   actuation between samples.
+- **First-order, fractional-order, and triangle holds** model alternate data
+  extrapolation assumptions between samples.
+- **Discrete equivalents** convert continuous plants or controllers into
+  discrete models using numerical integration, zero-pole matching, hold
+  equivalents, or cost-equivalent emulation.
+- **Emulation design** discretizes a continuous-time controller, then checks the
+  sampled closed-loop response.
+- **Direct digital design** designs the controller in the z-plane using root
+  locus, frequency response, pole placement, deadbeat control, or Ragazzini
+  methods.
+- **Deadbeat and modified deadbeat control** seek finite-sample settling while
+  managing actuator effort and robustness.
+- **Sample-rate selection** balances bandwidth, smoothness, aliasing,
+  computation, measurement noise, and sensitivity to plant uncertainty.
+- **Multirate and nonsynchronous sampling** handle systems where sensors,
+  actuators, or controllers update at different rates or phases.
+- **Intersample ripple** captures output behavior between sampling instants,
+  which can be missed by purely discrete-time analysis.
 - **Aliasing, quantization, and computation delay** are practical effects that
   can change closed-loop behavior.
+- **Round-off, word-length effects, limit cycles, and dither** matter when
+  controllers are implemented with finite-precision arithmetic.
+- **A/D and D/A conversion** connect sensors, actuators, computers, and
+  continuous plants in practical digital control loops.
+- **Digital controller realization** covers direct, parallel, cascade,
+  factorized, and state-space implementations.
+- **Embedded and distributed implementation** covers processor interfaces,
+  communication links, reliability, scheduling, and integration with plant
+  hardware.
 - **Hybrid control** combines continuous dynamics with discrete control logic,
   switching, events, or mode-dependent controllers.
 
@@ -245,6 +287,9 @@ into a structured reference for learning, review, and project planning.
 
 - **MIMO control** handles plants with multiple inputs and multiple outputs,
   where loops can interact strongly.
+- **Large-scale system control** uses decomposition, hierarchical control,
+  multilayer coordination, and optimization to manage systems too large for a
+  single centralized loop.
 - **Singular-value analysis** studies multivariable gain, directionality, and
   robustness across frequency.
 - **Relative gain array, or RGA**, helps evaluate input-output pairings and
@@ -396,6 +441,8 @@ into a structured reference for learning, review, and project planning.
 - **Disturbance observers** estimate unmeasured disturbances for compensation.
 - **Kalman observers** combine model prediction and measurement correction with
   explicit noise statistics.
+- **Prediction and current observers** distinguish whether estimates are formed
+  before or after incorporating the newest sampled measurement.
 - **Unknown-input observers** estimate states when some disturbances or inputs
   are not measured.
 - **High-gain and sliding-mode observers** are common nonlinear observer
@@ -462,6 +509,16 @@ into a structured reference for learning, review, and project planning.
 
 - **Hybrid systems** combine continuous dynamics with discrete modes, events, or
   logic.
+- **Discrete-time state space** represents sampled dynamics with updates such as
+  `x[k+1] = A x[k] + B u[k]`.
+- **Matrix-exponential discretization** computes exact linear sampled models
+  under zero-order-hold assumptions when the continuous model is known.
+- **Discrete models with delays** represent sensor, actuator, communication, and
+  computation delays as augmented states or delayed inputs and outputs.
+- **Reference-input and state-command structures** connect state feedback and
+  observers to tracking commands rather than only regulator problems.
+- **State augmentation for integral action** adds integrator states or
+  disturbance estimates to remove steady-state errors.
 - **Time-delay systems** model transport delays, communication delays, and
   computation delays that can destabilize feedback loops.
 - **Saturation and rate-limit models** capture actuator limits that strongly
@@ -474,6 +531,8 @@ into a structured reference for learning, review, and project planning.
 ### System Representations
 
 - **Transfer functions** represent input-output dynamics in the Laplace domain.
+- **Discrete transfer functions** represent input-output dynamics in the
+  z-domain.
 - **Block diagrams** show interconnections among plants, controllers, summing
   junctions, sensors, and feedback paths.
 - **Signal-flow views** clarify feedback, feedforward, disturbances, and noise.
@@ -489,6 +548,18 @@ into a structured reference for learning, review, and project planning.
 - **First-principles modeling** derives dynamics from physics, such as Newton's
   laws, energy balances, circuits, fluids, or thermodynamics.
 - **System identification** estimates models from input-output data.
+- **Nonparametric identification** estimates responses or spectra without first
+  committing to a low-order parametric model.
+- **Parametric identification** fits model structures such as transfer
+  functions, state-space models, or input-output regressions.
+- **Black-box identification** fits model dynamics from data when the internal
+  physical structure is unknown or intentionally abstracted.
+- **Least-squares, recursive least-squares, stochastic least-squares, maximum
+  likelihood, and subspace identification** are common estimation methods for
+  discrete-time models.
+- **Identification experiment design** chooses excitation signals, sampling
+  frequency, scaling, and validation data so estimated models are useful for
+  control.
 - **Linearization** approximates nonlinear dynamics near an equilibrium or
   trajectory.
 - **Canonical forms and similarity transformations** reorganize state-space
@@ -511,6 +582,8 @@ into a structured reference for learning, review, and project planning.
 - **Simulation software** includes tools such as Simulink, Modelica, and
   domain-specific simulators for controls, physical modeling, and verification.
 - **Closed-loop simulation** validates controller behavior before deployment.
+- **Discrete-time simulation** checks difference-equation, digital-filter, and
+  sampled-data controller behavior before hardware implementation.
 - **Monte Carlo simulation** tests performance across uncertainty, noise, and
   randomized initial conditions.
 - **Hardware-in-the-loop simulation** exercises controller implementation against
@@ -559,6 +632,8 @@ into a structured reference for learning, review, and project planning.
   explicitly computing roots.
 - **Jury tests** provide analogous algebraic stability checks for discrete-time
   characteristic polynomials.
+- **Bilinear-transform stability tests** map discrete-time characteristic
+  equations into a form where continuous-time tests can be applied.
 
 ### System Properties
 
@@ -572,6 +647,10 @@ into a structured reference for learning, review, and project planning.
   modeling errors propagate through feedback loops.
 - **Performance** includes tracking error, disturbance rejection, noise
   rejection, bandwidth, overshoot, and control effort.
+- **Steady-state accuracy** studies final values, error constants, integral
+  action, and reference/disturbance tracking for continuous and digital loops.
+- **z-plane geometry** maps damping, natural frequency, settling behavior, and
+  stability boundaries from the s-plane into sampled systems.
 
 ### Safety-Critical Analysis
 
@@ -595,6 +674,12 @@ into a structured reference for learning, review, and project planning.
   distillation columns, and transport delays.
 - **Robotics and vehicle models** include kinematics, rigid-body dynamics,
   tire/ground interaction, and actuator dynamics.
+- **Aerospace and pointing models** include satellite attitude, antenna
+  azimuth, aircraft landing, and servomotor dynamics.
+- **Power-system models** include generator, grid-interconnection, and topology
+  identification examples.
+- **Precision motion and storage models** include flexible structures, disk
+  drive servos, voice-coil actuators, runout, and amplifier saturation.
 - **Linearization** connects nonlinear first-principles models to linear design
   workflows.
 - **Transfer functions** connect physical equations to classical feedback
@@ -632,6 +717,20 @@ into a structured reference for learning, review, and project planning.
 4. PRM, trajectory optimization, and dynamically feasible planning
 5. Sensor fusion with IMU, GPS, and camera measurements
 6. Mapping, tracking, moving horizon estimation, and safety constraints
+
+### Digital Control Path
+
+1. Sampling, reconstruction, aliasing, and hold devices
+2. Difference equations, z-transforms, pulse transfer functions, and z-plane
+   pole-zero geometry
+3. Discrete equivalents: numerical integration, zero-pole matching, and hold
+   equivalents
+4. Digital controller design: emulation, direct z-plane design, deadbeat
+   control, discrete PID, and state-space pole assignment
+5. Sample-rate selection, multirate effects, delays, quantization, round-off,
+   limit cycles, and dither
+6. Digital implementation: A/D and D/A conversion, controller realization,
+   embedded interfaces, reliability, and hardware-in-the-loop validation
 
 ### Advanced Control Path
 
@@ -681,6 +780,24 @@ well-maintained open software, and canonical textbooks.
   state-space design text covering dynamic models, response, root locus,
   frequency response, state-space design, digital control, nonlinear systems,
   and case studies.
+- [Digital Control of Dynamic Systems, 3rd ed.](https://wright.ecampus.com/digital-control-dynamic-systems-3rd/bk/9780201820546)
+  by Gene F. Franklin, J. David Powell, and Michael L. Workman: digital-control
+  reference covering sampled-data modeling, z-transform analysis, discrete
+  equivalents, transform and state-space design, multivariable optimal control,
+  quantization, sample-rate selection, identification, nonlinear effects, and a
+  disk-drive servo case study.
+- [Applied Digital Control: Theory, Design and Implementation](https://books.google.com/books/about/Applied_Digital_Control.html?id=Z_AuDQAAQBAJ)
+  by J. R. Leigh: applied digital-control text covering sampling,
+  z-transform methods, root locus and frequency-response design, digital
+  algorithms, sensors and converters, implementation case histories,
+  state-variable methods, large-scale systems, distributed computer control,
+  adaptive control, and robust control.
+- [Digital Control System Analysis & Design, Global Edition](https://www.pearson.de/media/muster/toc/toc_9781292061887.pdf)
+  by Charles L. Phillips, H. Troy Nagle, and Aranya Chakrabortty: detailed
+  digital-control text covering discrete-time systems, sampling and
+  reconstruction, open- and closed-loop sampled systems, stability analysis,
+  digital controller design, pole assignment, observers, system identification,
+  linear-quadratic control, Kalman filtering, and application case studies.
 - [Control Systems Engineering](https://www.zybooks.com/catalog/control-systems-engineering-8th-edition/)
   by Norman S. Nise: undergraduate controls reference covering modeling,
   time response, subsystem reduction, stability, steady-state error, root locus,
@@ -791,8 +908,10 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   placement, full-state feedback, output feedback, separation principle,
   compensator design, LQR, LQG, H-infinity control, loop shaping.
 - **Nonlinear methods:** gain scheduling, backstepping, feedback linearization,
-  dynamic inversion, sliding mode, bang-bang, perturbation methods, averaging,
-  singular perturbations, input-output stability, passivity.
+  dynamic inversion, sliding mode, bang-bang, describing functions, equivalent
+  gains, circle criterion, inverse nonlinearities, time-optimal servos,
+  perturbation methods, averaging, singular perturbations, input-output
+  stability, passivity.
 - **Multi-agent methods:** graph-theoretic control, consensus, formation
   control, leader-follower control, swarm control.
 - **Optimal methods:** Pontryagin's Maximum Principle, HJB equation, LQR, DDP,
@@ -803,10 +922,17 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   stochastic MPC, explicit MPC, generalized predictive control, fast MPC,
   hybrid MPC, industrial MPC.
 - **Digital and sampled-data methods:** digital control, Z-transform,
-  sampled-data models, zero-order hold discretization, aliasing, quantization,
-  computation delay, hybrid control.
+  difference equations, pulse transfer functions, modified z-transform,
+  w-transform, sampled-data models, ideal sampling, reconstruction,
+  zero-order hold discretization, first-order and fractional-order holds,
+  discrete equivalents, emulation design, direct z-plane design, deadbeat
+  control, sample-rate selection, multirate sampling, nonsynchronous sampling,
+  intersample ripple, aliasing, quantization, round-off, word-length effects,
+  limit cycles, dither, computation delay, A/D and D/A conversion, controller
+  realization, embedded and distributed implementation, hybrid control.
 - **MIMO and multivariable methods:** MIMO control, singular-value analysis,
-  relative gain array, decoupling control, control structure design, LMIs.
+  relative gain array, decoupling control, large-scale system decomposition,
+  hierarchical control, multilayer control, control structure design, LMIs.
 - **Intelligent methods:** fuzzy control, reinforcement learning, genetic
   algorithms, adaptive dynamic programming, neural network control.
 - **Adaptive methods:** MRAC, direct adaptive control, indirect adaptive
@@ -823,18 +949,27 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   information filters, square-root filters, U-D filters, H-infinity filters,
   Kalman-Bucy filters, constrained filters, sigma-point filters, particle
   filters, smoothers, Wiener filtering, recursive least squares, covariance
-  tuning, reduced-order observers, unknown-input observers, moving horizon
-  estimation, calibration, mapping, tracking, multiple-model estimation, data
-  association, sensor fusion, fault detection.
+  tuning, prediction observers, current observers, reduced-order observers,
+  unknown-input observers, moving horizon estimation, calibration, mapping,
+  tracking, multiple-model estimation, data association, sensor fusion, fault
+  detection.
 - **Modeling and simulation:** linear state space, nonlinear state space,
-  stochastic state models, stochastic differential equations, hybrid systems,
-  time delays, saturation, transfer functions, uncertainty models, block
-  diagrams, signal-flow graphs, simulation, event handling, co-simulation,
-  system identification, first principles, linearization, canonical forms,
-  similarity transformations, minimum realizations, model reduction.
+  discrete-time state space, matrix-exponential discretization, stochastic
+  state models, stochastic differential equations, hybrid systems, time delays,
+  delay augmentation, state-command structures, integral state augmentation,
+  disturbance estimation, saturation, transfer functions, discrete transfer
+  functions, uncertainty models, block diagrams, signal-flow graphs,
+  simulation, discrete-time simulation, event handling, co-simulation, system
+  identification, nonparametric identification, parametric identification,
+  black-box identification, least-squares identification, recursive
+  least-squares identification, maximum-likelihood identification, subspace
+  identification, identification experiment design, first principles,
+  linearization, canonical forms, similarity transformations, minimum
+  realizations, model reduction.
 - **System analysis:** performance, stability, margins, Nyquist, Bode,
   Nichols, root locus, phase plane, pole-zero plots, Routh-Hurwitz, Jury tests,
-  spectral-density analysis, passivity, sensitivity, controllability,
+  bilinear-transform stability tests, spectral-density analysis, passivity,
+  sensitivity, steady-state accuracy, z-plane geometry, controllability,
   observability, nonminimum phase, Lyapunov stability, control Lyapunov
   functions, control barrier functions, reachability, invariant sets, formal
   verification.
