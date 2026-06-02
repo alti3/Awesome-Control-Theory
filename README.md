@@ -866,6 +866,21 @@ well-maintained open software, and canonical textbooks.
   equations, Laplace and Z-transforms, stability, transfer functions,
   block diagrams, signal-flow graphs, Nyquist, root locus, Bode, Nichols,
   nonlinear control, and advanced topics.
+- [Steve Brunton's Control Bootcamp](https://www.youtube.com/playlist?list=PLMrJAkhIeNNR20Mz-VpzgfQs5zrYi085m):
+  YouTube playlist introducing control-system modeling, analysis, and design
+  with practical examples.
+- [Brian Douglas Control Systems Lectures](https://www.youtube.com/user/ControlLectures):
+  YouTube channel with approachable lectures on classical control,
+  frequency-domain methods, state-space control, and control intuition.
+- [MathWorks/MATLAB YouTube Channel](https://www.youtube.com/@MATLAB):
+  videos on MATLAB, Simulink, Control System Toolbox workflows, modeling,
+  simulation, and control design examples.
+- [Prof Giordano Scarciotti YouTube Channel](https://www.youtube.com/@Prof_Gio):
+  lecture videos on control theory, dynamical systems, and related
+  engineering mathematics.
+- [Robotic Systems Control YouTube Channel](https://www.youtube.com/@RoboticSystemsControl):
+  videos on robotics-oriented control, system modeling, estimation, and
+  implementation topics.
 
 ### Classic Papers and Surveys
 

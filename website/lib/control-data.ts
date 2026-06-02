@@ -727,7 +727,7 @@ export type ResourceGroup = { title: string; description: string; resources: Ref
 export const resourceGroups: ResourceGroup[] = [
   {
     title: "Textbooks & Learning Resources",
-    description: "Canonical books spanning classical control, digital and sampled-data control, state space, nonlinear systems, MPC, optimal control, stochastic estimation, adaptive control, and robust MIMO design.",
+    description: "Canonical books and video resources spanning classical control, digital and sampled-data control, state space, nonlinear systems, MPC, optimal control, stochastic estimation, adaptive control, and robust MIMO design.",
     resources: [
       {
         label: "Feedback Systems: An Introduction for Scientists and Engineers",
@@ -828,6 +828,31 @@ export const resourceGroups: ResourceGroup[] = [
         label: "Schaum's Outline of Feedback and Control Systems",
         href: "https://www.mheducation.com/highered/mhp/product/schaums-outline-feedback-control-systems-3rd-edition.html",
         note: "Joseph J. DiStefano III, Allen R. Stubberud, and Ivan J. Williams. Problem-oriented review of Laplace and Z-transforms, stability, transfer functions, block diagrams, signal-flow graphs, Nyquist, root locus, Bode, and Nichols methods.",
+      },
+      {
+        label: "Steve Brunton's Control Bootcamp",
+        href: "https://www.youtube.com/playlist?list=PLMrJAkhIeNNR20Mz-VpzgfQs5zrYi085m",
+        note: "YouTube playlist introducing control-system modeling, analysis, and design with practical examples.",
+      },
+      {
+        label: "Brian Douglas Control Systems Lectures",
+        href: "https://www.youtube.com/user/ControlLectures",
+        note: "YouTube channel with approachable lectures on classical control, frequency-domain methods, state-space control, and control intuition.",
+      },
+      {
+        label: "MathWorks/MATLAB YouTube Channel",
+        href: "https://www.youtube.com/@MATLAB",
+        note: "Videos on MATLAB, Simulink, Control System Toolbox workflows, modeling, simulation, and control design examples.",
+      },
+      {
+        label: "Prof Giordano Scarciotti YouTube Channel",
+        href: "https://www.youtube.com/@Prof_Gio",
+        note: "Lecture videos on control theory, dynamical systems, and related engineering mathematics.",
+      },
+      {
+        label: "Robotic Systems Control YouTube Channel",
+        href: "https://www.youtube.com/@RoboticSystemsControl",
+        note: "Videos on robotics-oriented control, system modeling, estimation, and implementation topics.",
       },
     ],
   },
