@@ -15,7 +15,9 @@ A useful way to read this topic is as a connection between three objects: a mode
 
 A standard receding-horizon problem is
 
-$$\min_{x_{0:N},u_{0:N-1}}\sum_{k=0}^{N-1}\ell(x_k,u_k)+V_f(x_N)\quad\text{s.t.}\quad x_{k+1}=f(x_k,u_k).$$
+$$
+\min_{x_{0:N},u_{0:N-1}}\sum_{k=0}^{N-1}\ell(x_k,u_k)+V_f(x_N)\quad\text{s.t.}\quad x_{k+1}=f(x_k,u_k).
+$$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 

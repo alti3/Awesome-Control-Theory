@@ -11,11 +11,17 @@ branch: "Planning"
 
 A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
+## Video
+
+<YouTube url="https://www.youtube.com/watch?v=Kk5J-wOYOFM" title="G-FOLD trajectory optimization" />
+
 ## Mathematical Form
 
 The continuous-time optimal-control template is
 
-$$\min_{u(\cdot)} J=\phi(x(T))+\int_0^T L(x(t),u(t),t)\,dt\quad\text{s.t.}\quad \dot x=f(x,u,t).$$
+$$
+\min_{u(\cdot)} J=\phi(x(T))+\int_0^T L(x(t),u(t),t)\,dt\quad\text{s.t.}\quad \dot x=f(x,u,t).
+$$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
@@ -24,6 +30,8 @@ The notation should be interpreted with the page topic in mind: $x$ is the state
 The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Trajectory optimization**, the central issue is the behavior summarized above: searches over state and input histories that satisfy dynamics and minimize cost. The method still has to remain consistent with the plant assumptions and the performance objective.
 
 A practical example is autonomous motion: a planner proposes a feasible route or trajectory, then a tracking controller or MPC layer respects actuator and safety limits while correcting model error.
+
+The G-FOLD trajectory optimisation algorithm is a useful aerospace example. Powered-descent trajectory shaping is naturally non-convex: thrust magnitude lower bounds, thrust-pointing limits, glide-slope constraints, mass variation, and terminal landing requirements make the feasible set hard to search reliably onboard. G-FOLD used **lossless convexification** to relax the non-convex powered-descent optimal-control problem into a convex optimisation problem, while proving that the relaxed solution still satisfies the original non-convex constraints under the problem assumptions. That converts a fuel-optimal landing guidance problem from a brittle nonlinear search into a second-order cone program that can be solved fast enough for real-time guidance.
 
 ## How It Is Used
 
@@ -45,6 +53,8 @@ A practical example is autonomous motion: a planner proposes a feasible route or
 
 ## References
 
+- [Acikmese et al., G-FOLD: A Real-Time Implementable Fuel Optimal Large Divert Guidance Algorithm for Planetary Pinpoint Landing](https://www.lpi.usra.edu/meetings/marsconcepts2012/pdf/4193.pdf)
+- [Acikmese, Carson, and Blackmore, Lossless Convexification of Nonconvex Control Bound and Pointing Constraints of the Soft Landing Optimal Control Problem](https://doi.org/10.1109/TCST.2012.2237346)
 - [Boyd and Vandenberghe, Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/)
 - [Boyd et al., Linear Matrix Inequalities in System and Control Theory](https://stanford.edu/~boyd/papers/LMI_sys_ctrl.html)
 - [Rawlings, Mayne, and Diehl, Model Predictive Control](https://sites.engineering.ucsb.edu/~jbraw/mpc/)

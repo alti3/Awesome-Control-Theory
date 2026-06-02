@@ -15,7 +15,9 @@ A useful way to read this topic is as a connection between three objects: a mode
 
 The continuous-time optimal-control template is
 
-$$\min_{u(\cdot)} J=\phi(x(T))+\int_0^T L(x(t),u(t),t)\,dt\quad\text{s.t.}\quad \dot x=f(x,u,t).$$
+$$
+\min_{u(\cdot)} J=\phi(x(T))+\int_0^T L(x(t),u(t),t)\,dt\quad\text{s.t.}\quad \dot x=f(x,u,t).
+$$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 

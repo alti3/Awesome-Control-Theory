@@ -11,11 +11,17 @@ branch: "State Estimation"
 
 A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
+## Video
+
+<YouTube url="https://www.youtube.com/watch?v=QHikx6kVvAo" title="Starship booster catch control engineering" />
+
 ## Mathematical Form
 
 The estimator balances model prediction and measurement correction:
 
-$$\hat x_k^+=\hat x_k^-+K_k\bigl(y_k-C\hat x_k^-\bigr).$$
+$$
+\hat x_k^+=\hat x_k^-+K_k\bigl(y_k-C\hat x_k^-\bigr).
+$$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
@@ -24,6 +30,8 @@ The notation should be interpreted with the page topic in mind: $x$ is the state
 The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Trajectory tracking**, the central issue is the behavior summarized above: estimates deviation from a desired path or reference. The method still has to remain consistent with the plant assumptions and the performance objective.
 
 A practical example is vehicle navigation: an inertial model predicts motion between updates, while GPS, camera, wheel, or range measurements correct drift and expose outliers through residuals.
+
+The Starship booster catch is a high-energy example of trajectory tracking as part of a larger control stack. The planned descent trajectory has to be followed through hypersonic re-entry, aerodynamic drag, turbulence, changing attitude, and tight timing near the catch arms. The tracking loop depends on state estimation from fused sensors, then uses aerodynamic surfaces and propulsion to reject disturbances and correct path error in real time. The example also shows why trajectory tracking is not just "following a line": it couples estimation, nonlinear dynamics, actuator limits, disturbance rejection, and terminal accuracy.
 
 ## How It Is Used
 
