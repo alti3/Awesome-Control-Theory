@@ -11,11 +11,17 @@ branch: "System Analysis"
 
 A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
+## Video
+
+<YouTube url="https://www.youtube.com/playlist?list=PLUMWjy5jgHK0c6HObj5BAMwmsgV2OWsjG" title="Nyquist stability criterion playlist" />
+
 ## Mathematical Form
 
 For an LTI feedback loop, the loop transfer function organizes tracking and robustness:
 
-$$L(s)=C(s)P(s),\qquad S(s)=\frac{1}{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)}.$$
+$$
+L(s)=C(s)P(s),\qquad S(s)=\frac{1}{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)}.
+$$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
