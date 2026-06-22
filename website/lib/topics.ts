@@ -111,7 +111,7 @@ export async function getTopicSections(slug: string): Promise<TopicSection[]> {
       continue;
     }
 
-    const title = match[2].replace(/\s+#$/, "").trim();
+    const title = match[2].replace(/\s+#+\s*$/, "").trim();
     const baseId = slugifyHeading(title);
     const count = seen.get(baseId) ?? 0;
     seen.set(baseId, count + 1);

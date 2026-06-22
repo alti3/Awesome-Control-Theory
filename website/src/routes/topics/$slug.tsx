@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { TableOfContents } from "@/components/table-of-contents";
 import { getTopicBySlug } from "@/lib/control-data";
 import { getTopicMetadata, getTopicModule, getTopicSections, getTopicSlugs } from "@/lib/topics";
-import { mdxComponents } from "@/src/mdx-components";
+import { MdxHeadingScope, mdxComponents } from "@/src/mdx-components";
 
 export const Route = createFileRoute("/topics/$slug")({
   loader: async ({ params }) => {
@@ -28,8 +28,8 @@ export const Route = createFileRoute("/topics/$slug")({
     const fallbackTitle = loaderData?.slug.replace(/-/g, " ") ?? "Control Theory Topic";
     const title = loaderData?.metadata?.title ?? loaderData?.topic?.term ?? fallbackTitle;
     const description =
-      loaderData?.metadata?.description ??
-      loaderData?.topic?.description ??
+      loaderData?.metadata?.description ||
+      loaderData?.topic?.description ||
       `Deep dive into ${title} in Control Theory`;
 
     return {
@@ -68,7 +68,7 @@ function TopicPage() {
             {metadata?.title ?? topic?.term ?? "Control Theory Topic"}
           </h1>
           <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
-            {metadata?.description ?? topic?.description}
+            {metadata?.description || topic?.description}
           </p>
         </div>
 
@@ -150,6 +150,13 @@ function TopicArticle({ slug }: { slug: string }) {
       }
 
       setTopicContent(() => mdx.default);
+    }).catch((error) => {
+      if (ignore) {
+        return;
+      }
+
+      console.error(`Failed to load topic "${slug}"`, error);
+      setTopicContent(() => TopicArticleLoadError);
     });
 
     return () => {
@@ -163,8 +170,18 @@ function TopicArticle({ slug }: { slug: string }) {
 
   return (
     <article className="topic-prose">
-      <TopicContent components={mdxComponents} />
+      <MdxHeadingScope>
+        <TopicContent components={mdxComponents} />
+      </MdxHeadingScope>
     </article>
+  );
+}
+
+function TopicArticleLoadError() {
+  return (
+    <p className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
+      This topic could not be loaded.
+    </p>
   );
 }
 

@@ -26,7 +26,10 @@ function getYouTubeSrc({ id, playlistId, url }: Pick<YouTubeProps, "id" | "playl
       return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
     }
 
-    if (parsedUrl.hostname.endsWith("youtube.com")) {
+    if (
+      parsedUrl.hostname === "youtube.com" ||
+      parsedUrl.hostname.endsWith(".youtube.com")
+    ) {
       if (parsedUrl.pathname.startsWith("/embed/")) {
         const videoId = parsedUrl.pathname.split("/")[2];
         return videoId ? `https://www.youtube.com/embed/${videoId}` : null;

@@ -61,6 +61,7 @@ export function ThemeToggle() {
     };
 
     preference.addEventListener("change", onChange);
+    onChange();
     return () => preference.removeEventListener("change", onChange);
   }, []);
 

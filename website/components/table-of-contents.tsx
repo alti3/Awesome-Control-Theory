@@ -34,6 +34,10 @@ export function TableOfContents({ sections }: { sections: TopicSection[] }) {
   );
 
   useEffect(() => {
+    setActiveId(sections[0]?.id ?? "");
+  }, [sections]);
+
+  useEffect(() => {
     const headings = sections
       .map((section) => document.getElementById(section.id))
       .filter((el): el is HTMLElement => Boolean(el));
