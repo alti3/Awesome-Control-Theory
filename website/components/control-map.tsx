@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useMemo } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Search,
@@ -30,8 +30,18 @@ const ICONS = {
   "first-principles": Atom,
 } as const;
 
-export function ControlMap() {
-  const [query, setQuery] = useState("");
+export function ControlMap({ initialQuery = "" }: { initialQuery?: string }) {
+  const navigate = useNavigate({ from: "/map" });
+  const query = initialQuery;
+
+  const setQuery = (nextQuery: string) => {
+    navigate({
+      to: "/map",
+      search: nextQuery.trim() ? { q: nextQuery } : {},
+      replace: true,
+      resetScroll: false,
+    });
+  };
 
   const resetMap = () => {
     setQuery("");
@@ -155,10 +165,32 @@ function MapOverview() {
   );
 }
 
-export function BranchDetail({ branch }: { branch: Branch }) {
-  const [activeSection, setActiveSection] = useState(0);
+export function BranchDetail({
+  branch,
+  activeSectionId,
+}: {
+  branch: Branch;
+  activeSectionId?: string;
+}) {
+  const navigate = useNavigate({ from: "/map/$slug" });
   const Icon = ICONS[branch.id as keyof typeof ICONS] ?? Atom;
+  const activeSection = Math.max(
+    0,
+    branch.sections.findIndex((s) => topicToSlug(s.title) === activeSectionId),
+  );
   const section = branch.sections[activeSection];
+
+  const setActiveSection = (index: number) => {
+    const sectionId = topicToSlug(branch.sections[index]?.title ?? "");
+
+    navigate({
+      to: "/map/$slug",
+      params: { slug: branch.id },
+      search: sectionId ? { section: sectionId } : {},
+      replace: true,
+      resetScroll: false,
+    });
+  };
 
   return (
     <div>
@@ -231,6 +263,7 @@ export function BranchDetail({ branch }: { branch: Branch }) {
                 key={topic.term}
                 to="/topics/$slug"
                 params={{ slug: topicToSlug(topic.term) }}
+                search={{}}
                 className="rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40"
               >
                 <h3 className="text-sm font-semibold leading-snug text-foreground">{topic.term}</h3>
@@ -273,6 +306,7 @@ function SearchResults({
               key={`${branch.id}-${section}-${topicToSlug(topic.term)}`}
               to="/topics/$slug"
               params={{ slug: topicToSlug(topic.term) }}
+              search={{}}
               className="group rounded-lg border border-border bg-card p-4 text-left transition-colors hover:border-primary/60"
             >
               <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">

@@ -6,6 +6,9 @@ import { SiteHeader } from "@/components/site-header";
 import { branches, getBranchBySlug } from "@/lib/control-data";
 
 export const Route = createFileRoute("/map/$slug")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    section: typeof search.section === "string" ? search.section : undefined,
+  }),
   loader: ({ params }) => {
     const branch = getBranchBySlug(params.slug);
 
@@ -39,13 +42,14 @@ export function getStaticPaths() {
 
 function MapBranchPage() {
   const { branch } = Route.useLoaderData();
+  const { section } = Route.useSearch();
 
   return (
     <div className="min-h-screen">
       <SiteHeader activePage="map" />
 
       <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
-        <BranchDetail branch={branch} />
+        <BranchDetail branch={branch} activeSectionId={section} />
       </main>
 
       <SiteFooter />

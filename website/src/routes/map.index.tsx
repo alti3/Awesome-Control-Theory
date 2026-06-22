@@ -3,6 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ControlMap } from "@/components/control-map";
 
 export const Route = createFileRoute("/map/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    q: typeof search.q === "string" ? search.q : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Map - Map of Control Theory" },
@@ -17,5 +20,7 @@ export const Route = createFileRoute("/map/")({
 });
 
 function MapPage() {
-  return <ControlMap />;
+  const { q } = Route.useSearch();
+
+  return <ControlMap initialQuery={q ?? ""} />;
 }

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useCanGoBack, useRouter } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState, type ComponentType } from "react";
 import type { MDXComponents } from "mdx/types";
@@ -56,13 +56,7 @@ function TopicPage() {
       <SiteHeader activePage="map" />
 
       <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
-        <Link
-          to="/map"
-          className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-        >
-          <ArrowLeft className="size-4" />
-          Back to map
-        </Link>
+        <TopicBackControl branchId={topic?.branchId} branchTitle={topic?.branchTitle} />
 
         <div className="mb-8 border-b border-border pb-6">
           <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
@@ -99,6 +93,45 @@ function TopicPage() {
 
       <SiteFooter />
     </div>
+  );
+}
+
+function TopicBackControl({
+  branchId,
+  branchTitle,
+}: {
+  branchId?: string;
+  branchTitle?: string;
+}) {
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
+  const label = branchTitle ? `Back to ${branchTitle}` : "Back to map";
+  const className =
+    "mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary";
+
+  if (canGoBack) {
+    return (
+      <button type="button" onClick={() => router.history.back()} className={className}>
+        <ArrowLeft className="size-4" />
+        {label}
+      </button>
+    );
+  }
+
+  if (branchId) {
+    return (
+      <Link to="/map/$slug" params={{ slug: branchId }} search={{}} className={className}>
+        <ArrowLeft className="size-4" />
+        {label}
+      </Link>
+    );
+  }
+
+  return (
+    <Link to="/map" search={{}} className={className}>
+      <ArrowLeft className="size-4" />
+      {label}
+    </Link>
   );
 }
 
