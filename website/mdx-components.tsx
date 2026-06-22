@@ -1,1 +1,7 @@
-export { useMDXComponents } from "@/app/mdx-components"
+export { mdxComponents } from "@/src/mdx-components";
+
+import { mdxComponents } from "@/src/mdx-components";
+
+export function useMDXComponents() {
+  return mdxComponents;
+}

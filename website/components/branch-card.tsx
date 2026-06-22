@@ -1,23 +1,24 @@
-"use client"
+"use client";
 
-import type { LucideIcon } from "lucide-react"
-import { ArrowUpRight } from "lucide-react"
-import type { Branch } from "@/lib/control-data"
-import { cn } from "@/lib/utils"
+import type { LucideIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import type { Branch } from "@/lib/control-data";
+import { cn } from "@/lib/utils";
 
 export function BranchCard({
   branch,
   icon: Icon,
   onSelect,
 }: {
-  branch: Branch
-  icon: LucideIcon
-  onSelect: () => void
+  branch: Branch;
+  icon: LucideIcon;
+  onSelect: () => void;
 }) {
-  const topicCount = branch.sections.reduce((n, s) => n + s.topics.length, 0)
+  const topicCount = branch.sections.reduce((n, s) => n + s.topics.length, 0);
 
   return (
     <button
+      type="button"
       onClick={onSelect}
       className={cn(
         "group relative flex flex-col items-start gap-4 rounded-lg border border-border bg-card p-5 text-left",
@@ -32,8 +33,12 @@ export function BranchCard({
       </div>
 
       <div className="space-y-1.5">
-        <p className="font-mono text-[11px] uppercase tracking-widest text-primary">{branch.tagline}</p>
-        <h3 className="text-balance text-lg font-semibold leading-tight tracking-tight">{branch.title}</h3>
+        <p className="font-mono text-[11px] uppercase tracking-widest text-primary">
+          {branch.tagline}
+        </p>
+        <h3 className="text-balance text-lg font-semibold leading-tight tracking-tight">
+          {branch.title}
+        </h3>
         <p className="text-pretty text-sm leading-relaxed text-muted-foreground">{branch.blurb}</p>
       </div>
 
@@ -44,5 +49,5 @@ export function BranchCard({
         <ArrowUpRight className="size-4 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
       </div>
     </button>
-  )
+  );
 }

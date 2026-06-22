@@ -1,20 +1,25 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { resourceGroups, roadmaps } from "@/lib/control-data"
-import { ArrowRight, BookOpen } from "lucide-react"
+import { Link } from "@tanstack/react-router";
+import { resourceGroups, roadmaps } from "@/lib/control-data";
+import { ArrowRight, BookOpen } from "lucide-react";
 
 export function RoadmapsView() {
-  const resourceCount = resourceGroups.reduce((count, group) => count + group.resources.length, 0)
+  const resourceCount = resourceGroups.reduce((count, group) => count + group.resources.length, 0);
 
   return (
     <div className="space-y-12">
       <section>
         <header className="mb-6">
-          <p className="font-mono text-xs uppercase tracking-widest text-primary">Learning roadmaps</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">Pick a path, follow the loop</h2>
+          <p className="font-mono text-xs uppercase tracking-widest text-primary">
+            Learning roadmaps
+          </p>
+          <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+            Pick a path, follow the loop
+          </h2>
           <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
-            Ordered sequences that take you from first principles to advanced, learning-based control.
+            Ordered sequences that take you from first principles to advanced, learning-based
+            control.
           </p>
         </header>
 
@@ -40,15 +45,17 @@ export function RoadmapsView() {
       <section>
         <header className="mb-6">
           <p className="font-mono text-xs uppercase tracking-widest text-primary">References</p>
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight">Books, papers, courses & software</h2>
+          <h2 className="mt-1 text-2xl font-semibold tracking-tight">
+            Books, papers, courses & software
+          </h2>
           <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
-            The full resource index now has {resourceGroups.length} groups and {resourceCount} entries, including
-            the textbook references from the README.
+            The full resource index now has {resourceGroups.length} groups and {resourceCount}{" "}
+            entries, including the textbook references from the README.
           </p>
         </header>
 
         <Link
-          href="/references"
+          to="/references"
           className="group inline-flex items-center gap-2 rounded-md border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-primary/60"
         >
           <BookOpen className="size-4 text-primary" />
@@ -60,11 +67,13 @@ export function RoadmapsView() {
           {resourceGroups.map((group) => (
             <div key={group.title} className="rounded-lg border border-border bg-card p-4">
               <p className="text-sm font-medium leading-snug">{group.title}</p>
-              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{group.resources.length} entries</p>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                {group.resources.length} entries
+              </p>
             </div>
           ))}
         </div>
       </section>
     </div>
-  )
+  );
 }

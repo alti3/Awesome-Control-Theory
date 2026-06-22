@@ -1,0 +1,15 @@
+{
+  "plugins": ["react", "react-hooks", "typescript"],
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "ignorePatterns": [
+    ".tanstack/**",
+    "dist/**",
+    "node_modules/**",
+    "routeTree.gen.ts",
+    "src/routeTree.gen.ts"
+  ]
+}

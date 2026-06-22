@@ -14,5 +14,5 @@ export function SiteFooter() {
         (Engineering Media). Text licensed CC BY 4.0.
       </div>
     </footer>
-  )
+  );
 }

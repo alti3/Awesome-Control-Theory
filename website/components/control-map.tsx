@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from "react"
-import Link from "next/link"
+import { useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   Search,
@@ -13,12 +13,12 @@ import {
   Activity,
   Atom,
   X,
-} from "lucide-react"
-import { branches, topicToSlug, type Branch, type Topic } from "@/lib/control-data"
-import { BranchCard } from "@/components/branch-card"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { cn } from "@/lib/utils"
+} from "lucide-react";
+import { branches, topicToSlug, type Branch, type Topic } from "@/lib/control-data";
+import { BranchCard } from "@/components/branch-card";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { cn } from "@/lib/utils";
 
 const ICONS = {
   core: Repeat,
@@ -28,23 +28,23 @@ const ICONS = {
   modeling: Boxes,
   analysis: Activity,
   "first-principles": Atom,
-} as const
+} as const;
 
 export function ControlMap() {
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-  const [query, setQuery] = useState("")
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
   const resetMap = () => {
-    setSelectedId(null)
-    setQuery("")
-  }
+    setSelectedId(null);
+    setQuery("");
+  };
 
-  const selected = branches.find((b) => b.id === selectedId) ?? null
+  const selected = branches.find((b) => b.id === selectedId) ?? null;
 
   const searchResults = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return null
-    const results: { branch: Branch; section: string; topic: Topic }[] = []
+    const q = query.trim().toLowerCase();
+    if (!q) return null;
+    const results: { branch: Branch; section: string; topic: Topic }[] = [];
     for (const branch of branches) {
       for (const section of branch.sections) {
         for (const topic of section.topics) {
@@ -54,13 +54,13 @@ export function ControlMap() {
             section.title.toLowerCase().includes(q) ||
             branch.title.toLowerCase().includes(q)
           ) {
-            results.push({ branch, section: section.title, topic })
+            results.push({ branch, section: section.title, topic });
           }
         }
       }
     }
-    return results
-  }, [query])
+    return results;
+  }, [query]);
 
   return (
     <div className="min-h-screen">
@@ -68,6 +68,7 @@ export function ControlMap() {
         <div className="relative min-w-0 flex-[1_1_14rem] md:w-72">
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <input
+            aria-label="Search topics"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search 200+ topics..."
@@ -75,6 +76,7 @@ export function ControlMap() {
           />
           {query && (
             <button
+              type="button"
               onClick={() => setQuery("")}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               aria-label="Clear search"
@@ -87,10 +89,7 @@ export function ControlMap() {
 
       <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
         {searchResults ? (
-          <SearchResults
-            results={searchResults}
-            query={query}
-          />
+          <SearchResults results={searchResults} query={query} />
         ) : selected ? (
           <BranchDetail branch={selected} onBack={() => setSelectedId(null)} />
         ) : (
@@ -100,7 +99,7 @@ export function ControlMap() {
 
       <SiteFooter />
     </div>
-  )
+  );
 }
 
 function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
@@ -109,16 +108,27 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
       <section className="relative mb-10 overflow-hidden rounded-xl border border-border bg-card">
         <div className="blueprint-grid absolute inset-0 opacity-60" aria-hidden />
         <div className="relative px-6 py-12 md:px-10 md:py-16">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">Sense · Decide · Act</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
+            Sense · Decide · Act
+          </p>
           <h1 className="mt-3 max-w-3xl text-balance text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
             The study of systems that match behavior to a desired objective.
           </h1>
           <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
-            Explore control theory as a connected map. Start with a branch below, follow a learning path, or
-            search across every method, estimator, and analysis tool.
+            Explore control theory as a connected map. Start with a branch below, follow a learning
+            path, or search across every method, estimator, and analysis tool.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Feedback", "LQR", "Kalman filter", "MPC", "MIMO", "Z-transform", "Lyapunov", "Sliding mode"].map((t) => (
+            {[
+              "Feedback",
+              "LQR",
+              "Kalman filter",
+              "MPC",
+              "MIMO",
+              "Z-transform",
+              "Lyapunov",
+              "Sliding mode",
+            ].map((t) => (
               <span
                 key={t}
                 className="rounded-full border border-border bg-secondary px-3 py-1 font-mono text-xs text-secondary-foreground"
@@ -131,7 +141,9 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
       </section>
 
       <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="font-mono text-sm uppercase tracking-widest text-muted-foreground">Branches</h2>
+        <h2 className="font-mono text-sm uppercase tracking-widest text-muted-foreground">
+          Branches
+        </h2>
         <span className="font-mono text-xs text-muted-foreground">{branches.length} regions</span>
       </div>
 
@@ -146,17 +158,18 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }) {
-  const [activeSection, setActiveSection] = useState(0)
-  const Icon = ICONS[branch.id as keyof typeof ICONS] ?? Atom
-  const section = branch.sections[activeSection]
+  const [activeSection, setActiveSection] = useState(0);
+  const Icon = ICONS[branch.id as keyof typeof ICONS] ?? Atom;
+  const section = branch.sections[activeSection];
 
   return (
     <div>
       <button
+        type="button"
         onClick={onBack}
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
@@ -171,21 +184,30 @@ function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }
         <div>
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs text-muted-foreground">{branch.number}</span>
-            <span className="font-mono text-[11px] uppercase tracking-widest text-primary">{branch.tagline}</span>
+            <span className="font-mono text-[11px] uppercase tracking-widest text-primary">
+              {branch.tagline}
+            </span>
           </div>
-          <h1 className="mt-1 text-balance text-2xl font-semibold tracking-tight md:text-3xl">{branch.title}</h1>
-          <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">{branch.blurb}</p>
+          <h1 className="mt-1 text-balance text-2xl font-semibold tracking-tight md:text-3xl">
+            {branch.title}
+          </h1>
+          <p className="mt-1 max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
+            {branch.blurb}
+          </p>
         </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         {/* Section nav */}
         <nav className="md:sticky md:top-24 md:self-start">
-          <p className="mb-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">Groups</p>
+          <p className="mb-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            Groups
+          </p>
           <ul className="flex flex-wrap gap-2 md:flex-col md:gap-1">
             {branch.sections.map((s, i) => (
               <li key={s.title}>
                 <button
+                  type="button"
                   onClick={() => setActiveSection(i)}
                   className={cn(
                     "w-full rounded-md border px-3 py-2 text-left text-sm transition-colors",
@@ -214,26 +236,29 @@ function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }
             {section.topics.map((topic) => (
               <Link
                 key={topic.term}
-                href={`/topics/${topicToSlug(topic.term)}`}
+                to="/topics/$slug"
+                params={{ slug: topicToSlug(topic.term) }}
                 className="rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40"
               >
                 <h3 className="text-sm font-semibold leading-snug text-foreground">{topic.term}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {topic.description}
+                </p>
               </Link>
             ))}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function SearchResults({
   results,
   query,
 }: {
-  results: { branch: Branch; section: string; topic: Topic }[]
-  query: string
+  results: { branch: Branch; section: string; topic: Topic }[];
+  query: string;
 }) {
   return (
     <div>
@@ -245,14 +270,16 @@ function SearchResults({
 
       {results.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
-          No topics matched. Try &ldquo;Kalman&rdquo;, &ldquo;MPC&rdquo;, or &ldquo;stability&rdquo;.
+          No topics matched. Try &ldquo;Kalman&rdquo;, &ldquo;MPC&rdquo;, or
+          &ldquo;stability&rdquo;.
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
-          {results.map(({ branch, section, topic }, i) => (
+          {results.map(({ branch, section, topic }) => (
             <Link
-              key={`${topic.term}-${i}`}
-              href={`/topics/${topicToSlug(topic.term)}`}
+              key={`${branch.id}-${section}-${topicToSlug(topic.term)}`}
+              to="/topics/$slug"
+              params={{ slug: topicToSlug(topic.term) }}
               className="group rounded-lg border border-border bg-card p-4 text-left transition-colors hover:border-primary/60"
             >
               <div className="mb-1.5 flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
@@ -261,11 +288,13 @@ function SearchResults({
                 <span>{section}</span>
               </div>
               <h3 className="text-sm font-semibold leading-snug">{topic.term}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                {topic.description}
+              </p>
             </Link>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }

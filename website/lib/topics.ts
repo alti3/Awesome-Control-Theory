@@ -1,9 +1,12 @@
-import { readFile } from "node:fs/promises"
-import path from "node:path"
-import { slugifyHeading } from "@/lib/heading-utils"
-import { topicContent, type TopicMdxModule } from "@/lib/topic-content"
+import { slugifyHeading } from "@/lib/heading-utils";
+import { topicContent, type TopicMdxModule } from "@/lib/topic-content";
 
-export const topics = [
+const topicSource = import.meta.glob<string>("/content/topics/*.mdx", {
+  query: "?raw",
+  import: "default",
+});
+
+const topics = [
   "a-a-star",
   "a-d-and-d-a-conversion",
   "adaptive-dynamic-programming",
@@ -268,41 +271,37 @@ export const topics = [
   "z-plane-geometry",
   "z-transform-methods",
   "zero-order-hold",
-] as const
+] as const;
 
-export type TopicSlug = (typeof topics)[number]
+export type TopicSlug = (typeof topics)[number];
 
 export type TopicSection = {
-  id: string
-  title: string
-  level: 2 | 3
-}
+  id: string;
+  title: string;
+  level: 2 | 3;
+};
 
 export async function getTopicSlugs(): Promise<string[]> {
-  return [...topics]
-}
-
-export function isTopicSlug(slug: string): slug is TopicSlug {
-  return (topics as readonly string[]).includes(slug)
+  return [...topics];
 }
 
 function hasTopicContent(slug: string): slug is keyof typeof topicContent {
-  return slug in topicContent
+  return slug in topicContent;
 }
 
 export async function getTopicModule(slug: string): Promise<TopicMdxModule | null> {
   if (!hasTopicContent(slug)) {
-    return null
+    return null;
   }
 
-  return topicContent[slug]()
+  return topicContent[slug]();
 }
 
 export async function getTopicMetadata(slug: string) {
-  const module = await getTopicModule(slug)
+  const module = await getTopicModule(slug);
 
   if (!module) {
-    return null
+    return null;
   }
 
   return {
@@ -310,41 +309,47 @@ export async function getTopicMetadata(slug: string) {
     description: module.frontmatter?.description || "",
     category: module.frontmatter?.category,
     branch: module.frontmatter?.branch,
-  }
+  };
 }
 
 export async function getTopicSections(slug: string): Promise<TopicSection[]> {
   if (!hasTopicContent(slug)) {
-    return []
+    return [];
   }
 
   try {
-    const file = await readFile(path.join(process.cwd(), "content", "topics", `${slug}.mdx`), "utf8")
-    const content = file.replace(/^---[\s\S]*?---\s*/, "")
-    const sections: TopicSection[] = []
-    const seen = new Map<string, number>()
+    const loadTopicSource = topicSource[`/content/topics/${slug}.mdx`];
+
+    if (!loadTopicSource) {
+      return [];
+    }
+
+    const file = await loadTopicSource();
+    const content = file.replace(/^---[\s\S]*?---\s*/, "");
+    const sections: TopicSection[] = [];
+    const seen = new Map<string, number>();
 
     for (const line of content.split("\n")) {
-      const match = /^(#{2,3})\s+(.+?)\s*$/.exec(line)
+      const match = /^(#{2,3})\s+(.+?)\s*$/.exec(line);
 
       if (!match) {
-        continue
+        continue;
       }
 
-      const title = match[2].replace(/\s+#$/, "").trim()
-      const baseId = slugifyHeading(title)
-      const count = seen.get(baseId) ?? 0
-      seen.set(baseId, count + 1)
+      const title = match[2].replace(/\s+#$/, "").trim();
+      const baseId = slugifyHeading(title);
+      const count = seen.get(baseId) ?? 0;
+      seen.set(baseId, count + 1);
 
       sections.push({
         id: count === 0 ? baseId : `${baseId}-${count + 1}`,
         title,
         level: match[1].length as 2 | 3,
-      })
+      });
     }
 
-    return sections
+    return sections;
   } catch {
-    return []
+    return [];
   }
 }
