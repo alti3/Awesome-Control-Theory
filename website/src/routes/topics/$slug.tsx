@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { cache, use } from "react";
+import { cache, Suspense, use } from "react";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -58,9 +58,7 @@ const getTopicPageContent = cache(async (slug: string) => {
 });
 
 function TopicPage() {
-  const { sections, slug, topic } = Route.useLoaderData();
-  const mdx = use(getTopicPageContent(slug));
-  const { default: TopicContent, frontmatter } = mdx;
+  const { metadata, sections, slug, topic } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen">
@@ -77,15 +75,15 @@ function TopicPage() {
 
         <div className="mb-8 border-b border-border pb-6">
           <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-            <span className="text-primary">{frontmatter?.branch ?? topic?.branchTitle}</span>
+            <span className="text-primary">{metadata?.branch ?? topic?.branchTitle}</span>
             <span>/</span>
-            <span>{frontmatter?.category ?? topic?.sectionTitle}</span>
+            <span>{metadata?.category ?? topic?.sectionTitle}</span>
           </div>
           <h1 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
-            {frontmatter?.title ?? topic?.term ?? "Control Theory Topic"}
+            {metadata?.title ?? topic?.term ?? "Control Theory Topic"}
           </h1>
           <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
-            {frontmatter?.description ?? topic?.description}
+            {metadata?.description ?? topic?.description}
           </p>
         </div>
 
@@ -97,9 +95,9 @@ function TopicPage() {
               </div>
             )}
 
-            <article className="topic-prose">
-              <TopicContent components={mdxComponents} />
-            </article>
+            <Suspense fallback={<TopicArticleFallback />}>
+              <TopicArticle slug={slug} />
+            </Suspense>
           </div>
 
           {sections.length > 0 && (
@@ -112,5 +110,27 @@ function TopicPage() {
 
       <SiteFooter />
     </div>
+  );
+}
+
+function TopicArticle({ slug }: { slug: string }) {
+  const mdx = use(getTopicPageContent(slug));
+  const { default: TopicContent } = mdx;
+
+  return (
+    <article className="topic-prose">
+      <TopicContent components={mdxComponents} />
+    </article>
+  );
+}
+
+function TopicArticleFallback() {
+  return (
+    <article className="topic-prose" aria-busy="true">
+      <div className="h-8 w-2/3 rounded bg-secondary" />
+      <div className="h-4 w-full rounded bg-secondary" />
+      <div className="h-4 w-11/12 rounded bg-secondary" />
+      <div className="h-4 w-4/5 rounded bg-secondary" />
+    </article>
   );
 }

@@ -1,10 +1,34 @@
 import { slugifyHeading } from "@/lib/heading-utils";
 import { topicContent, type TopicMdxModule } from "@/lib/topic-content";
 
-const topicSource = import.meta.glob<string>("/content/topics/*.mdx", {
+const topicSource = import.meta.glob<unknown>("/content/topics/*.mdx", {
   query: "?raw",
   import: "default",
+  eager: true,
 });
+
+function getRawTopicSource(source: unknown): string | null {
+  if (typeof source === "string") {
+    return source;
+  }
+
+  if (typeof source !== "function") {
+    return null;
+  }
+
+  const rendered = source({});
+
+  if (
+    rendered &&
+    typeof rendered === "object" &&
+    "type" in rendered &&
+    typeof rendered.type === "string"
+  ) {
+    return rendered.type;
+  }
+
+  return null;
+}
 
 const topics = [
   "a-a-star",
@@ -318,13 +342,12 @@ export async function getTopicSections(slug: string): Promise<TopicSection[]> {
   }
 
   try {
-    const loadTopicSource = topicSource[`/content/topics/${slug}.mdx`];
+    const file = getRawTopicSource(topicSource[`/content/topics/${slug}.mdx`]);
 
-    if (!loadTopicSource) {
+    if (!file) {
       return [];
     }
 
-    const file = await loadTopicSource();
     const content = file.replace(/^---[\s\S]*?---\s*/, "");
     const sections: TopicSection[] = [];
     const seen = new Map<string, number>();

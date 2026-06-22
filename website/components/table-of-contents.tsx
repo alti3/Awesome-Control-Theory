@@ -26,6 +26,34 @@ function subscribeToScrollProgress(onStoreChange: () => void) {
   };
 }
 
+let scrollAnimationFrame = 0;
+
+function animateScrollTo(targetTop: number) {
+  if (scrollAnimationFrame) {
+    cancelAnimationFrame(scrollAnimationFrame);
+  }
+
+  const startTop = window.scrollY;
+  const distance = targetTop - startTop;
+  const duration = 450;
+  const startTime = performance.now();
+
+  const step = (now: number) => {
+    const elapsed = Math.min(1, (now - startTime) / duration);
+    const eased = elapsed < 0.5 ? 4 * elapsed ** 3 : 1 - (-2 * elapsed + 2) ** 3 / 2;
+
+    window.scrollTo(0, startTop + distance * eased);
+
+    if (elapsed < 1) {
+      scrollAnimationFrame = requestAnimationFrame(step);
+    } else {
+      scrollAnimationFrame = 0;
+    }
+  };
+
+  scrollAnimationFrame = requestAnimationFrame(step);
+}
+
 export function TableOfContents({ sections }: { sections: TopicSection[] }) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "");
   const progress = useSyncExternalStore(
@@ -67,7 +95,7 @@ export function TableOfContents({ sections }: { sections: TopicSection[] }) {
 
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 96;
-      window.scrollTo({ top, behavior: "smooth" });
+      animateScrollTo(top);
       setActiveId(id);
     }
   };
