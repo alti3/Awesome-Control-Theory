@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { cache, Suspense, use } from "react";
+import { useEffect, useState, type ComponentType } from "react";
+import type { MDXComponents } from "mdx/types";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -47,16 +48,6 @@ export async function getStaticPaths() {
   return (await getTopicSlugs()).map((slug) => ({ slug }));
 }
 
-const getTopicPageContent = cache(async (slug: string) => {
-  const mdx = await getTopicModule(slug);
-
-  if (!mdx) {
-    throw notFound();
-  }
-
-  return mdx;
-});
-
 function TopicPage() {
   const { metadata, sections, slug, topic } = Route.useLoaderData();
 
@@ -95,9 +86,7 @@ function TopicPage() {
               </div>
             )}
 
-            <Suspense fallback={<TopicArticleFallback />}>
-              <TopicArticle slug={slug} />
-            </Suspense>
+            <TopicArticle slug={slug} />
           </div>
 
           {sections.length > 0 && (
@@ -114,8 +103,30 @@ function TopicPage() {
 }
 
 function TopicArticle({ slug }: { slug: string }) {
-  const mdx = use(getTopicPageContent(slug));
-  const { default: TopicContent } = mdx;
+  const [TopicContent, setTopicContent] = useState<ComponentType<{
+    components?: MDXComponents;
+  }> | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+    setTopicContent(null);
+
+    getTopicModule(slug).then((mdx) => {
+      if (ignore || !mdx) {
+        return;
+      }
+
+      setTopicContent(() => mdx.default);
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [slug]);
+
+  if (!TopicContent) {
+    return <TopicArticleFallback />;
+  }
 
   return (
     <article className="topic-prose">

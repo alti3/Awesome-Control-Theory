@@ -1,6 +1,5 @@
 "use client";
 
-import type { MouseEvent } from "react";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 import type { TopicSection } from "@/lib/topics";
@@ -24,34 +23,6 @@ function subscribeToScrollProgress(onStoreChange: () => void) {
     window.removeEventListener("scroll", onStoreChange);
     window.removeEventListener("resize", onStoreChange);
   };
-}
-
-let scrollAnimationFrame = 0;
-
-function animateScrollTo(targetTop: number) {
-  if (scrollAnimationFrame) {
-    cancelAnimationFrame(scrollAnimationFrame);
-  }
-
-  const startTop = window.scrollY;
-  const distance = targetTop - startTop;
-  const duration = 450;
-  const startTime = performance.now();
-
-  const step = (now: number) => {
-    const elapsed = Math.min(1, (now - startTime) / duration);
-    const eased = elapsed < 0.5 ? 4 * elapsed ** 3 : 1 - (-2 * elapsed + 2) ** 3 / 2;
-
-    window.scrollTo(0, startTop + distance * eased);
-
-    if (elapsed < 1) {
-      scrollAnimationFrame = requestAnimationFrame(step);
-    } else {
-      scrollAnimationFrame = 0;
-    }
-  };
-
-  scrollAnimationFrame = requestAnimationFrame(step);
 }
 
 export function TableOfContents({ sections }: { sections: TopicSection[] }) {
@@ -88,18 +59,6 @@ export function TableOfContents({ sections }: { sections: TopicSection[] }) {
     return () => observer.disconnect();
   }, [sections]);
 
-  const handleClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    event.preventDefault();
-
-    const el = document.getElementById(id);
-
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 96;
-      animateScrollTo(top);
-      setActiveId(id);
-    }
-  };
-
   if (sections.length === 0) {
     return null;
   }
@@ -121,7 +80,6 @@ export function TableOfContents({ sections }: { sections: TopicSection[] }) {
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
-                onClick={(event) => handleClick(event, section.id)}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
                   "group flex items-baseline gap-3 rounded-md px-3 py-2 leading-snug transition-colors",

@@ -1,25 +1,18 @@
 "use client";
 
+import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 import { ArrowUpRight } from "lucide-react";
 import type { Branch } from "@/lib/control-data";
 import { cn } from "@/lib/utils";
 
-export function BranchCard({
-  branch,
-  icon: Icon,
-  onSelect,
-}: {
-  branch: Branch;
-  icon: LucideIcon;
-  onSelect: () => void;
-}) {
+export function BranchCard({ branch, icon: Icon }: { branch: Branch; icon: LucideIcon }) {
   const topicCount = branch.sections.reduce((n, s) => n + s.topics.length, 0);
 
   return (
-    <button
-      type="button"
-      onClick={onSelect}
+    <Link
+      to="/map/$slug"
+      params={{ slug: branch.id }}
       className={cn(
         "group relative flex flex-col items-start gap-4 rounded-lg border border-border bg-card p-5 text-left",
         "transition-all hover:border-primary/60 hover:shadow-[0_1px_0_0_var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -48,6 +41,6 @@ export function BranchCard({
         </span>
         <ArrowUpRight className="size-4 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
       </div>
-    </button>
+    </Link>
   );
 }

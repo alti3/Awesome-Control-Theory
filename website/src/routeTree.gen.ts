@@ -7,7 +7,9 @@ import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as PathsRouteImport } from './routes/paths'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MapIndexRouteImport } from './routes/map.index'
 import { Route as TopicsSlugRouteImport } from './routes/topics/$slug'
+import { Route as MapSlugRouteImport } from './routes/map.$slug'
 
 const ReferencesRoute = ReferencesRouteImport.update({
   id: '/references',
@@ -29,45 +31,75 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MapIndexRoute = MapIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MapRoute,
+} as any)
 const TopicsSlugRoute = TopicsSlugRouteImport.update({
   id: '/topics/$slug',
   path: '/topics/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MapSlugRoute = MapSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => MapRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
+  '/map': typeof MapRouteWithChildren
   '/paths': typeof PathsRoute
   '/references': typeof ReferencesRoute
+  '/map/$slug': typeof MapSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
+  '/map/': typeof MapIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
   '/paths': typeof PathsRoute
   '/references': typeof ReferencesRoute
+  '/map/$slug': typeof MapSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
+  '/map': typeof MapIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
+  '/map': typeof MapRouteWithChildren
   '/paths': typeof PathsRoute
   '/references': typeof ReferencesRoute
+  '/map/$slug': typeof MapSlugRoute
   '/topics/$slug': typeof TopicsSlugRoute
+  '/map/': typeof MapIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/paths' | '/references' | '/topics/$slug'
+  fullPaths:
+    | '/'
+    | '/map'
+    | '/paths'
+    | '/references'
+    | '/map/$slug'
+    | '/topics/$slug'
+    | '/map/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/paths' | '/references' | '/topics/$slug'
-  id: '__root__' | '/' | '/map' | '/paths' | '/references' | '/topics/$slug'
+  to: '/' | '/paths' | '/references' | '/map/$slug' | '/topics/$slug' | '/map'
+  id:
+    | '__root__'
+    | '/'
+    | '/map'
+    | '/paths'
+    | '/references'
+    | '/map/$slug'
+    | '/topics/$slug'
+    | '/map/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MapRoute: typeof MapRoute
+  MapRoute: typeof MapRouteWithChildren
   PathsRoute: typeof PathsRoute
   ReferencesRoute: typeof ReferencesRoute
   TopicsSlugRoute: typeof TopicsSlugRoute
@@ -103,6 +135,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/map/': {
+      id: '/map/'
+      path: '/'
+      fullPath: '/map/'
+      preLoaderRoute: typeof MapIndexRouteImport
+      parentRoute: typeof MapRoute
+    }
     '/topics/$slug': {
       id: '/topics/$slug'
       path: '/topics/$slug'
@@ -110,12 +149,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TopicsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/map/$slug': {
+      id: '/map/$slug'
+      path: '/$slug'
+      fullPath: '/map/$slug'
+      preLoaderRoute: typeof MapSlugRouteImport
+      parentRoute: typeof MapRoute
+    }
   }
 }
 
+interface MapRouteChildren {
+  MapSlugRoute: typeof MapSlugRoute
+  MapIndexRoute: typeof MapIndexRoute
+}
+
+const MapRouteChildren: MapRouteChildren = {
+  MapSlugRoute: MapSlugRoute,
+  MapIndexRoute: MapIndexRoute,
+}
+
+const MapRouteWithChildren = MapRoute._addFileChildren(MapRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MapRoute: MapRoute,
+  MapRoute: MapRouteWithChildren,
   PathsRoute: PathsRoute,
   ReferencesRoute: ReferencesRoute,
   TopicsSlugRoute: TopicsSlugRoute,

@@ -31,35 +31,15 @@ const ICONS = {
 } as const;
 
 export function ControlMap() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
   const resetMap = () => {
-    setSelectedId(null);
     setQuery("");
   };
 
-  const selected = branches.find((b) => b.id === selectedId) ?? null;
-
   const searchResults = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return null;
-    const results: { branch: Branch; section: string; topic: Topic }[] = [];
-    for (const branch of branches) {
-      for (const section of branch.sections) {
-        for (const topic of section.topics) {
-          if (
-            topic.term.toLowerCase().includes(q) ||
-            topic.description.toLowerCase().includes(q) ||
-            section.title.toLowerCase().includes(q) ||
-            branch.title.toLowerCase().includes(q)
-          ) {
-            results.push({ branch, section: section.title, topic });
-          }
-        }
-      }
-    }
-    return results;
+    return q ? getSearchResults(q) : null;
   }, [query]);
 
   return (
@@ -88,13 +68,7 @@ export function ControlMap() {
       </SiteHeader>
 
       <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
-        {searchResults ? (
-          <SearchResults results={searchResults} query={query} />
-        ) : selected ? (
-          <BranchDetail branch={selected} onBack={() => setSelectedId(null)} />
-        ) : (
-          <MapOverview onSelect={setSelectedId} />
-        )}
+        {searchResults ? <SearchResults results={searchResults} query={query} /> : <MapOverview />}
       </main>
 
       <SiteFooter />
@@ -102,7 +76,28 @@ export function ControlMap() {
   );
 }
 
-function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
+function getSearchResults(query: string) {
+  const results: { branch: Branch; section: string; topic: Topic }[] = [];
+
+  for (const branch of branches) {
+    for (const section of branch.sections) {
+      for (const topic of section.topics) {
+        if (
+          topic.term.toLowerCase().includes(query) ||
+          topic.description.toLowerCase().includes(query) ||
+          section.title.toLowerCase().includes(query) ||
+          branch.title.toLowerCase().includes(query)
+        ) {
+          results.push({ branch, section: section.title, topic });
+        }
+      }
+    }
+  }
+
+  return results;
+}
+
+function MapOverview() {
   return (
     <div>
       <section className="relative mb-10 overflow-hidden rounded-xl border border-border bg-card">
@@ -153,7 +148,6 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
             key={branch.id}
             branch={branch}
             icon={ICONS[branch.id as keyof typeof ICONS] ?? Atom}
-            onSelect={() => onSelect(branch.id)}
           />
         ))}
       </div>
@@ -161,21 +155,20 @@ function MapOverview({ onSelect }: { onSelect: (id: string) => void }) {
   );
 }
 
-function BranchDetail({ branch, onBack }: { branch: Branch; onBack: () => void }) {
+export function BranchDetail({ branch }: { branch: Branch }) {
   const [activeSection, setActiveSection] = useState(0);
   const Icon = ICONS[branch.id as keyof typeof ICONS] ?? Atom;
   const section = branch.sections[activeSection];
 
   return (
     <div>
-      <button
-        type="button"
-        onClick={onBack}
+      <Link
+        to="/map"
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         <ArrowLeft className="size-4" />
         Back to map
-      </button>
+      </Link>
 
       <div className="mb-8 flex items-start gap-4">
         <span className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary text-primary">

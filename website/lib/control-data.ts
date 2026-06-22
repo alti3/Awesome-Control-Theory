@@ -1458,6 +1458,10 @@ export const branches: Branch[] = [
   },
 ];
 
+export function getBranchBySlug(slug: string) {
+  return branches.find((branch) => branch.id === slug);
+}
+
 export type Roadmap = { title: string; steps: string[] };
 
 export function topicToSlug(term: string) {
