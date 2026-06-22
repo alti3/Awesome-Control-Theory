@@ -1,14 +1,15 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
-import { BookOpen, GitBranch, Github, Map as MapIcon, Route } from "lucide-react";
+import { BookOpen, GitBranch, Github, Home, Map as MapIcon, Route } from "lucide-react";
 import type { ReactNode } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
-type ActivePage = "map" | "paths" | "references";
+type ActivePage = "home" | "map" | "paths" | "references";
 
 const navItems = [
+  { href: "/", label: "Home", page: "home", icon: Home },
   { href: "/map", label: "Map", page: "map", icon: MapIcon },
   { href: "/paths", label: "Paths", page: "paths", icon: Route },
   { href: "/references", label: "Resources", page: "references", icon: BookOpen },
@@ -28,7 +29,7 @@ export function SiteHeader({
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-3 md:flex-row md:items-center md:justify-between md:py-4">
-        <Link to="/map" onClick={resetMap} className="flex items-center gap-2.5 text-left">
+        <Link to="/" className="flex items-center gap-2.5 text-left">
           <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <GitBranch className="size-4" />
           </span>
