@@ -1,0 +1,197 @@
+import { createFileRoute, Link, notFound, useCanGoBack, useRouter } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
+import { useEffect, useState, type ComponentType } from "react";
+import type { MDXComponents } from "mdx/types";
+
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { TableOfContents } from "@/components/table-of-contents";
+import { getTopicBySlug } from "@/lib/control-data";
+import { getTopicMetadata, getTopicModule, getTopicSections, getTopicSlugs } from "@/lib/topics";
+import { MdxHeadingScope, mdxComponents } from "@/src/mdx-components";
+
+export const Route = createFileRoute("/topics/$slug")({
+  loader: async ({ params }) => {
+    const topic = getTopicBySlug(params.slug);
+    const mdx = await getTopicModule(params.slug);
+
+    if (!mdx) {
+      throw notFound();
+    }
+
+    const metadata = await getTopicMetadata(params.slug);
+    const sections = await getTopicSections(params.slug);
+
+    return { metadata, sections, topic, slug: params.slug };
+  },
+  head: ({ loaderData }) => {
+    const fallbackTitle = loaderData?.slug.replace(/-/g, " ") ?? "Control Theory Topic";
+    const title = loaderData?.metadata?.title ?? loaderData?.topic?.term ?? fallbackTitle;
+    const description =
+      loaderData?.metadata?.description ||
+      loaderData?.topic?.description ||
+      `Deep dive into ${title} in Control Theory`;
+
+    return {
+      meta: [
+        { title: `${title} | Control Theory` },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+      ],
+    };
+  },
+  component: TopicPage,
+});
+
+export async function getStaticPaths() {
+  return (await getTopicSlugs()).map((slug) => ({ slug }));
+}
+
+function TopicPage() {
+  const { metadata, sections, slug, topic } = Route.useLoaderData();
+
+  return (
+    <div className="min-h-screen">
+      <SiteHeader activePage="map" />
+
+      <main className="mx-auto max-w-6xl px-5 py-8 md:py-12">
+        <TopicBackControl branchId={topic?.branchId} branchTitle={topic?.branchTitle} />
+
+        <div className="mb-8 border-b border-border pb-6">
+          <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+            <span className="text-primary">{metadata?.branch ?? topic?.branchTitle}</span>
+            <span>/</span>
+            <span>{metadata?.category ?? topic?.sectionTitle}</span>
+          </div>
+          <h1 className="text-balance text-3xl font-semibold tracking-tight md:text-5xl">
+            {metadata?.title ?? topic?.term ?? "Control Theory Topic"}
+          </h1>
+          <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-muted-foreground">
+            {metadata?.description || topic?.description}
+          </p>
+        </div>
+
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+          <div className="min-w-0">
+            {sections.length > 0 && (
+              <div className="mb-8 rounded-lg border border-border bg-card p-4 lg:hidden">
+                <TableOfContents sections={sections} />
+              </div>
+            )}
+
+            <TopicArticle slug={slug} />
+          </div>
+
+          {sections.length > 0 && (
+            <aside className="hidden lg:sticky lg:top-28 lg:block">
+              <TableOfContents sections={sections} />
+            </aside>
+          )}
+        </div>
+      </main>
+
+      <SiteFooter />
+    </div>
+  );
+}
+
+function TopicBackControl({
+  branchId,
+  branchTitle,
+}: {
+  branchId?: string;
+  branchTitle?: string;
+}) {
+  const router = useRouter();
+  const canGoBack = useCanGoBack();
+  const label = branchTitle ? `Back to ${branchTitle}` : "Back to map";
+  const className =
+    "mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary";
+
+  if (canGoBack) {
+    return (
+      <button type="button" onClick={() => router.history.back()} className={className}>
+        <ArrowLeft className="size-4" />
+        {label}
+      </button>
+    );
+  }
+
+  if (branchId) {
+    return (
+      <Link to="/map/$slug" params={{ slug: branchId }} search={{}} className={className}>
+        <ArrowLeft className="size-4" />
+        {label}
+      </Link>
+    );
+  }
+
+  return (
+    <Link to="/map" search={{}} className={className}>
+      <ArrowLeft className="size-4" />
+      {label}
+    </Link>
+  );
+}
+
+function TopicArticle({ slug }: { slug: string }) {
+  const [TopicContent, setTopicContent] = useState<ComponentType<{
+    components?: MDXComponents;
+  }> | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+    setTopicContent(null);
+
+    getTopicModule(slug).then((mdx) => {
+      if (ignore || !mdx) {
+        return;
+      }
+
+      setTopicContent(() => mdx.default);
+    }).catch((error) => {
+      if (ignore) {
+        return;
+      }
+
+      console.error(`Failed to load topic "${slug}"`, error);
+      setTopicContent(() => TopicArticleLoadError);
+    });
+
+    return () => {
+      ignore = true;
+    };
+  }, [slug]);
+
+  if (!TopicContent) {
+    return <TopicArticleFallback />;
+  }
+
+  return (
+    <article className="topic-prose">
+      <MdxHeadingScope>
+        <TopicContent components={mdxComponents} />
+      </MdxHeadingScope>
+    </article>
+  );
+}
+
+function TopicArticleLoadError() {
+  return (
+    <p className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
+      This topic could not be loaded.
+    </p>
+  );
+}
+
+function TopicArticleFallback() {
+  return (
+    <article className="topic-prose" aria-busy="true">
+      <div className="h-8 w-2/3 rounded bg-secondary" />
+      <div className="h-4 w-full rounded bg-secondary" />
+      <div className="h-4 w-11/12 rounded bg-secondary" />
+      <div className="h-4 w-4/5 rounded bg-secondary" />
+    </article>
+  );
+}
