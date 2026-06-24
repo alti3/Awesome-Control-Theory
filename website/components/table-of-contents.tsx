@@ -4,6 +4,8 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 import type { TopicSection } from "@/lib/topics";
 
+const ACTIVE_HEADING_OFFSET = 112;
+
 function getScrollProgressSnapshot() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -25,6 +27,26 @@ function subscribeToScrollProgress(onStoreChange: () => void) {
   };
 }
 
+function getActiveSectionId(sections: TopicSection[]) {
+  let activeId = sections[0]?.id ?? "";
+
+  for (const section of sections) {
+    const heading = document.getElementById(section.id);
+
+    if (!heading) {
+      continue;
+    }
+
+    if (heading.getBoundingClientRect().top <= ACTIVE_HEADING_OFFSET) {
+      activeId = section.id;
+    } else {
+      break;
+    }
+  }
+
+  return activeId;
+}
+
 export function TableOfContents({ sections }: { sections: TopicSection[] }) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? "");
   const progress = useSyncExternalStore(
@@ -38,29 +60,32 @@ export function TableOfContents({ sections }: { sections: TopicSection[] }) {
   }, [sections]);
 
   useEffect(() => {
-    const headings = sections
-      .map((section) => document.getElementById(section.id))
-      .filter((el): el is HTMLElement => Boolean(el));
+    if (sections.length === 0) {
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    let animationFrame = 0;
 
-        if (visible[0]) {
-          setActiveId(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-10% 0px -70% 0px",
-        threshold: 0,
-      },
-    );
+    const updateActiveId = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        setActiveId(getActiveSectionId(sections));
+      });
+    };
 
-    headings.forEach((heading) => observer.observe(heading));
+    updateActiveId();
 
-    return () => observer.disconnect();
+    const observer = new MutationObserver(updateActiveId);
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("scroll", updateActiveId, { passive: true });
+    window.addEventListener("resize", updateActiveId);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      observer.disconnect();
+      window.removeEventListener("scroll", updateActiveId);
+      window.removeEventListener("resize", updateActiveId);
+    };
   }, [sections]);
 
   if (sections.length === 0) {
