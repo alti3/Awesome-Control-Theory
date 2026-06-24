@@ -1,0 +1,52 @@
+---
+title: "Fundamental limitations"
+description: "Capture barriers from delay, nonminimum-phase zeros, unstable poles, noise, and actuator limits."
+category: "System Properties"
+branch: "System Analysis"
+---
+
+## What It Means
+
+**Fundamental limitations** are performance barriers imposed by the plant and the
+implementation environment. These limits keep design work from mistaking tuning
+effort for missing authority: unstable poles, right-half-plane zeros, delay, noise,
+saturation, and finite actuator bandwidth all restrict what feedback can achieve.
+
+## Mathematical Form
+
+Several limits appear through $S$ and $T$:
+
+$$
+S=\frac{1}{1+L},\qquad T=\frac{L}{1+L}.
+$$
+
+Reducing $|S|$ in one frequency band can increase it elsewhere, while zeros, poles,
+and delays constrain crossover frequency and phase margin.
+
+## Intuition
+
+Feedback redistributes error; it does not remove physics. A controller can make a
+plant behave better where the loop has authority, but it must pay with control
+effort, noise sensitivity, reduced robustness, or slower response somewhere else.
+
+## How It Is Used
+
+1. Identify nonminimum-phase zeros, unstable poles, delay, saturation, and sensor
+   noise early.
+2. Estimate feasible bandwidth before selecting a controller family.
+3. Check sensitivity peaks and actuator effort against the actual hardware.
+4. Relax specifications or redesign hardware when the limits are structural.
+
+## Common Pitfalls
+
+- Treating bandwidth as a software parameter independent of the plant.
+- Ignoring actuator rate limits in frequency-domain designs.
+- Testing only nominal tracking while missing robustness and noise amplification.
+
+## Connections
+
+- Closely related to [Bode's relations](/topics/bode-s-relations), [robust performance](/topics/robust-performance), and [saturation and rate limits](/topics/saturation-and-rate-limits).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

@@ -13,19 +13,28 @@ A useful way to read this topic is as a connection between three objects: a mode
 
 ## Mathematical Form
 
-A useful control-theory abstraction is a dynamical map with an objective:
+For a nonlinear model near an equilibrium $(x_e,u_e)$,
 
 $$
-\dot x=f(x,u,d,t),\qquad y=h(x,u,t),\qquad e=r-y.
+\delta\dot x=A\delta x+B\delta u,\qquad
+A=\left.\frac{\partial f}{\partial x}\right|_{x_e,u_e},\quad
+B=\left.\frac{\partial f}{\partial u}\right|_{x_e,u_e}.
 $$
 
-The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
+Output matrices are obtained from the same Jacobian idea applied to
+$y=h(x,u)$.
 
 ## Intuition
 
 The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Linearization**, the central issue is the behavior summarized above: approximates nonlinear dynamics near an equilibrium or trajectory. The method still has to remain consistent with the plant assumptions and the performance objective.
 
 A practical example is a coupled process unit or flight-control axis set where one actuator affects several outputs; multivariable analysis shows which directions are easy to control and which are fragile.
+
+Linearization connects first-principles nonlinear models to linear analysis and
+design. A VTOL aircraft, bicycle, op amp with saturation, drug compartment model,
+or population model may be nonlinear globally, but a local linear model around a
+trim condition can still reveal modes, zeros, reachability, observability, and
+useful controller gains.
 
 ## How It Is Used
 
@@ -39,11 +48,13 @@ A practical example is a coupled process unit or flight-control axis set where o
 
 - Check that the linear model is valid over the amplitudes and operating points used in the design.
 - Separate nominal performance from robust performance; a design can be fast on the nominal model but fragile to structured uncertainty.
+- Recompute the equilibrium first; linearizing around a point that is not a
+  consistent trim condition gives misleading constant terms and dynamics.
 
 ## Connections
 
 - provides the plant representation used by analysis, estimation, and controller synthesis.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- Connects nonlinear examples such as [thrust vector control](/topics/thrust-vector-control), [population dynamics models](/topics/population-dynamics-models), and [pharmacokinetic models](/topics/pharmacokinetic-models) to linear tools.
 
 ## References
 

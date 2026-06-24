@@ -27,6 +27,21 @@ The key intuition is to ask what information this topic adds to the feedback loo
 
 A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
 
+Loop shaping is organized around the loop transfer function: choose the gain and
+phase of $L=PC$ so the closed loop has enough low-frequency authority, enough
+phase margin near crossover, and enough high-frequency roll-off. Atomic-force
+microscope examples emphasize resonance and bandwidth limits; vectored-thrust
+aircraft examples show how inner-loop attitude control can be shaped first and
+then treated as part of the plant for a slower outer loop.
+
+## Design Checks
+
+- Inspect $S=1/(1+L)$ for disturbance rejection and robustness.
+- Inspect $T=L/(1+L)$ for reference response, resonance, and noise pathways.
+- Check actuator effort and saturation, not only output tracking.
+- Re-evaluate the design after adding filters, computation delay, and sampled
+  implementation.
+
 ## How It Is Used
 
 1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
@@ -44,6 +59,7 @@ A practical example is an engineering design review: the topic helps decide what
 
 - connects controller synthesis to stability, performance, robustness, and implementation limits.
 - shares language with robust control through loop gain, sensitivity, and uncertainty descriptions.
+- Builds on [loop transfer function](/topics/loop-transfer-function), [Bode's relations](/topics/bode-s-relations), and [fundamental limitations](/topics/fundamental-limitations).
 
 ## References
 

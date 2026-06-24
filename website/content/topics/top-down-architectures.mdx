@@ -1,0 +1,51 @@
+---
+title: "Top-down architectures"
+description: "Start from mission objectives and decompose them into planning, logic, estimation, and feedback layers."
+category: "MIMO & Multivariable"
+branch: "Control Methods"
+---
+
+## What It Means
+
+**Top-down architectures** begin with mission or system-level requirements and
+decompose them into layers: planning, discrete logic, reference generation,
+estimation, and low-level feedback. Autonomous systems and process control are
+common examples where high-level decisions must be translated into safe, trackable
+commands.
+
+## Mathematical Form
+
+A top-down stack can be summarized as
+
+$$
+\text{mission} \rightarrow \text{plan} \rightarrow r(t) \rightarrow u(t),
+$$
+
+with constraints and state estimates flowing upward.
+
+## Intuition
+
+The top layer decides what should happen; lower layers make it dynamically
+feasible. The architecture is successful when high-level decisions respect what the
+plant and low-level loops can actually do.
+
+## How It Is Used
+
+1. Define objectives, constraints, and safety requirements first.
+2. Decompose them into planning, logic, estimation, and feedback responsibilities.
+3. Specify interfaces between layers.
+4. Verify that lower layers can track references generated above them.
+
+## Common Pitfalls
+
+- Generating references that violate plant dynamics or actuator limits.
+- Treating safety logic as an afterthought.
+- Leaving layer interfaces informal.
+
+## Connections
+
+- Connects to [control-system architectures](/topics/control-system-architectures), [trajectory generation](/topics/trajectory-generation), and [formal verification](/topics/formal-verification).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

@@ -1,0 +1,52 @@
+---
+title: "Computing & network models"
+description: "Queues, congestion control, admission control, web servers, and resource-management loops."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Computing and network models** apply feedback ideas to digital services and
+communication systems. Examples include web-server resource management, admission
+control, router protocols, and congestion control, where the controlled variables
+may be queue length, throughput, latency, packet loss, or CPU allocation.
+
+## Mathematical Form
+
+A queue-like fluid approximation often has the form
+
+$$
+\dot q = a(t)-s(t,u),
+$$
+
+where $q$ is backlog, $a$ is arrival rate, and $s$ is service rate controlled by
+resource allocation or admission decisions.
+
+## Intuition
+
+The same feedback problem appears with different units: measure congestion or
+latency, decide whether to admit work or allocate resources, and act before queues
+grow into outages. Delay and stochastic arrivals make these loops harder than their
+simple models suggest.
+
+## How It Is Used
+
+1. Choose controlled variables such as latency, utilization, loss, or queue length.
+2. Build a flow, queueing, or empirical model around the operating region.
+3. Include measurement and actuation delays.
+4. Combine feedback with logic for admission, overload protection, and scaling.
+
+## Common Pitfalls
+
+- Ignoring transport and measurement delay in congestion loops.
+- Using average models when burstiness dominates tail latency.
+- Optimizing utilization without a stability margin for queues.
+
+## Connections
+
+- Connects to [time-delay systems](/topics/time-delay-systems), [feedback with logic](/topics/feedback-with-logic), and [distributed control systems](/topics/distributed-control-systems).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

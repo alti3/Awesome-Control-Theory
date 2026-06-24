@@ -1,0 +1,50 @@
+---
+title: "Atomic-force-microscope models"
+description: "Model nanopositioning, piezo actuation, and tip-sample interaction for precision feedback."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Atomic-force-microscope models** describe precision positioning systems where a
+probe interacts with a sample at nanometer scale. AFM examples connect modeling,
+frequency-domain design, PID tuning, loop shaping, and robust performance because
+high bandwidth and mechanical resonance are central.
+
+## Mathematical Form
+
+A simplified vertical positioning model often uses a resonant transfer function,
+
+$$
+P(s)=\frac{k\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2},
+$$
+
+augmented with actuator, sensor, and contact dynamics.
+
+## Intuition
+
+The control problem is a bandwidth problem under resonance and uncertainty. Faster
+scanning improves throughput, but the loop must avoid exciting flexible modes or
+amplifying measurement noise.
+
+## How It Is Used
+
+1. Identify piezo, cantilever, sensor, and contact dynamics.
+2. Use frequency response to locate resonances and bandwidth limits.
+3. Design PID, lead-lag, or loop-shaped controllers.
+4. Validate against sample interaction, noise, saturation, and robustness.
+
+## Common Pitfalls
+
+- Treating the nanopositioner as a rigid low-order plant.
+- Ignoring resonant peaks outside the nominal bandwidth.
+- Increasing integral or proportional gain until imaging artifacts appear.
+
+## Connections
+
+- Connects to [precision motion models](/topics/precision-motion-models), [loop shaping](/topics/loop-shaping), [PID tuning](/topics/pid-tuning), and [robust performance](/topics/robust-performance).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

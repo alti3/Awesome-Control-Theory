@@ -1,0 +1,54 @@
+---
+title: "Feedback with logic"
+description: "Combines continuous loops with modes, selectors, interlocks, and supervisory decisions."
+category: "Feedback & Feedforward"
+branch: "Core Feedback Concepts"
+---
+
+## What It Means
+
+**Feedback with logic** combines continuous control laws with discrete decisions:
+modes, selectors, startup and shutdown sequences, protection interlocks, reference
+generators, and supervisory policies. Many deployed systems are not a single
+smooth controller; they are hybrid systems built from loops plus decision logic.
+
+## Mathematical Form
+
+A compact hybrid description is
+
+$$
+\dot x=f_q(x,u),\qquad q^+ = \Delta(q,x,y),\qquad u=C_q(r,y),
+$$
+
+where $q$ is a discrete mode and each mode has its own continuous dynamics or
+controller.
+
+## Intuition
+
+Logic decides which controller is allowed to act, what reference is safe, or when a
+system should change mode. Continuous feedback then regulates inside that mode.
+The hard part is usually the transition: a stable loop in each mode can still fail
+if switching creates jumps, windup, or inconsistent state.
+
+## How It Is Used
+
+1. Define operating modes and the guards that trigger transitions.
+2. Specify selectors, limiters, interlocks, and reset or bumpless-transfer rules.
+3. Check that each mode is stable over its intended operating region.
+4. Test transitions, especially startup, shutdown, fault handling, and constraint
+   recovery.
+
+## Common Pitfalls
+
+- Verifying each continuous controller while ignoring switching behavior.
+- Resetting integrators or estimator states inconsistently across modes.
+- Letting safety logic fight the tracking controller without a clear priority.
+
+## Connections
+
+- Connects to [hybrid control](/topics/hybrid-control), [event handling](/topics/event-handling), and [formal verification](/topics/formal-verification).
+- Provides the practical architecture behind many [industrial MPC](/topics/industrial-mpc) and [distributed control systems](/topics/distributed-control-systems).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

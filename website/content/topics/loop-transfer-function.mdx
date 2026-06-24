@@ -1,0 +1,53 @@
+---
+title: "Loop transfer function"
+description: "Uses L = PC to relate stability margins, sensitivity, complementary sensitivity, and bandwidth."
+category: "Linear"
+branch: "Control Methods"
+---
+
+## What It Means
+
+The **loop transfer function** is the open-loop product seen around a broken
+feedback loop. In a unity-feedback SISO loop it is usually written as $L(s)=P(s)C(s)$.
+The loop transfer $L$ is the central object for frequency-domain design because it
+connects stability, margins, sensitivity, noise amplification, and bandwidth.
+
+## Mathematical Form
+
+For unity negative feedback,
+
+$$
+L(s)=P(s)C(s),\qquad
+S(s)=\frac{1}{1+L(s)},\qquad
+T(s)=\frac{L(s)}{1+L(s)}.
+$$
+
+Low-frequency high gain usually improves tracking and disturbance rejection. High
+frequency gain usually amplifies sensor noise and unmodeled dynamics.
+
+## Intuition
+
+Loop design is a negotiation over frequency. You want enough gain where commands
+and disturbances matter, enough phase margin near crossover, and enough roll-off
+where the model and sensors become unreliable.
+
+## How It Is Used
+
+1. Form $L=PC$ from the plant and candidate controller.
+2. Inspect crossover frequency, phase margin, gain margin, and resonance peaks.
+3. Shape $L$ with lead, lag, PID, filters, or robust-control weights.
+4. Recompute $S$, $T$, actuator effort, and noise paths.
+
+## Common Pitfalls
+
+- Treating high bandwidth as always better.
+- Ignoring model uncertainty near and above crossover.
+- Reading margins from $L$ without checking saturation and implementation delay.
+
+## Connections
+
+- Central to [loop shaping](/topics/loop-shaping), [sensitivity functions](/topics/sensitivity-functions), [Nyquist criterion](/topics/nyquist-criterion), and [Bode plots](/topics/bode-plots).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

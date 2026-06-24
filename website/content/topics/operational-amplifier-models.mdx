@@ -1,0 +1,51 @@
+---
+title: "Operational-amplifier models"
+description: "Use high-gain electronics and feedback interconnections to model analog circuits and controllers."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Operational-amplifier models** describe high-gain electronic amplifiers used with
+feedback to create precise gains, filters, integrators, and analog controller
+elements. Op amps connect Black's feedback amplifier idea to modern control block
+diagrams and implementation.
+
+## Mathematical Form
+
+An idealized inverting amplifier has a closed-loop gain set mostly by passive
+components:
+
+$$
+\frac{V_o}{V_i}\approx -\frac{Z_2}{Z_1},
+$$
+
+when the open-loop gain is very large and the amplifier is not saturated.
+
+## Intuition
+
+High open-loop gain is made useful by feedback. The closed-loop behavior becomes
+less sensitive to amplifier details and more determined by the feedback network,
+until bandwidth, saturation, and slew-rate limits matter.
+
+## How It Is Used
+
+1. Model the amplifier open-loop gain and dominant bandwidth limits.
+2. Choose feedback impedances for gain, integration, or filtering.
+3. Check saturation, slew rate, and stability margins.
+4. Translate analog realizations into equivalent block diagrams.
+
+## Common Pitfalls
+
+- Assuming infinite gain and bandwidth.
+- Ignoring saturation and slew-rate limits.
+- Forgetting that op-amp circuits can oscillate if feedback phase is wrong.
+
+## Connections
+
+- Connects to [positive feedback](/topics/positive-feedback), [controller implementation](/topics/controller-implementation), and [transfer functions](/topics/transfer-functions).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

@@ -13,19 +13,27 @@ A useful way to read this topic is as a connection between three objects: a mode
 
 ## Mathematical Form
 
-A useful control-theory abstraction is a dynamical map with an objective:
+For a linear state-space model, full-state feedback is commonly written
 
 $$
-\dot x=f(x,u,d,t),\qquad y=h(x,u,t),\qquad e=r-y.
+\dot x=Ax+Bu,\qquad u=-Kx+k_r r.
 $$
 
-The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
+The gain $K$ changes the closed-loop matrix to $A-BK$. The reference gain $k_r$
+or an integral augmentation is added when the problem is tracking rather than
+pure regulation.
 
 ## Intuition
 
 The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Full-state feedback**, the central issue is the behavior summarized above: uses the entire state vector, often as u = -Kx, when states are measured or estimated. The method still has to remain consistent with the plant assumptions and the performance objective.
 
 A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
+
+Full-state feedback naturally follows reachability because pole assignment and LQR
+only work in the controllable part of the state. In examples such as vehicle
+steering, population regulation, drug administration, and vectored-thrust aircraft,
+the state vector gives a compact way to coordinate variables that would be awkward
+to tune as independent SISO loops.
 
 ## How It Is Used
 
@@ -42,8 +50,8 @@ A practical example is an engineering design review: the topic helps decide what
 
 ## Connections
 
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- Connects to [controllability](/topics/controllability), [pole placement](/topics/pole-placement), [LQR](/topics/lqr), and [state observers](/topics/state-observers).
+- When the full state is not measured, it is paired with [Kalman filter](/topics/kalman-filter), [Luenberger observers](/topics/luenberger-observers), or [separation principle](/topics/separation-principle).
 
 ## References
 

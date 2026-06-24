@@ -1,0 +1,54 @@
+---
+title: "Bode's relations"
+description: "Explain gain-phase coupling and waterbed tradeoffs in stable minimum-phase loops."
+category: "Frequency-Domain Analysis"
+branch: "System Analysis"
+---
+
+## What It Means
+
+**Bode's relations** connect magnitude and phase for stable minimum-phase transfer
+functions. In feedback design they explain why loop-shaping is constrained: you
+cannot arbitrarily choose gain and phase independently, and reducing sensitivity in
+one band tends to push sensitivity elsewhere.
+
+## Mathematical Form
+
+For many stable loops, sensitivity obeys integral constraints of the form
+
+$$
+\int_0^\infty \log |S(j\omega)|\,d\omega
+$$
+
+with corrections for unstable poles, nonminimum-phase zeros, and delays. The exact
+formula depends on the assumptions, but the design message is persistent:
+performance redistribution is unavoidable.
+
+## Intuition
+
+The waterbed effect is the practical picture: pushing sensitivity down at low
+frequency often makes it rise near crossover or at higher frequency. Plants with
+delay or right-half-plane zeros make the tradeoff harsher.
+
+## How It Is Used
+
+1. Identify delay, unstable poles, and nonminimum-phase zeros before setting
+   bandwidth targets.
+2. Use Bode plots to inspect gain slope and phase near crossover.
+3. Check sensitivity peaks, not only low-frequency error.
+4. Treat aggressive specifications as suspect when they violate known loop limits.
+
+## Common Pitfalls
+
+- Asking loop shaping to beat delay or nonminimum-phase behavior by gain alone.
+- Ignoring the sensitivity peak created by excellent low-frequency rejection.
+- Interpreting Bode relations outside their assumptions without checking a robust
+  analysis.
+
+## Connections
+
+- Connects to [sensitivity functions](/topics/sensitivity-functions), [nonminimum-phase zeros](/topics/nonminimum-phase-zeros), and [fundamental limitations](/topics/fundamental-limitations).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

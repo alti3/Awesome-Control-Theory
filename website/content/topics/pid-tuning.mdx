@@ -1,0 +1,51 @@
+---
+title: "PID tuning"
+description: "Chooses PID gains using model rules, relay tests, frequency response, or iteration."
+category: "Linear"
+branch: "Control Methods"
+---
+
+## What It Means
+
+**PID tuning** chooses $K_p$, $K_i$, and $K_d$ so a PID loop meets stability,
+tracking, disturbance rejection, noise, and actuator-effort requirements. Tuning is
+a design problem, not just a recipe: rules such as Ziegler-Nichols are starting
+points that must be checked against margins and implementation limits.
+
+## Mathematical Form
+
+A filtered PID controller is often written
+
+$$
+C(s)=K_p+\frac{K_i}{s}+\frac{K_d s}{1+sT_f}.
+$$
+
+The derivative filter $T_f$ matters because ideal differentiation is not physically
+realizable and amplifies measurement noise.
+
+## Intuition
+
+Proportional action sets immediate correction, integral action removes steady
+error, and derivative action adds prediction-like damping. Tuning balances those
+effects against noise, delay, and saturation.
+
+## How It Is Used
+
+1. Start from a plant model, step test, relay test, or frequency response.
+2. Choose gains for a desired bandwidth and damping.
+3. Check gain margin, phase margin, sensitivity peak, actuator effort, and noise.
+4. Add anti-windup and derivative filtering before implementation.
+
+## Common Pitfalls
+
+- Using aggressive tuning rules without checking robustness.
+- Leaving derivative action unfiltered.
+- Forgetting that integral action can wind up during saturation or mode changes.
+
+## Connections
+
+- Builds on [PID control](/topics/pid-control), [relay feedback](/topics/relay-feedback), and [integral action and anti-windup](/topics/integral-action-and-anti-windup).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

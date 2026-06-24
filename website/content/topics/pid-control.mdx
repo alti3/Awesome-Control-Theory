@@ -33,6 +33,20 @@ The key intuition is to ask what information this topic adds to the feedback loo
 
 A practical example is a motor-speed or temperature loop: the model predicts the dominant time constants, the controller sets bandwidth and damping, and tests such as step response or frequency response reveal whether the design meets overshoot, settling, and disturbance-rejection targets.
 
+PID is best treated as a family of control functions rather than one fixed
+formula. Proportional action reacts to present error, integral action removes
+constant offsets, and derivative action adds damping when the measured signal is
+clean enough. Practical PID also includes setpoint weighting, derivative
+filtering, anti-windup, and implementation logic.
+
+## Tuning and Implementation
+
+PID gains can be selected from a model, frequency response, relay experiment, or
+empirical tuning rule, but the final design should be checked through margins,
+sensitivity, actuator effort, and noise amplification. Ideal derivative action is
+not implemented directly; it is filtered. Integral action needs anti-windup when
+the actuator saturates or the controller changes mode.
+
 ## How It Is Used
 
 1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
@@ -49,7 +63,7 @@ A practical example is a motor-speed or temperature loop: the model predicts the
 ## Connections
 
 - connects controller synthesis to stability, performance, robustness, and implementation limits.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- Connects to [PID tuning](/topics/pid-tuning), [integral action and anti-windup](/topics/integral-action-and-anti-windup), [controller implementation](/topics/controller-implementation), and [loop shaping](/topics/loop-shaping).
 
 ## References
 

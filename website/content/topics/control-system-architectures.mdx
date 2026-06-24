@@ -1,0 +1,53 @@
+---
+title: "Control-system architectures"
+description: "Organize feedback, feedforward, estimation, optimization, and logic into layered designs."
+category: "Feedback & Feedforward"
+branch: "Core Feedback Concepts"
+---
+
+## What It Means
+
+**Control-system architectures** describe how controllers, estimators, reference
+generators, planners, logic, and optimization layers are connected. Architecture is
+a design decision in its own right: a complex system is often made tractable by
+nesting loops, separating time scales, and assigning clear authority to each layer.
+
+## Mathematical Form
+
+A common layered pattern is
+
+$$
+r_\text{inner}=G_\text{outer}(r,y),\qquad
+u=G_\text{inner}(r_\text{inner},y_\text{inner}),
+$$
+
+with supervisory logic or optimization modifying references, constraints, and
+modes.
+
+## Intuition
+
+Architecture is how a control problem is decomposed. Inner loops make fast
+variables predictable; outer loops command slower objectives; estimators provide
+state; logic protects the plant; optimization handles constraints.
+
+## How It Is Used
+
+1. Allocate control authority across time scales and physical subsystems.
+2. Decide which signals are measured, estimated, commanded, or constrained.
+3. Design inner loops before relying on them as simplified blocks in outer loops.
+4. Verify interactions between feedback, feedforward, logic, and optimization.
+
+## Common Pitfalls
+
+- Assuming nested loops are independent when their bandwidths overlap.
+- Adding supervisory logic without documenting priority and reset behavior.
+- Designing a controller before deciding what variables should be controlled.
+
+## Connections
+
+- Connects to [control structure design](/topics/control-structure-design), [large-scale system control](/topics/large-scale-system-control), and [distributed control systems](/topics/distributed-control-systems).
+- Specialized forms include [top-down architectures](/topics/top-down-architectures) and [bottom-up architectures](/topics/bottom-up-architectures).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

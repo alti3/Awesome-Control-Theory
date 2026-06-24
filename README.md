@@ -87,6 +87,13 @@ into a structured reference for learning, review, and project planning.
 
 - **Feedback control** closes the loop by measuring behavior and correcting error.
 - **Feedforward control** acts from a model or known command before error appears.
+- **Positive feedback** reinforces deviations and is useful in oscillators,
+  switches, regenerative amplification, and some biological circuits, but it
+  usually needs nonlinear saturation or logic to avoid runaway behavior.
+- **Feedback with logic** combines continuous loops with selectors, modes,
+  interlocks, startup/shutdown sequences, and supervisory decisions.
+- **Control-system architectures** organize feedback, feedforward, estimation,
+  reference generation, optimization, and logic into nested or layered designs.
 - **Full-state feedback** uses the entire state vector, often in the form
   `u = -Kx`, when states are measured or estimated.
 - **Output feedback** uses measured outputs directly or through an observer.
@@ -134,6 +141,9 @@ into a structured reference for learning, review, and project planning.
 
 - **PID control** combines proportional, integral, and derivative action for
   simple, effective feedback control.
+- **PID tuning** chooses proportional, integral, and derivative gains using
+  model-based rules, relay experiments, frequency response, or empirical
+  iteration.
 - **Integral action and anti-windup** improve steady-state tracking while
   limiting integrator problems when actuators saturate.
 - **Lead-lag compensation** shapes transient response and steady-state accuracy
@@ -149,6 +159,9 @@ into a structured reference for learning, review, and project planning.
   worst-case disturbance attenuation and robustness.
 - **Loop shaping** designs open-loop gain and phase to meet bandwidth, tracking,
   noise, and robustness targets.
+- **Loop-transfer-function design** studies `L = PC` as the object that ties
+  stability margins, sensitivity, complementary sensitivity, and bandwidth
+  together.
 
 ### Nonlinear
 
@@ -282,6 +295,9 @@ into a structured reference for learning, review, and project planning.
   hardware.
 - **Hybrid control** combines continuous dynamics with discrete control logic,
   switching, events, or mode-dependent controllers.
+- **Controller implementation** covers realizable filters, derivative roll-off,
+  bumpless transfer, saturation handling, PLC or computer deployment, and
+  numerical details that change real closed-loop behavior.
 
 ### MIMO and Multivariable
 
@@ -616,6 +632,11 @@ into a structured reference for learning, review, and project planning.
 - **Nichols charts** combine gain and phase for frequency-domain design.
 - **Sensitivity functions** describe disturbance rejection, noise amplification,
   and tracking limitations.
+- **Nyquist criterion** converts encirclements of the critical point by the loop
+  transfer function into a closed-loop stability test.
+- **Bode's relations and waterbed effects** explain why reducing sensitivity in
+  one frequency band often increases it elsewhere, especially for nonminimum-
+  phase plants, delays, or unstable poles.
 - **Spectral-density analysis** describes how stochastic disturbances and noise
   are distributed across frequency.
 
@@ -651,6 +672,9 @@ into a structured reference for learning, review, and project planning.
   action, and reference/disturbance tracking for continuous and digital loops.
 - **z-plane geometry** maps damping, natural frequency, settling behavior, and
   stability boundaries from the s-plane into sampled systems.
+- **Fundamental limitations** identify performance and robustness barriers
+  imposed by right-half-plane poles and zeros, delay, saturation, noise, and
+  actuator bandwidth.
 
 ### Safety-Critical Analysis
 
@@ -672,10 +696,19 @@ into a structured reference for learning, review, and project planning.
   converters, and sensors.
 - **Process-control models** include tanks, reactors, heat exchangers,
   distillation columns, and transport delays.
+- **Computing and network models** describe queues, admission control, web
+  servers, congestion control, and resource-management loops.
+- **Biological and pharmacokinetic models** include gene regulation,
+  physiological feedback, drug-compartment models, and population dynamics.
 - **Robotics and vehicle models** include kinematics, rigid-body dynamics,
   tire/ground interaction, and actuator dynamics.
 - **Aerospace and pointing models** include satellite attitude, antenna
   azimuth, aircraft landing, and servomotor dynamics.
+- **Thrust vector control** uses gimbaled or vectored thrust and inner/outer
+  attitude-position loops, as in rockets and VTOL aircraft.
+- **Operational-amplifier and precision-instrument models** connect feedback to
+  high-gain electronics, analog controller realization, and atomic-force-
+  microscope nanopositioning.
 - **Power-system models** include generator, grid-interconnection, and topology
   identification examples.
 - **Precision motion and storage models** include flexible structures, disk
@@ -696,9 +729,9 @@ into a structured reference for learning, review, and project planning.
 1. First-principles modeling
 2. Transfer functions and block diagrams
 3. Step, impulse, and sine responses
-4. PID control
+4. PID control, PID tuning, and implementation details
 5. Root locus, Bode plots, Nyquist plots, and stability margins
-6. Lead-lag compensation and loop shaping
+6. Lead-lag compensation, loop transfer functions, and loop shaping
 
 ### State-Space Path
 
@@ -707,14 +740,14 @@ into a structured reference for learning, review, and project planning.
 3. Full-state feedback and pole placement
 4. LQR, Riccati equations, and LQG
 5. Observers, Kalman filtering, and separation principle
-6. MPC, constrained control, and safety filters
+6. Nested architectures, MPC, constrained control, and safety filters
 
 ### Robotics and Autonomy Path
 
 1. Nonlinear state-space models
-2. Motion planning with holonomic and nonholonomic constraints
-3. RRT and A-star (A*) path planning
-4. PRM, trajectory optimization, and dynamically feasible planning
+2. Robotics, vehicle, and thrust-vector-control models
+3. Motion planning with holonomic and nonholonomic constraints
+4. RRT, A-star (A*), PRM, and trajectory optimization
 5. Sensor fusion with IMU, GPS, and camera measurements
 6. Mapping, tracking, moving horizon estimation, and safety constraints
 
@@ -730,7 +763,8 @@ into a structured reference for learning, review, and project planning.
 5. Sample-rate selection, multirate effects, delays, quantization, round-off,
    limit cycles, and dither
 6. Digital implementation: A/D and D/A conversion, controller realization,
-   embedded interfaces, reliability, and hardware-in-the-loop validation
+   controller implementation, embedded interfaces, reliability, and hardware-in-
+   the-loop validation
 
 ### Advanced Control Path
 
@@ -738,8 +772,9 @@ into a structured reference for learning, review, and project planning.
 2. Nonlinear control: feedback linearization, backstepping, sliding mode
 3. Optimal control: PMP, HJB, trajectory optimization, DDP, and iLQR
 4. Robust control: H-infinity, mu-synthesis, ADRC, small-gain, and LFTs
-5. Adaptive control: MRAC, extremum seeking, ILC, and self-tuning regulators
-6. Multi-agent, safety-critical, intelligent, and learning-based control
+5. Fundamental limitations, Bode relations, and robust performance tradeoffs
+6. Adaptive, multi-agent, safety-critical, intelligent, and learning-based
+   control
 
 ## Academic and Open References
 
@@ -921,7 +956,8 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   dynamic programming, Riccati equations, quadratic programming.
 - **Linear methods:** PID, integral action, anti-windup, lead-lag, pole
   placement, full-state feedback, output feedback, separation principle,
-  compensator design, LQR, LQG, H-infinity control, loop shaping.
+  compensator design, LQR, LQG, H-infinity control, loop transfer functions,
+  PID tuning, loop shaping.
 - **Nonlinear methods:** gain scheduling, backstepping, feedback linearization,
   dynamic inversion, sliding mode, bang-bang, describing functions, equivalent
   gains, circle criterion, inverse nonlinearities, time-optimal servos,
@@ -944,7 +980,8 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   control, sample-rate selection, multirate sampling, nonsynchronous sampling,
   intersample ripple, aliasing, quantization, round-off, word-length effects,
   limit cycles, dither, computation delay, A/D and D/A conversion, controller
-  realization, embedded and distributed implementation, hybrid control.
+  realization, controller implementation, embedded and distributed
+  implementation, hybrid control.
 - **MIMO and multivariable methods:** MIMO control, singular-value analysis,
   relative gain array, decoupling control, large-scale system decomposition,
   hierarchical control, multilayer control, control structure design, LMIs.
@@ -983,13 +1020,18 @@ This checklist mirrors the labels in the map so gaps are easy to spot.
   realizations, model reduction.
 - **System analysis:** performance, stability, margins, Nyquist, Bode,
   Nichols, root locus, phase plane, pole-zero plots, Routh-Hurwitz, Jury tests,
-  bilinear-transform stability tests, spectral-density analysis, passivity,
-  sensitivity, steady-state accuracy, z-plane geometry, controllability,
-  observability, nonminimum phase, Lyapunov stability, control Lyapunov
-  functions, control barrier functions, reachability, invariant sets, formal
-  verification.
+  bilinear-transform stability tests, Nyquist criterion, Bode's relations,
+  fundamental limitations, spectral-density analysis, passivity, sensitivity,
+  steady-state accuracy, z-plane geometry, controllability, observability,
+  nonminimum phase, Lyapunov stability, control Lyapunov functions, control
+  barrier functions, reachability, invariant sets, formal verification.
 - **Core concepts:** feedback, feedforward, continuous time, discrete time,
-  frequency domain, Laplace domain, Z-domain, C2D, D2C.
+  frequency domain, Laplace domain, Z-domain, C2D, D2C, positive feedback,
+  feedback with logic, control-system architectures.
+- **First-principles examples:** mechanical, electrical, process-control,
+  robotics, aerospace, thrust vector control, computing and network models,
+  biological models, pharmacokinetics, population dynamics, operational
+  amplifiers, atomic-force microscopes, power systems, and precision motion.
 
 ## Contributing
 

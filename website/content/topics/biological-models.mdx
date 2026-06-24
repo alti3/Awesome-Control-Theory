@@ -1,0 +1,52 @@
+---
+title: "Biological models"
+description: "Gene regulation, physiological feedback, neural circuits, and biological switching examples."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Biological models** describe feedback in living systems: homeostasis, gene
+regulation, neural circuits, hormone regulation, immune response, and synthetic
+biological networks. Biological examples show that feedback is not only an
+engineered mechanism; it is also a recurring organizing principle in nature.
+
+## Mathematical Form
+
+Many biological feedback models use nonlinear state equations:
+
+$$
+\dot x=f(x,u,p),\qquad y=h(x),
+$$
+
+where $x$ may be concentration, population, membrane potential, or a physiological
+state, and $p$ collects uncertain kinetic parameters.
+
+## Intuition
+
+Biological loops often combine feedback, saturation, delay, stochasticity, and
+switching. A small-signal model can explain local regulation, while nonlinear
+analysis is needed for oscillations, bistability, and threshold effects.
+
+## How It Is Used
+
+1. Identify states and conserved quantities from biology or chemistry.
+2. Decide whether concentrations, populations, or probabilities are the right
+   state variables.
+3. Fit uncertain rates from data when first-principles parameters are unavailable.
+4. Analyze equilibria, oscillations, robustness, and sensitivity.
+
+## Common Pitfalls
+
+- Treating parameters as precisely known when they are fitted indirectly.
+- Applying linear conclusions across large concentration or population changes.
+- Ignoring stochastic effects in small populations.
+
+## Connections
+
+- Connects to [positive feedback](/topics/positive-feedback), [nonlinear state space](/topics/nonlinear-state-space), and [population dynamics models](/topics/population-dynamics-models).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

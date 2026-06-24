@@ -27,6 +27,19 @@ The key intuition is to ask what information this topic adds to the feedback loo
 
 A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
 
+LQR bridges reachability, state feedback, and practical design tradeoffs. In the
+vectored-thrust aircraft example, the state penalty encodes how much lateral
+position, velocity, attitude, and angular rate matter, while the input penalty
+encodes limited thrust authority. The Riccati solution turns those engineering
+weights into a stabilizing gain when the linearized pair is reachable.
+
+## Weight Selection
+
+The common workflow is to scale each state and input by an acceptable excursion
+and then tune from the resulting behavior. Bryson-style scaling is not a proof of
+optimality for the real plant; it is a disciplined way to avoid arbitrary units
+dominating the cost.
+
 ## How It Is Used
 
 1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
@@ -39,11 +52,13 @@ A practical example is an engineering design review: the topic helps decide what
 
 - Check that the linear model is valid over the amplitudes and operating points used in the design.
 - Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
+- Remember that LQR handles unconstrained linear-quadratic regulation; saturation
+  and rate limits still require separate checks.
 
 ## Connections
 
 - connects controller synthesis to stability, performance, robustness, and implementation limits.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- Connects to [full-state feedback](/topics/full-state-feedback), [Riccati equations](/topics/riccati-equations), [thrust vector control](/topics/thrust-vector-control), and [LQG](/topics/lqg).
 
 ## References
 

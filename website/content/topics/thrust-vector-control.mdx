@@ -1,0 +1,57 @@
+---
+title: "Thrust vector control"
+description: "Uses gimbaled or vectored thrust and nested attitude-position loops in rockets and VTOL aircraft."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Thrust vector control** changes the direction of a thrust force so the same
+propulsion system can generate moments as well as translation. Rockets and
+vectored-thrust aircraft are recurring examples: a gimbaled nozzle can stabilize a
+rocket, while a VTOL aircraft can use main thrust plus maneuvering thrusters to
+control roll, lateral position, and vertical motion.
+
+## Mathematical Form
+
+A simplified planar model separates translation and rotation:
+
+$$
+m\ddot p = R(\theta)F + mg,\qquad J\ddot\theta=\tau.
+$$
+
+Linearization near hover gives a local model for inner attitude control and outer
+position control. The attitude loop is usually faster; the position loop commands
+attitude or lateral acceleration.
+
+## Intuition
+
+The actuator is not just "more force"; it changes force direction. That couples
+attitude and translation, so a practical architecture often uses nested loops:
+stabilize attitude first, then let slower guidance or position loops command the
+attitude needed for motion.
+
+## How It Is Used
+
+1. Derive rigid-body equations and the thrust-to-force/moment geometry.
+2. Linearize around hover, trim, or another operating condition.
+3. Design an inner attitude loop using pole placement, LQR, or loop shaping.
+4. Design an outer position or guidance loop around the closed inner-loop dynamics.
+5. Check saturation, rate limits, thrust authority, and robustness across the
+   flight envelope.
+
+## Common Pitfalls
+
+- Designing lateral control before the attitude loop has enough bandwidth.
+- Ignoring thrust magnitude limits while commanding large attitude changes.
+- Assuming a hover linearization remains valid for aggressive maneuvers.
+
+## Connections
+
+- Connects to [aerospace and pointing models](/topics/aerospace-and-pointing-models), [linearization](/topics/linearization), [LQR](/topics/lqr), [Kalman filter](/topics/kalman-filter), and [loop shaping](/topics/loop-shaping).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)
+- [MIT Underactuated Robotics](https://underactuated.mit.edu/)

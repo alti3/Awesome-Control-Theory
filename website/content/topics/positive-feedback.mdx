@@ -1,0 +1,61 @@
+---
+title: "Positive feedback"
+description: "Reinforces deviations and appears in oscillators, switches, and biological regulation."
+category: "Feedback & Feedforward"
+branch: "Core Feedback Concepts"
+---
+
+## What It Means
+
+**Positive feedback** feeds a signal back with a sign that reinforces the current
+deviation instead of reducing it. In linear models this can easily destabilize the
+loop, but in real systems it is often paired with saturation, hysteresis, switching,
+or other nonlinear effects to create useful behavior.
+
+Positive feedback appears in amplifiers, oscillators, biological activation,
+integral-action realizations, and switch-like behavior. The point is not that
+positive feedback is "bad"; it is that the designer must account for the nonlinear
+mechanism that limits growth.
+
+## Mathematical Form
+
+For a scalar static loop,
+
+$$
+y = P(u + k y).
+$$
+
+With linear $P$, increasing $k$ can move the closed-loop denominator toward zero.
+With nonlinear $P$, saturation or a sector bound can create multiple equilibria,
+limit cycles, or bistable behavior.
+
+## Intuition
+
+Negative feedback suppresses error; positive feedback amplifies a tendency that is
+already present. That makes it useful when the goal is decisive switching,
+memory-like behavior, or oscillation, and risky when the plant can run away.
+
+## How It Is Used
+
+1. Identify the variable being reinforced and the physical limit that prevents
+   unbounded growth.
+2. Analyze equilibria and local stability, not just small-signal loop gain.
+3. Check for saturation, hysteresis, dead zones, or logic that changes the
+   effective loop.
+4. Simulate large-signal behavior from several initial conditions.
+
+## Common Pitfalls
+
+- Treating a positive-feedback design as a purely linear small-signal problem.
+- Ignoring actuator or amplifier saturation that actually determines the final
+  operating point.
+- Confusing useful regenerative behavior with robust regulation.
+
+## Connections
+
+- Connects to [describing functions](/topics/describing-functions), [circle criterion](/topics/circle-criterion), and [limit cycles and dither](/topics/limit-cycles-and-dither).
+- Appears in [operational-amplifier models](/topics/operational-amplifier-models) and [biological models](/topics/biological-models).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

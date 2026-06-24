@@ -1,0 +1,55 @@
+---
+title: "Controller implementation"
+description: "Covers realizable filters, saturation handling, bumpless transfer, PLCs, and computer deployment."
+category: "Digital & Sampled-Data"
+branch: "Control Methods"
+---
+
+## What It Means
+
+**Controller implementation** turns an ideal control law into hardware or software
+that runs with finite precision, finite sampling rate, delays, saturating actuators,
+noisy sensors, and mode changes. Implementation details matter because many
+apparent design failures are caused by realizability details rather than the
+nominal controller equation.
+
+## Mathematical Form
+
+Implementation replaces ideal operations with realizable ones, for example
+
+$$
+K_d s \quad\rightarrow\quad \frac{K_d s}{1+sT_f},
+$$
+
+and continuous integrators with sampled recursions such as
+
+$$
+I[k+1]=I[k]+T_s e[k].
+$$
+
+## Intuition
+
+The implemented controller is part of the plant from the closed-loop perspective.
+Sampling, computation delay, filters, scaling, saturation, and reset logic all
+change the loop transfer function.
+
+## How It Is Used
+
+1. Choose sampling time, numerical form, scaling, and filter realizations.
+2. Add anti-windup, limit handling, and bumpless transfer.
+3. Account for computation and communication delay.
+4. Test the exact implementation in simulation, HIL, or staged commissioning.
+
+## Common Pitfalls
+
+- Implementing ideal differentiation or ideal switching.
+- Ignoring integer scaling, word length, and overflow.
+- Validating a continuous design but deploying a delayed sampled controller.
+
+## Connections
+
+- Connects to [controller realization](/topics/controller-realization), [embedded implementation](/topics/embedded-implementation), [A/D and D/A conversion](/topics/a-d-and-d-a-conversion), and [computation delay](/topics/computation-delay).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

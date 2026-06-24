@@ -27,6 +27,27 @@ The key intuition is to ask what information this topic adds to the feedback loo
 
 A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
 
+Flight-control examples show how modeling, linearization, state feedback,
+estimation, and loop shaping fit together. A vectored-thrust VTOL aircraft is
+especially useful: the same thrust geometry couples roll angle, lateral
+acceleration, and vertical motion, so the model naturally leads to nested inner
+attitude and outer position loops. Rockets use the same idea in a different
+geometry when a gimbaled nozzle creates the stabilizing moment.
+
+## Thrust Vector Control
+
+Thrust vector control belongs here because it is a first-principles aerospace
+model before it is a controller. The designer starts with force and moment balance,
+maps actuator geometry into forces and torques, then decides which variables are
+measured or estimated. Near hover or a trim condition, the nonlinear rigid-body
+model is linearized so LQR, observers, Kalman filters, or loop-shaping methods can
+be applied.
+
+The architecture matters: a fast inner loop regulates attitude or angular rate,
+while a slower outer loop commands position, velocity, or acceleration. If the
+outer loop asks for more attitude or thrust than the vehicle can provide, the
+linear design no longer represents the closed loop.
+
 ## How It Is Used
 
 1. Specify the signals, units, sampling convention, operating point, and uncertainty assumptions.
@@ -39,11 +60,13 @@ A practical example is an engineering design review: the topic helps decide what
 
 - Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
 - Verify conclusions with simulation or analysis that matches the intended closed-loop interconnection.
+- Check trim conditions, actuator authority, and rate limits before trusting a
+  hover or small-angle linearization.
 
 ## Connections
 
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- Connects directly to [thrust vector control](/topics/thrust-vector-control), [linearization](/topics/linearization), [LQR](/topics/lqr), and [Kalman filter](/topics/kalman-filter).
+- Provides plant models for [loop shaping](/topics/loop-shaping), [robust stability margins](/topics/robust-stability-margins), and [controller implementation](/topics/controller-implementation).
 
 ## References
 

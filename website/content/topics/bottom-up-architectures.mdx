@@ -1,0 +1,52 @@
+---
+title: "Bottom-up architectures"
+description: "Build complex control systems from local loops, selectors, filters, and coordination layers."
+category: "MIMO & Multivariable"
+branch: "Control Methods"
+---
+
+## What It Means
+
+**Bottom-up architectures** assemble larger systems from local feedback loops,
+filters, selectors, feedforward elements, and coordination logic. This style is
+common in process control, industrial automation, and systems where many local
+loops were installed before centralized optimization or supervision was added.
+
+## Mathematical Form
+
+A decentralized loop collection has local laws such as
+
+$$
+u_i=C_i(r_i,y_i),\qquad i=1,\dots,m,
+$$
+
+with a higher layer adjusting setpoints, constraints, or loop pairings.
+
+## Intuition
+
+Local loops make subsystems predictable and maintainable. Their interactions,
+however, can create hidden multivariable behavior, so coordination and pairing
+choices still matter.
+
+## How It Is Used
+
+1. Stabilize and commission local loops.
+2. Analyze interaction through gains, delays, and relative gain array or singular
+   values.
+3. Add selectors, decouplers, or supervisory optimization when local loops
+   compete.
+4. Preserve maintainability by documenting ownership and priorities.
+
+## Common Pitfalls
+
+- Assuming stable local loops imply stable system-level behavior.
+- Adding decoupling without checking model uncertainty.
+- Letting multiple loops manipulate the same actuator without priority logic.
+
+## Connections
+
+- Connects to [control structure design](/topics/control-structure-design), [relative gain array](/topics/relative-gain-array), and [distributed control systems](/topics/distributed-control-systems).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

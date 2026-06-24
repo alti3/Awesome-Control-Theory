@@ -1,0 +1,52 @@
+---
+title: "Pharmacokinetic models"
+description: "Drug administration and compartment models connecting dose, concentration, and effect."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Pharmacokinetic models** describe how a drug moves through body compartments,
+how it is eliminated, and how concentration relates to effect. Drug administration
+is a useful example because compartment models, observability, state feedback, and
+closed-loop dosing can reduce concentration variability.
+
+## Mathematical Form
+
+A two-compartment model can be written as
+
+$$
+\dot x = A x + B u,\qquad y=Cx,
+$$
+
+where states represent drug amounts or concentrations, $u$ is infusion or dose
+rate, and $y$ is the measured concentration.
+
+## Intuition
+
+The clinically relevant concentration may not be directly measured. Control and
+estimation are useful because a dosing input affects hidden compartments through
+delayed transport and elimination dynamics.
+
+## How It Is Used
+
+1. Choose compartments and transfer/elimination rates.
+2. Decide whether dose input is bolus, infusion, or absorption through another
+   compartment.
+3. Check observability from available measurements.
+4. Design dosing policies while respecting safety limits and patient variability.
+
+## Common Pitfalls
+
+- Confusing measured blood concentration with active-site concentration.
+- Ignoring patient-to-patient parameter variation.
+- Designing aggressive feedback without safety constraints.
+
+## Connections
+
+- Connects to [state observers](/topics/state-observers), [Kalman filter](/topics/kalman-filter), and [constrained filters](/topics/constrained-filters).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

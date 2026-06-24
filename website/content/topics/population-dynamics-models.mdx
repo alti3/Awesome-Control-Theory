@@ -1,0 +1,50 @@
+---
+title: "Population dynamics models"
+description: "Growth, carrying capacity, predator-prey interaction, and ecological feedback examples."
+category: "Foundational Tools"
+branch: "First Principles & Classical Tools"
+---
+
+## What It Means
+
+**Population dynamics models** describe how species, groups, or interacting
+populations evolve over time. Logistic growth and predator-prey examples connect
+nonlinear modeling, equilibria, phase portraits, and feedback intervention.
+
+## Mathematical Form
+
+A logistic model is
+
+$$
+\dot x = r x\left(1-\frac{x}{K}\right),
+$$
+
+while predator-prey models introduce coupled states and interaction terms such as
+prey consumption and predator growth.
+
+## Intuition
+
+Population feedback is often nonlinear: growth slows near carrying capacity, one
+species can regulate another, and parameter changes can shift equilibria or create
+oscillations.
+
+## How It Is Used
+
+1. Choose state variables and interaction terms.
+2. Find equilibria and local stability.
+3. Plot phase portraits to understand cycles and basins.
+4. Test interventions, harvesting, or resource changes as control inputs.
+
+## Common Pitfalls
+
+- Treating average deterministic models as reliable for small populations.
+- Interpreting negative equilibrium populations as physically meaningful.
+- Ignoring parameter uncertainty in ecological interactions.
+
+## Connections
+
+- Connects to [phase-plane analysis](/topics/phase-plane-analysis), [local stability](/topics/local-stability), and [nonlinear state space](/topics/nonlinear-state-space).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

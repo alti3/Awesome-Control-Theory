@@ -1,0 +1,53 @@
+---
+title: "Nyquist criterion"
+description: "Turns open-loop encirclements of the critical point into a closed-loop stability test."
+category: "Frequency-Domain Analysis"
+branch: "System Analysis"
+---
+
+## What It Means
+
+The **Nyquist criterion** determines closed-loop stability from the open-loop
+frequency response. It is stronger than just reading gain and phase margins because
+it accounts for unstable open-loop poles and the full encirclement of the critical
+point.
+
+## Mathematical Form
+
+For a negative-feedback loop with loop transfer $L(s)$, closed-loop poles are roots
+of
+
+$$
+1+L(s)=0.
+$$
+
+The Nyquist contour tracks how $1+L(s)$ winds around the origin, equivalently how
+$L(s)$ winds around $-1$.
+
+## Intuition
+
+The plot asks whether the loop transfer gets too close to turning negative
+feedback into positive feedback at a frequency where the loop still has enough gain
+to matter.
+
+## How It Is Used
+
+1. Count unstable open-loop poles.
+2. Plot or compute the Nyquist curve for $L(j\omega)$ with the proper contour.
+3. Count encirclements of $-1$ using the sign convention of the chosen text or
+   software.
+4. Infer closed-loop unstable poles and then check margins.
+
+## Common Pitfalls
+
+- Applying the simple margin interpretation to open-loop unstable plants.
+- Forgetting delays, which add phase lag and change encirclements.
+- Confusing the Nyquist plot with the Nyquist stability criterion.
+
+## Connections
+
+- Builds on [Nyquist plots](/topics/nyquist-plots), [loop transfer function](/topics/loop-transfer-function), and [gain margin](/topics/gain-margin).
+
+## References
+
+- [Astrom and Murray, Feedback Systems](https://fbsbook.org/)

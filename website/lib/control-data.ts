@@ -29,6 +29,21 @@ export const branches: Branch[] = [
             description: "Acts from a model or known command before error appears.",
           },
           {
+            term: "Positive feedback",
+            description:
+              "Reinforces deviations and appears in oscillators, switches, and biological regulation.",
+          },
+          {
+            term: "Feedback with logic",
+            description:
+              "Combines continuous loops with modes, selectors, interlocks, and supervisory decisions.",
+          },
+          {
+            term: "Control-system architectures",
+            description:
+              "Organize feedback, feedforward, estimation, optimization, and logic into layered designs.",
+          },
+          {
             term: "Full-state feedback",
             description:
               "Uses the entire state vector, often as u = -Kx, when states are measured or estimated.",
@@ -144,6 +159,11 @@ export const branches: Branch[] = [
               "Combines proportional, integral, and derivative action for simple, effective feedback.",
           },
           {
+            term: "PID tuning",
+            description:
+              "Chooses PID gains using model rules, relay tests, frequency response, or iteration.",
+          },
+          {
             term: "Integral action & anti-windup",
             description:
               "Improves steady-state tracking while limiting integrator problems when actuators saturate.",
@@ -180,6 +200,11 @@ export const branches: Branch[] = [
             term: "Loop shaping",
             description:
               "Designs open-loop gain and phase to meet bandwidth, tracking, noise, and robustness targets.",
+          },
+          {
+            term: "Loop transfer function",
+            description:
+              "Uses L = PC to relate stability margins, sensitivity, complementary sensitivity, and bandwidth.",
           },
         ],
       },
@@ -515,6 +540,11 @@ export const branches: Branch[] = [
             term: "Controller realization",
             description:
               "Covers direct, parallel, cascade, factorized, and state-space implementations.",
+          },
+          {
+            term: "Controller implementation",
+            description:
+              "Covers realizable filters, saturation handling, bumpless transfer, PLCs, and computer deployment.",
           },
           {
             term: "Embedded implementation",
@@ -1277,6 +1307,11 @@ export const branches: Branch[] = [
             description: "Determine closed-loop stability from open-loop encirclements.",
           },
           {
+            term: "Nyquist criterion",
+            description:
+              "Turns open-loop encirclements of the critical point into a closed-loop stability test.",
+          },
+          {
             term: "Nichols charts",
             description: "Combine gain and phase for frequency-domain design.",
           },
@@ -1284,6 +1319,11 @@ export const branches: Branch[] = [
             term: "Sensitivity functions",
             description:
               "Describe disturbance rejection, noise amplification, and tracking limitations.",
+          },
+          {
+            term: "Bode's relations",
+            description:
+              "Explain gain-phase coupling and waterbed tradeoffs in stable minimum-phase loops.",
           },
           {
             term: "Spectral-density analysis",
@@ -1362,6 +1402,11 @@ export const branches: Branch[] = [
             description:
               "Maps damping, natural frequency, settling behavior, and stability boundaries into sampled systems.",
           },
+          {
+            term: "Fundamental limitations",
+            description:
+              "Capture barriers from delay, nonminimum-phase zeros, unstable poles, noise, and actuator limits.",
+          },
         ],
       },
       {
@@ -1417,6 +1462,26 @@ export const branches: Branch[] = [
               "Tanks, reactors, heat exchangers, distillation columns, and transport delays.",
           },
           {
+            term: "Computing & network models",
+            description:
+              "Queues, congestion control, admission control, web servers, and resource-management loops.",
+          },
+          {
+            term: "Biological models",
+            description:
+              "Gene regulation, physiological feedback, neural circuits, and biological switching examples.",
+          },
+          {
+            term: "Pharmacokinetic models",
+            description:
+              "Drug administration and compartment models connecting dose, concentration, and effect.",
+          },
+          {
+            term: "Population dynamics models",
+            description:
+              "Growth, carrying capacity, predator-prey interaction, and ecological feedback examples.",
+          },
+          {
             term: "Robotics & vehicle models",
             description:
               "Kinematics, rigid-body dynamics, tire/ground interaction, and actuator dynamics.",
@@ -1425,6 +1490,21 @@ export const branches: Branch[] = [
             term: "Aerospace & pointing models",
             description:
               "Satellite attitude, antenna azimuth, aircraft landing, and servomotor dynamics.",
+          },
+          {
+            term: "Thrust vector control",
+            description:
+              "Uses gimbaled or vectored thrust and nested attitude-position loops in rockets and VTOL aircraft.",
+          },
+          {
+            term: "Operational-amplifier models",
+            description:
+              "Use high-gain electronics and feedback interconnections to model analog circuits and controllers.",
+          },
+          {
+            term: "Atomic-force-microscope models",
+            description:
+              "Model nanopositioning, piezo actuation, and tip-sample interaction for precision feedback.",
           },
           {
             term: "Power-system models",
