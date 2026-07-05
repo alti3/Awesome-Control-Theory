@@ -11,19 +11,66 @@ branch: "Core Feedback Concepts"
 
 A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
+## Video
+
+<YouTube url="https://www.youtube.com/watch?v=j0wJBEZdwLs" title="But what is the Laplace transform? A visual introduction" />
+
+<YouTube url="https://www.youtube.com/watch?v=FE-hM1kRK4Y" title="Solving differential equations with the Laplace transform" />
+
 ## Mathematical Form
 
-A useful control-theory abstraction is a dynamical map with an objective:
+The unilateral Laplace transform maps a time signal into a function of the
+complex variable $s$:
 
 $$
-\dot x=f(x,u,d,t),\qquad y=h(x,u,t),\qquad e=r-y.
+F(s)=\mathcal{L}\{f(t)\}=\int_0^\infty f(t)e^{-st}\,dt.
+$$
+
+The s-plane gives each value $s=\sigma+j\omega$ a dynamic interpretation:
+$\sigma<0$ corresponds to decay, $\sigma>0$ to growth, and $\omega$ to
+oscillation. For exponential pieces,
+
+$$
+\mathcal{L}\{e^{at}\}=\frac{1}{s-a},
+$$
+
+so poles of $F(s)$ expose exponential components in $f(t)$. Linearity then lets
+sums of exponentials become sums of simple fractions. The transform also turns
+time derivatives into algebraic expressions:
+
+$$
+\mathcal{L}\{\dot f(t)\}=sF(s)-f(0),\qquad
+\mathcal{L}\{\ddot f(t)\}=s^2F(s)-sf(0)-\dot f(0).
+$$
+
+For a forced mass-spring-damper equation,
+
+$$
+m\ddot x+\mu\dot x+kx=F_0\cos(\omega t),
+$$
+
+zero initial conditions give
+
+$$
+X(s)=\frac{F_0s}{(s^2+\omega^2)(ms^2+\mu s+k)}.
 $$
 
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
 ## Intuition
 
-The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Laplace transforms**, the central issue is the behavior summarized above: connect differential-equation models to transfer functions and classical design tools. The method still has to remain consistent with the plant assumptions and the performance objective.
+Laplace transforms convert time-domain behavior into geometry and algebra on the
+s-plane. A pole tells you that the original signal contains a corresponding
+exponential mode: imaginary parts produce oscillation, negative real parts
+produce decay, and positive real parts signal growth or instability.
+
+This is why the transform is so useful in control theory. Differential equations
+become polynomial equations in $s$, initial conditions ride along as explicit
+terms, and the roots of denominators reveal the modes that will appear in the
+time response. In a forced oscillator, the transformed solution contains poles
+from the natural spring-damper dynamics and poles from the external forcing. The
+natural poles produce the startup transient, while the forcing poles produce the
+steady-state oscillation that remains after the transient decays.
 
 A practical example is an engineering design review: the topic helps decide what model is trusted, what signals are measured, what behavior is required, and what evidence is needed before implementation.
 
@@ -37,13 +84,22 @@ A practical example is an engineering design review: the topic helps decide what
 
 ## Common Pitfalls
 
+- Track the region of convergence; the integral definition may only converge on
+  part of the s-plane even when analytic continuation reveals useful pole
+  structure elsewhere.
+- Do not drop initial-condition terms unless the model really starts from rest or
+  the transfer-function convention explicitly assumes zero initial conditions.
+- Distinguish transient modes from forced steady-state modes before interpreting
+  resonance, settling, or stability.
 - Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
 - Verify conclusions with simulation or analysis that matches the intended closed-loop interconnection.
 
 ## Connections
 
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- connects differential equations to transfer functions, pole-zero plots, Bode
+  plots, frequency-domain analysis, and continuous-time state-space models.
+- provides the algebraic foundation for classical controller design, transient
+  analysis, and forced-response calculations.
 
 ## References
 
