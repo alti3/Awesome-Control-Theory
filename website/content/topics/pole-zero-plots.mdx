@@ -11,6 +11,10 @@ branch: "System Analysis"
 
 A useful way to read this topic is as a connection between three objects: a model of the plant or signal, an objective stated in engineering terms, and evidence that the resulting behavior is stable, accurate, robust, or safe enough for the application.
 
+## Video
+
+<YouTube url="https://www.youtube.com/watch?v=eA950Z9VtM4" title="How to design a controller? Poles & Stability" />
+
 ## Mathematical Form
 
 For an LTI feedback loop, the loop transfer function organizes tracking and robustness:
@@ -19,11 +23,36 @@ $$
 L(s)=C(s)P(s),\qquad S(s)=\frac{1}{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)}.
 $$
 
+For a transfer function
+
+$$
+G(s)=\frac{N(s)}{D(s)},
+$$
+
+the poles are the roots of $D(s)$ and the zeros are the roots of $N(s)$. A
+continuous-time LTI system is asymptotically stable when all closed-loop poles
+lie in the open left half-plane. A real pole at $s=-a$ contributes an
+exponential term $e^{-at}$; a complex conjugate pair
+$s=\sigma\pm j\omega$ contributes oscillation at frequency $\omega$ with an
+envelope set by $e^{\sigma t}$.
+
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
 ## Intuition
 
-The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Pole-zero plots**, the central issue is the behavior summarized above: reveal modes, damping, zeros, cancellations, and nonminimum-phase behavior. The method still has to remain consistent with the plant assumptions and the performance objective.
+Pole-zero plots turn transfer-function algebra into a geometric picture of
+motion modes. Poles on the negative real axis produce decaying exponentials,
+complex poles add oscillation, right-half-plane poles imply exponential growth,
+and poles on the imaginary axis mark marginal oscillation. For closed-loop
+analysis, even one unstable pole is enough to make the whole transfer function
+unstable.
+
+This makes pole-zero maps useful for explaining why a controller changes the
+time response: changing controller gains changes the denominator of the
+closed-loop transfer function, so the closed-loop poles move. The limitation is
+that exact pole placement depends on an analytical model; when the plant is
+uncertain or only measured data is available, frequency-response methods such as
+Bode, Nyquist, and loop shaping often become more practical.
 
 A practical example is a motor-speed or temperature loop: the model predicts the dominant time constants, the controller sets bandwidth and damping, and tests such as step response or frequency response reveal whether the design meets overshoot, settling, and disturbance-rejection targets.
 
@@ -38,12 +67,18 @@ A practical example is a motor-speed or temperature loop: the model predicts the
 ## Common Pitfalls
 
 - Check that the linear model is valid over the amplitudes and operating points used in the design.
+- Do not infer closed-loop stability from open-loop pole locations alone; use the
+  poles of the actual closed-loop transfer function or an equivalent stability
+  test.
+- Remember that zeros can strongly affect transient response even when they do
+  not set asymptotic stability in the same direct way as poles.
 - Define assumptions explicitly: time domain, sampling, uncertainty, measured outputs, actuator limits, and disturbances.
 
 ## Connections
 
 - turns a proposed model or controller into evidence about stability, robustness, safety, and performance.
-- is one node in the map: its value comes from how it interacts with modeling assumptions, objectives, and verification.
+- connects directly to root locus, pole placement, transfer functions, Laplace
+  transforms, local stability, and frequency-domain analysis.
 
 ## References
 

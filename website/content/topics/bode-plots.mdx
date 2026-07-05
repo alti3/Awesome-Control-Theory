@@ -13,6 +13,8 @@ A useful way to read this topic is as a connection between three objects: a mode
 
 ## Video
 
+<YouTube url="https://www.youtube.com/watch?v=BGAjnt-C4tI" title="Why the Bode Plot Is Awesome!" />
+
 <YouTube url="https://www.youtube.com/playlist?list=PLUMWjy5jgHK24TCFwngV5MeiruHxt1BQR" title="Bode plot playlist" />
 
 ## Mathematical Form
@@ -23,11 +25,34 @@ $$
 L(s)=C(s)P(s),\qquad S(s)=\frac{1}{1+L(s)},\qquad T(s)=\frac{L(s)}{1+L(s)}.
 $$
 
+The Bode plot shows the magnitude and phase of $L(j\omega)$ across frequency.
+The critical feedback condition is
+
+$$
+1+L(s)=0,\qquad\text{or equivalently}\qquad L(s)=-1.
+$$
+
+On the imaginary axis this corresponds to $|L(j\omega)|=1$ and
+$\angle L(j\omega)=-180^\circ$ at the same frequency, which is why the
+0 dB crossing and the -180 degree phase crossing are central to gain and phase
+margin.
+
 The notation should be interpreted with the page topic in mind: $x$ is the state or configuration, $u$ is the manipulated input, $y$ is the measured output, $r$ is a reference, $e$ is an error signal, and disturbances or modeling errors are included when they materially affect the design.
 
 ## Intuition
 
-The key intuition is to ask what information this topic adds to the feedback loop. Some topics add a model, some add a controller, some add an estimator, and some add a test. For **Bode plots**, the central issue is the behavior summarized above: show magnitude and phase versus frequency. The method still has to remain consistent with the plant assumptions and the performance objective.
+Bode plots summarize the steady-state sinusoidal response of an LTI system.
+After transients from initial-condition mismatch die away, a sinusoidal input
+produces a sinusoidal output at the same frequency with changed magnitude and
+phase. Because general inputs can be decomposed into sinusoidal components, the
+frequency response gives a practical way to reason about how each component
+behaves around a feedback loop.
+
+For closed-loop design, the central question is how close the loop transfer
+function gets to the point $-1$ in the complex plane. Gain margin and phase
+margin express that distance in engineering quantities: how much loop gain or
+phase lag can change before a frequency simultaneously reaches 0 dB and
+-180 degrees.
 
 A practical example is a motor-speed or temperature loop: the model predicts the dominant time constants, the controller sets bandwidth and damping, and tests such as step response or frequency response reveal whether the design meets overshoot, settling, and disturbance-rejection targets.
 
@@ -48,6 +73,8 @@ A practical example is a motor-speed or temperature loop: the model predicts the
 
 - turns a proposed model or controller into evidence about stability, robustness, safety, and performance.
 - shares language with robust control through loop gain, sensitivity, and uncertainty descriptions.
+- connects directly to gain margin, phase margin, loop shaping, Nyquist plots,
+  and the Nyquist stability criterion.
 
 ## References
 
