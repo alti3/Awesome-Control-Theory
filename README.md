@@ -944,6 +944,9 @@ well-maintained open software, and canonical textbooks.
   horizon estimation.
 - [JuliaControl](https://juliacontrol.github.io/): Julia ecosystem for control
   systems modeling, analysis, and synthesis.
+- [BlockWerk](https://blockwerk.tech/): browser-based block diagram simulator
+  for control systems and dynamic modelling, featuring RK4, adaptive RK45, and
+  TR-BDF2 stiff solvers in WebAssembly.
 
 ## Coverage Checklist
 
