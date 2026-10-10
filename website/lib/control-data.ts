@@ -1918,6 +1918,11 @@ export const resourceGroups: ResourceGroup[] = [
         href: "https://juliacontrol.github.io/",
         note: "Julia ecosystem for control systems modeling, analysis, and synthesis.",
       },
+      {
+        label: "BlockWerk",
+        href: "https://blockwerk.tech/",
+        note: "Browser-based block diagram simulator for control systems and dynamic modelling, featuring RK4, adaptive RK45, and TR-BDF2 stiff solvers in WebAssembly.",
+      },
     ],
   },
 ];
